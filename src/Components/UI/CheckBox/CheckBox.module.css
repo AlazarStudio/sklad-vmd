@@ -1,0 +1,30 @@
+.checkBox {
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 25%;
+  border: 1px solid #b4b4b4;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.checkBox:checked {
+  background-color: #f77523;
+  border: 1px solid #f77523;
+}
+
+.checkBox:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -60%) rotate(45deg);
+  transform-origin: center center;
+}

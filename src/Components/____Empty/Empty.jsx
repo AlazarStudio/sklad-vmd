@@ -1,12 +1,7 @@
-import React from "react";
-import classes from './Empty.module.css';
+import styles from './Empty.module.css'
 
 function Empty({ children, ...props }) {
-    return ( 
-        <>
-            
-        </>
-     );
+	return <></>
 }
 
-export default Empty;
+export default Empty

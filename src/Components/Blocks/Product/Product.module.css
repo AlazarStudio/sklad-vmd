@@ -1,0 +1,34 @@
+.product_wrapper {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.product_wrapper p {
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 5%;
+}
+
+.name {
+  flex-basis: 23%;
+}
+
+.code {
+  flex-basis: 10%;
+  text-align: right;
+}
+
+.unit_of_measurement {
+  flex-basis: 20%;
+  text-align: center;
+}
+
+.sale_price {
+  flex-basis: 25%;
+}

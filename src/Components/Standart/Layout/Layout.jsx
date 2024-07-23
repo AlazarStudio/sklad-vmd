@@ -1,18 +1,17 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React from 'react'
+import { Outlet } from 'react-router-dom'
 
-import Header from "../../Blocks/Header/Header"
-import Footer from "../../Blocks/Footer/Footer";
-
+import Footer from '../../Blocks/Footer/Footer'
+import Header from '../../Blocks/Header/Header'
 
 function Empty({ children, ...props }) {
-    return (
-        <>
-            <Header/>
-            <Outlet />
-            <Footer/>
-        </>
-    );
+	return (
+		<>
+			<Header />
+			<Outlet />
+			<Footer />
+		</>
+	)
 }
 
-export default Empty;
+export default Empty

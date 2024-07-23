@@ -1,0 +1,22 @@
+.footer {
+  padding: 50px 0 50px 0;
+  height: fit-content;
+  background-color: #848484;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.footer_info {
+  display: flex;
+  gap: 20px;
+}
+
+.footer_info a {
+  font-size: 16px;
+  line-height: 19.5px;
+  font-weight: 500;
+  color: #000;
+}

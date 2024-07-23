@@ -1,0 +1,80 @@
+.operations {
+  display: flex;
+  justify-content: space-between;
+}
+
+.operations__title {
+  flex-basis: 15%;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.operations input {
+  padding: 0 25px;
+  flex-basis: 36%;
+  height: 44px;
+  font-size: 14px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+}
+
+.operation_buttons__wrapper {
+  flex-basis: 45%;
+  display: flex;
+  gap: 30px;
+  justify-content: flex-end;
+}
+
+.operation_buttons__wrapper button {
+  flex-basis: 30%;
+}
+
+
+
+
+
+.products_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.products_wrapper__head {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #f77532;
+}
+
+.products_wrapper__head p {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 3%;
+}
+
+
+.number {
+  flex-basis: 10%;
+}
+
+.time {
+  flex-basis: 19%;
+}
+
+.warehouse {
+  flex-basis: 20%;
+}
+
+.org {
+  flex-basis: 18%;
+}
+
+.sum {
+  flex-basis: 30%;
+  text-align: right;
+}
