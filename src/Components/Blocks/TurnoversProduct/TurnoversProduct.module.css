@@ -1,0 +1,43 @@
+.product_wrapper {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.product_wrapper p {
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 5%;
+}
+
+.name {
+  flex-basis: 18%;
+}
+
+.code {
+  flex-basis: 5%;
+  text-align: right;
+}
+
+.quantity_sum {
+  flex-basis: 18%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 0;
+}
+
+.quantity {
+  flex-basis: 40%;
+  text-align: center;
+}
+
+.sum {
+  flex-basis: 45%;
+  text-align: right;
+}

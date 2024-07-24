@@ -1,17 +1,18 @@
 import { products } from '../../../../data'
-import Product from '../../Blocks/Product/Product'
-import RemainsProduct from '../../Blocks/RemainsProduct/RemainsProduct'
+import ContractorsProduct from '../../Blocks/ContractorsProduct/ContractorsProduct'
+import ContractsProduct from '../../Blocks/ContractsProduct/ContractsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
-import styles from './Remains.module.css'
+import styles from './Contracts.module.css'
 
-function Remains({ children, ...props }) {
+function Contracts({ ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Остатки</p>
+				<p className={styles.operations__title}>Договоры</p>
 				<div className={styles.operation_buttons__wrapper}>
+					<AddButton img='/images/green_add.png' text='Договор' />
 					<AddButton text='Фильтр' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
@@ -22,17 +23,16 @@ function Remains({ children, ...props }) {
 					<div className={styles.checkBox_wrapper}>
 						<CheckBox />
 					</div>
-					<p className={styles.name}>Наименование</p>
+					<p className={styles.number}>№</p>
 					<p className={styles.code}>Код</p>
-					<p className={styles.remains}>Остаток</p>
-					<p className={styles.cost_price}>Себестоимость</p>
-					<p className={styles.cost_price_sum}>Сумма себестоимости</p>
-					<p className={styles.sale_price}>Цена продажи</p>
-					<p className={styles.sale_price_sum}>Сумма продажи</p>
+					<p className={styles.time}>Время</p>
+					<p className={styles.contractors}>Контрагент</p>
+					<p className={styles.organization}>Организация</p>
+					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
 					{products.slice(-5).map((product, index) => (
-						<RemainsProduct key={index} {...product} />
+						<ContractsProduct key={index} {...product} />
 					))}
 				</div>
 			</section>
@@ -40,4 +40,4 @@ function Remains({ children, ...props }) {
 	)
 }
 
-export default Remains
+export default Contracts

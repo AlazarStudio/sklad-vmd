@@ -1,17 +1,17 @@
 import { products } from '../../../../data'
+import ContractorsProduct from '../../Blocks/ContractorsProduct/ContractorsProduct'
 import Product from '../../Blocks/Product/Product'
-import RemainsProduct from '../../Blocks/RemainsProduct/RemainsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
+import styles from './ContractorsPage.module.css'
 
-import styles from './Remains.module.css'
-
-function Remains({ children, ...props }) {
+function ContractorsPage({ children, ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Остатки</p>
+				<p className={styles.operations__title}>Контрагенты</p>
 				<div className={styles.operation_buttons__wrapper}>
+					<AddButton img='/images/green_add.png' text='Контрагент' />
 					<AddButton text='Фильтр' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
@@ -24,15 +24,14 @@ function Remains({ children, ...props }) {
 					</div>
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
-					<p className={styles.remains}>Остаток</p>
-					<p className={styles.cost_price}>Себестоимость</p>
-					<p className={styles.cost_price_sum}>Сумма себестоимости</p>
-					<p className={styles.sale_price}>Цена продажи</p>
-					<p className={styles.sale_price_sum}>Сумма продажи</p>
+					<p className={styles.created}>Создан</p>
+					<p className={styles.phone}>Телефон</p>
+					<p className={styles.email}>Email</p>
+					<p className={styles.address}>Адрес</p>
 				</div>
 				<div>
 					{products.slice(-5).map((product, index) => (
-						<RemainsProduct key={index} {...product} />
+						<ContractorsProduct key={index} {...product} />
 					))}
 				</div>
 			</section>
@@ -40,4 +39,4 @@ function Remains({ children, ...props }) {
 	)
 }
 
-export default Remains
+export default ContractorsPage

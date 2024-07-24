@@ -1,0 +1,127 @@
+.operations {
+  display: flex;
+  justify-content: space-between;
+}
+
+.operations__title {
+  flex-basis: 15%;
+  font-size: 32px;
+  font-weight: 500;
+}
+
+.operations input {
+  padding: 0 25px;
+  flex-basis: 36%;
+  height: 44px;
+  font-size: 14px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+}
+
+.operation_buttons__wrapper {
+  flex-basis: 40%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 50px;
+}
+
+.operation_buttons__wrapper button {
+  flex-basis: 30%;
+}
+
+
+
+
+
+.products_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.periods {
+  display: flex;
+  justify-content: end;
+  gap: 52px;
+}
+
+.periods p {
+  flex-basis: 14%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* padding: 20px 0 0 0; */
+  font-size: 16px;
+  line-height: 19.5px;
+  font-weight: 500;
+  text-align: center;
+  border-bottom: 2px solid #f77532;
+}
+
+.period_item {
+  flex-basis: 14%;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-bottom: 2px solid #f77532;
+}
+
+.period_item p {
+  border: none;
+  padding: 0;
+}
+
+.period_item button {
+  font-size: 16px;
+  color: #f77532;
+  font-weight: 700;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.products_wrapper__head {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #f77532;
+}
+
+.products_wrapper__head p {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 5%;
+}
+
+.name {
+  flex-basis: 18%;
+}
+
+.code {
+  flex-basis: 5%;
+  text-align: right;
+}
+
+.quantity_sum {
+  flex-basis: 18%;
+  display: flex;
+  justify-content: end;
+  gap: 0;
+}
+
+.quantity {
+  flex-basis: 40%;
+  text-align: center;
+}
+
+.sum {
+  flex-basis: 45%;
+  text-align: right;
+}

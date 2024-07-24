@@ -3,9 +3,12 @@
   flex-direction: column;
   gap: 30px;
 }
+
 .products_buttons {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 69px;
 }
 
 .products_buttons a {

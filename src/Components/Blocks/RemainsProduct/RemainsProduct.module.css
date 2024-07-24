@@ -1,0 +1,46 @@
+.product_wrapper {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.product_wrapper p {
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 4%;
+}
+
+.name {
+  flex-basis: 20%;
+}
+
+.code {
+  flex-basis: 6%;
+  text-align: right;
+}
+
+.remains {
+  flex-basis: 13%;
+  text-align: center;
+}
+
+.cost_price {
+  flex-basis: 14%;
+}
+
+.cost_price_sum {
+  flex-basis: 18%;
+}
+
+.sale_price {
+  flex-basis: 14%;
+}
+
+.sale_price_sum {
+  flex-basis: 11%;
+}

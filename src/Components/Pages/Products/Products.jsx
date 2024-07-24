@@ -5,7 +5,7 @@ import styles from './Products.module.css'
 function Products({ children, ...props }) {
 	let { id } = useParams()
 	let location = useLocation()
-	console.log(id)
+	// console.log(id)
 
 	return (
 		<div className={styles.products_header__wrapper}>

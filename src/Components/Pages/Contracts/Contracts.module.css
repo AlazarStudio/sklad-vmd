@@ -4,7 +4,7 @@
 }
 
 .operations__title {
-  flex-basis: 15%;
+  flex-basis: 17%;
   font-size: 32px;
   font-weight: 500;
 }
@@ -20,14 +20,14 @@
 }
 
 .operation_buttons__wrapper {
-  flex-basis: 40%;
+  flex-basis: 44%;
   display: flex;
   justify-content: flex-end;
-  gap: 50px;
+  gap: 22px;
 }
 
 .operation_buttons__wrapper button {
-  flex-basis: 30%;
+  flex-basis: 28%;
 }
 
 
@@ -54,35 +54,32 @@
 
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 4%;
+  flex-basis: 3%;
 }
 
-.name {
-  flex-basis: 20%;
+
+.number {
+  flex-basis: 5%;
 }
 
 .code {
-  flex-basis: 6%;
-  text-align: right;
+  flex-basis: 17%;
+  padding-left: 40px;
+  /* text-align: center; */
 }
 
-.remains {
-  flex-basis: 13%;
-  text-align: center;
+.time {
+  flex-basis: 20%;
 }
 
-.cost_price {
-  flex-basis: 14%;
+.contractors {
+  flex-basis: 20%;
 }
 
-.cost_price_sum {
-  flex-basis: 18%;
+.organization {
+  flex-basis: 20%;
 }
 
-.sale_price {
-  flex-basis: 14%;
-}
-
-.sale_price_sum {
-  flex-basis: 11%;
+.sum {
+  flex-basis: 15%;
 }

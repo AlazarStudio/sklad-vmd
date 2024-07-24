@@ -8,9 +8,11 @@ function Header({ children, ...props }) {
 	return (
 		<header className={styles.header}>
 			<div className={styles.widthBlock}>
-				<img src='/images/header_logo.png' alt='' />
+				<Link to='/'>
+					<img src='/images/header_logo.png' alt='' />
+				</Link>
 				<Burger />
-				<img src="/images/search_header.png" alt="" />
+				<img src='/images/search_header.png' alt='' />
 			</div>
 		</header>
 	)

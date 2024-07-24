@@ -1,0 +1,45 @@
+.product_wrapper {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #b4b4b4;
+}
+
+.product_wrapper p {
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 5%;
+}
+
+
+.name {
+  flex-basis: 20%;
+}
+
+.code {
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.created {
+  flex-basis: 16.25%;
+  padding-left: 30px;
+}
+
+.phone {
+  flex-basis: 16.25%;
+  padding-left: 20px;
+}
+.email {
+  flex-basis: 16.25%;
+  padding-left: 20px;
+}
+
+.address {
+  flex-basis: 16.25%;
+  padding-left: 20px;
+}
