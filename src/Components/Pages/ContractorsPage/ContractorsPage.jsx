@@ -1,8 +1,8 @@
 import { products } from '../../../../data'
 import ContractorsProduct from '../../Blocks/ContractorsProduct/ContractorsProduct'
-import Product from '../../Blocks/Product/Product'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
+
 import styles from './ContractorsPage.module.css'
 
 function ContractorsPage({ children, ...props }) {

@@ -1,5 +1,4 @@
 import { products } from '../../../../data'
-import Product from '../../Blocks/Product/Product'
 import WriteOffProduct from '../../Blocks/WriteOffProduct/WriteOffProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
@@ -31,11 +30,11 @@ function WriteOffs({ children, ...props }) {
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
-					{products.map((product, index) => (
+					{products.map((product, index) =>
 						product.writtenOff === true ? (
 							<WriteOffProduct key={index} {...product} />
 						) : null
-					))}
+					)}
 				</div>
 			</section>
 		</>

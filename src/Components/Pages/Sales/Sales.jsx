@@ -1,7 +1,7 @@
 import styles from './Sales.module.css'
 
 function Sales({ children, ...props }) {
-	return <></>
+	return <>Sales</>
 }
 
 export default Sales

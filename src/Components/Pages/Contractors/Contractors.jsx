@@ -12,11 +12,7 @@ function Contractors({ children, ...props }) {
 			<div className={styles.products_buttons}>
 				<Link
 					to='/contractors'
-					className={
-						location.pathname === '/contractors'
-							? styles.active
-							: ''
-					}
+					className={location.pathname === '/contractors' ? styles.active : ''}
 				>
 					Контрагенты
 				</Link>

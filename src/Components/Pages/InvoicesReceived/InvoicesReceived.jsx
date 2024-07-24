@@ -1,5 +1,4 @@
 import { products } from '../../../../data'
-import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
 import InvoicesReceivedProduct from '../../Blocks/InvoicesReceivedProduct/InvoicesReceivedProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
