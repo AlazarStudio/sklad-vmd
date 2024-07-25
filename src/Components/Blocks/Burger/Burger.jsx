@@ -26,6 +26,11 @@ function Burger({ children, ...props }) {
 						КОНТРАГЕНТЫ
 					</Link>
 				</li>
+				<li>
+					<Link to='/reports' className={styles.nav_list__item}>
+						ОТЧЕТЫ
+					</Link>
+				</li>
 			</ul>
 		</nav>
 	)

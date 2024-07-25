@@ -1,22 +1,26 @@
 import { Link } from 'react-router-dom'
 
 import { products } from '../../../../data'
-import ContractorsProduct from '../../Blocks/ContractorsProduct/ContractorsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
+import Report from '../Report/Report'
 
-import styles from './ContractorsPage.module.css'
+import styles from './Reports.module.css'
 
-function ContractorsPage({ children, ...props }) {
+function Reports({ ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Контрагенты</p>
+				<p className={styles.operations__title}>Отчеты</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<Link to='/add-contractors'>
+					<Link to='/add-report'>
 						<img src='/images/green_add.png' alt='' />
-						Контрагент
+						Отчет
 					</Link>
+					<div className={styles.period_date}>
+						<input type='date' required />
+						<input type='date' required />
+					</div>
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -26,16 +30,15 @@ function ContractorsPage({ children, ...props }) {
 					<div className={styles.checkBox_wrapper}>
 						<CheckBox />
 					</div>
-					<p className={styles.name}>Наименование</p>
-					<p className={styles.code}>Код</p>
-					<p className={styles.created}>Создан</p>
-					<p className={styles.phone}>Телефон</p>
-					<p className={styles.email}>Email</p>
-					<p className={styles.address}>Адрес</p>
+					<p className={styles.number}>№</p>
+					<p className={styles.time}>Время</p>
+					<p className={styles.category}>Категория</p>
+					<p className={styles.organization}>Организация</p>
+					<p className={styles.period}>Период</p>
 				</div>
 				<div>
 					{products.slice(-5).map((product, index) => (
-						<ContractorsProduct key={index} {...product} />
+						<Report key={index} {...product} />
 					))}
 				</div>
 			</section>
@@ -43,4 +46,4 @@ function ContractorsPage({ children, ...props }) {
 	)
 }
 
-export default ContractorsPage
+export default Reports

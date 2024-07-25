@@ -20,18 +20,28 @@
   outline: none;
 }
 
-.operation_buttons__wrapper {
-  flex-basis: 50%;
+.period_date {
   display: flex;
   justify-content: space-between;
 }
 
+.period_date input {
+  flex-basis: 48%;
+}
+
+.operation_buttons__wrapper {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 22px;
+}
+
 .operation_buttons__wrapper button {
-  flex-basis: 22%;
+  flex-basis: 28%;
 }
 
 .operation_buttons__wrapper a {
-  flex-basis: 22%;
+  flex-basis: 28%;
   height: 44px;
   display: flex;
   justify-content: center;
@@ -44,7 +54,6 @@
   outline: none;
   cursor: pointer;
 }
-
 
 
 
@@ -69,24 +78,27 @@
 
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 5%;
+  flex-basis: 3%;
 }
 
 
-.name {
-  flex-basis: 23%;
-}
-
-.code {
+.number {
   flex-basis: 10%;
-  text-align: right;
 }
 
-.unit_of_measurement {
+.time {
+  flex-basis: 15%;
+}
+
+.category {
+  flex-basis: 20%;
+}
+
+.organization {
+  flex-basis: 20%;
+}
+
+.period {
   flex-basis: 20%;
   text-align: center;
-}
-
-.sale_price {
-  flex-basis: 25%;
 }

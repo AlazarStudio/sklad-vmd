@@ -1,0 +1,116 @@
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.form_product label {
+  font-size: 16px;
+  line-height: 19.5px;
+}
+
+.form_product input {
+  height: 44px !important;
+  padding: 0 25px !important;
+  border: 1px solid #b4b4b4 !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  font-size: 16px !important;
+}
+
+.products_header__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.products_buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 69px;
+}
+
+.products_buttons :first-child {
+  background-color: #f77532;
+  color: #fff;
+  font-weight: 700;
+  border: #f77532;
+}
+
+.products_buttons button {
+  flex-basis: 21%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 19.5px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.products_buttons a {
+  flex-basis: 21%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  line-height: 19.5px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.form_inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form_inputs :last-child {
+  padding: 0;
+  border: none;
+}
+
+.form_item {
+  padding-bottom: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1.5px solid #b4b4b4;
+}
+
+.item {
+  flex-basis: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item2 {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.item2 button {
+  flex-basis: 30%;
+}
+
+.item_half {
+  display: flex;
+  justify-content: space-between;
+}
+
+.item_half input {
+  flex-basis: 48%;
+}

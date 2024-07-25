@@ -3,16 +3,16 @@ import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
-import styles from './Acceptance.module.css'
+import styles from './Shipments.module.css'
 
-function Acceptance({ ...props }) {
+function Shipments({ ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Приемки</p>
+				<p className={styles.operations__title}>Отгрузки</p>
 				<div className={styles.operation_buttons__wrapper}>
 					<AddButton img='/images/qr-code.png' text='Добавить товар' />
-					<AddButton img='/images/green_add.png' text='Приемка' />
+					<AddButton img='/images/green_add.png' text='Отгрузка' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -39,4 +39,4 @@ function Acceptance({ ...props }) {
 	)
 }
 
-export default Acceptance
+export default Shipments

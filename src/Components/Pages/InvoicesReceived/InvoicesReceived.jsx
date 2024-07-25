@@ -11,7 +11,6 @@ function InvoicesReceived({ children, ...props }) {
 			<div className={styles.operations}>
 				<p className={styles.operations__title}>Счета-фактуры полученные</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton text='Фильтр' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />

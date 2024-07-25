@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { products } from '../../../../data'
 import Product from '../../Blocks/Product/Product'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -11,8 +13,14 @@ function ProductsPage({ children, ...props }) {
 			<div className={styles.operations}>
 				<p className={styles.operations__title}>Товары</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton img='/images/green_add.png' text='Товар' />
-					<AddButton img='/images/blue_add.png' text='Группа' />
+					<Link to='/add-product'>
+						<img src='/images/green_add.png' alt='' />
+						Товар
+					</Link>
+					<Link to='/add-product-group'>
+						<img src='/images/blue_add.png' alt='' />
+						Группа
+					</Link>
 					<AddButton text='Фильтр' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>

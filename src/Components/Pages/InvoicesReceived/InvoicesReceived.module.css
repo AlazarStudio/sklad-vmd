@@ -1,6 +1,7 @@
 .operations {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .operations__title {
@@ -11,7 +12,7 @@
 
 .operations input {
   padding: 0 25px;
-  flex-basis: 28%;
+  flex-basis: 34%;
   height: 44px;
   font-size: 14px;
   border: 1px solid #b4b4b4;
@@ -20,7 +21,7 @@
 }
 
 .operation_buttons__wrapper {
-  flex-basis: 30%;
+  flex-basis: 25%;
   display: flex;
   justify-content: flex-end;
   gap: 30px;

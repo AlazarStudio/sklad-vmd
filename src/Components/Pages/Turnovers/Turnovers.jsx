@@ -6,12 +6,52 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 import styles from './Turnovers.module.css'
 
 function Turnovers({ children, ...props }) {
+	const today = new Date()
+
+	// Функция для получения первого и последнего дня предыдущего полного месяца
+	const getLastFullMonth = () => {
+		let year = today.getFullYear()
+		let month = today.getMonth() // текущий месяц (0-11)
+
+		// Если текущий день не 1-е число, берем предыдущий месяц
+		if (today.getDate() !== 1) {
+			if (month === 0) {
+				month = 11
+				year -= 1
+			} else {
+				month -= 1
+			}
+		} else {
+			// Если текущий месяц - январь, берем декабрь предыдущего года
+			if (month === 0) {
+				month = 11
+				year -= 1
+			}
+		}
+
+		// Первый день месяца
+		const firstDay = new Date(year, month, 2)
+		// Последний день месяца
+		const lastDay = new Date(year, month + 1) // 0-й день следующего месяца - это последний день текущего
+
+		// Преобразуем в формат YYYY-MM-DD
+		const formatDate = date => date.toISOString().split('T')[0]
+
+		return {
+			start: formatDate(firstDay),
+			end: formatDate(lastDay)
+		}
+	}
+
+	const { start, end } = getLastFullMonth()
+
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Остатки</p>
+				<p className={styles.operations__title}>Обороты</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton text='Фильтр' />
+					<input type='date' defaultValue={start} required />
+					<input type='date' defaultValue={end} required />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -20,13 +60,11 @@ function Turnovers({ children, ...props }) {
 				<div className={styles.periods}>
 					<div className={styles.period_item}>
 						<p>Начало периода</p>
-						<button>(01.07.2024)</button>
 					</div>
 					<p>Приход</p>
 					<p>Расход</p>
 					<div className={styles.period_item}>
 						<p>Конец периода</p>
-						<button>(31.07.2024)</button>
 					</div>
 				</div>
 				<div className={styles.products_wrapper__head}>

@@ -1,6 +1,7 @@
 .operations {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .operations__title {
@@ -30,6 +31,20 @@
   flex-basis: 28%;
 }
 
+.operation_buttons__wrapper a {
+  flex-basis: 28%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
 
 
 

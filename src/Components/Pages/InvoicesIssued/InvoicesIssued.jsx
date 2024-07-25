@@ -1,18 +1,16 @@
 import { products } from '../../../../data'
-import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
+import InvoicesReceivedProduct from '../../Blocks/InvoicesReceivedProduct/InvoicesReceivedProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
-import styles from './Acceptance.module.css'
+import styles from './InvoicesIssued.module.css'
 
-function Acceptance({ ...props }) {
+function InvoicesIssued({ children, ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Приемки</p>
+				<p className={styles.operations__title}>Счета-фактуры выданные</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton img='/images/qr-code.png' text='Добавить товар' />
-					<AddButton img='/images/green_add.png' text='Приемка' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -24,14 +22,13 @@ function Acceptance({ ...props }) {
 					</div>
 					<p className={styles.number}>№</p>
 					<p className={styles.time}>Время</p>
-					<p className={styles.to_warehouse}>На склад</p>
 					<p className={styles.contractors}>Контрагент</p>
 					<p className={styles.organization}>Организация</p>
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
 					{products.slice(-5).map((product, index) => (
-						<AcceptanceProduct key={index} {...product} />
+						<InvoicesReceivedProduct key={index} {...product} />
 					))}
 				</div>
 			</section>
@@ -39,4 +36,4 @@ function Acceptance({ ...props }) {
 	)
 }
 
-export default Acceptance
+export default InvoicesIssued

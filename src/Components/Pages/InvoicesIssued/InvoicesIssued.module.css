@@ -5,14 +5,14 @@
 }
 
 .operations__title {
-  flex-basis: 10%;
+  flex-basis: 37%;
   font-size: 32px;
   font-weight: 500;
 }
 
 .operations input {
   padding: 0 25px;
-  flex-basis: 36%;
+  flex-basis: 34%;
   height: 44px;
   font-size: 14px;
   border: 1px solid #b4b4b4;
@@ -21,30 +21,15 @@
 }
 
 .operation_buttons__wrapper {
-  flex-basis: 50%;
+  flex-basis: 25%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 30px;
 }
 
 .operation_buttons__wrapper button {
-  flex-basis: 22%;
+  flex-basis: 40%;
 }
-
-.operation_buttons__wrapper a {
-  flex-basis: 22%;
-  height: 44px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  background-color: transparent;
-  border: 1px solid #b4b4b4;
-  border-radius: 10px;
-  outline: none;
-  cursor: pointer;
-}
-
 
 
 
@@ -69,24 +54,26 @@
 
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 5%;
+  flex-basis: 3%;
 }
 
 
-.name {
-  flex-basis: 23%;
+.number {
+  flex-basis: 7%;
 }
 
-.code {
-  flex-basis: 10%;
-  text-align: right;
-}
-
-.unit_of_measurement {
+.time {
   flex-basis: 20%;
-  text-align: center;
 }
 
-.sale_price {
-  flex-basis: 25%;
+.contractors {
+  flex-basis: 20%;
+}
+
+.organization {
+  flex-basis: 20%;
+}
+
+.sum {
+  flex-basis: 20%;
 }
