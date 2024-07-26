@@ -9,7 +9,7 @@ function Sales({ children, ...props }) {
 	return (
 		<div className={styles.products_header__wrapper}>
 			<div className={styles.products_buttons}>
-				<Link
+				{/* <Link
 					to='/sales/shipments'
 					className={
 						location.pathname === '/sales/shipments' ||
@@ -27,7 +27,7 @@ function Sales({ children, ...props }) {
 					}
 				>
 					Счета-фактуры выданные
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	)

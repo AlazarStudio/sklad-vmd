@@ -22,10 +22,40 @@ import Sales from '../Sales/Sales'
 import Shipments from '../Shipments/Shipments'
 import Turnovers from '../Turnovers/Turnovers'
 import WriteOffs from '../WriteOffs/WriteOffs'
+import AddShipment from '../AddShipment/AddShipment'
+import AddAcceptance from '../AddAcceptance/AddAcceptance'
+import UpdateProduct from '../UpdateProduct/UpdateProduct'
 
 function MainPage({ children, ...props }) {
 	let { id, idType } = useParams()
-	console.log(id)
+	// console.log(id)
+	const ids = [
+		'products',
+		'add-product',
+		'update-product',
+		'add-product-group',
+		'contractors',
+		'add-contractors',
+		'purchases',
+		'sales',
+		'add-shipment',
+		'add-acceptance',
+		'reports',
+		'add-report',
+		undefined
+	]
+
+	const idTypes = [
+		'write-offs',
+		'remains',
+		'turnovers',
+		'contracts',
+		'acceptance',
+		'invoices-received',
+		'shipments',
+		'invoices-issued',
+		undefined
+	]
 	return (
 		<main>
 			<CenterBlock>
@@ -33,6 +63,7 @@ function MainPage({ children, ...props }) {
 					{(id == 'products' || !id) && <Products />}
 					{!id && !idType && <ProductsPage />}
 					{id == 'products' && !idType && <ProductsPage />}
+					{id == 'update-product' && !idType && <UpdateProduct />}
 					{id == 'add-product' && <AddProduct />}
 					{id == 'add-product-group' && <AddGroup />}
 					{id == 'products' && idType == 'write-offs' && <WriteOffs />}
@@ -45,15 +76,19 @@ function MainPage({ children, ...props }) {
 					{id == 'purchases' && <Purchases />}
 					{id == 'purchases' && !idType && <Acceptance />}
 					{id == 'purchases' && idType == 'acceptance' && <Acceptance />}
+					{id == 'add-acceptance' && <AddAcceptance />}
 					{id == 'purchases' && idType == 'invoices-received' && (
 						<InvoicesReceived />
 					)}
 					{id == 'sales' && <Sales />}
 					{id == 'sales' && !idType && <Shipments />}
 					{id == 'sales' && idType == 'shipments' && <Shipments />}
+					{id == 'add-shipment' && <AddShipment />}
 					{id == 'sales' && idType == 'invoices-issued' && <InvoicesIssued />}
 					{id == 'reports' && <Reports />}
 					{id == 'add-report' && <AddReport />}
+					{!ids.includes(id) && <NotFoundPage />}
+					{ids.includes(id) && !idTypes.includes(idType) && <NotFoundPage />}
 				</WidthBlock>
 			</CenterBlock>
 		</main>

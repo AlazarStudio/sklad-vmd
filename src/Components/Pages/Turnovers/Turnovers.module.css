@@ -41,17 +41,18 @@
 }
 
 .periods {
+  padding-right: 248px;
   display: flex;
   justify-content: end;
-  gap: 52px;
+  gap: 45px;
 }
 
 .periods p {
-  flex-basis: 14%;
+  flex-basis: 18%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* padding: 20px 0 0 0; */
+  padding: 10px 0 12px 0;
   font-size: 16px;
   line-height: 19.5px;
   font-weight: 500;
@@ -110,16 +111,28 @@
   text-align: right;
 }
 
+.date_sale {
+  flex-basis: 100%;
+  text-align: center;
+}
+
 .quantity_sum {
   flex-basis: 18%;
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  align-items: center;
   gap: 0;
 }
 
-.quantity {
-  flex-basis: 40%;
+.income {
+  flex-basis: 80%;
   text-align: center;
+}
+
+.quantity {
+  padding-left: 15px;
+  flex-basis: 40%;
+  text-align: left;
 }
 
 .sum {

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { products } from '../../../../data'
 import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -12,7 +13,7 @@ function Acceptance({ ...props }) {
 				<p className={styles.operations__title}>Приемки</p>
 				<div className={styles.operation_buttons__wrapper}>
 					<AddButton img='/images/qr-code.png' text='Добавить товар' />
-					<AddButton img='/images/green_add.png' text='Приемка' />
+					<Link to='/add-acceptance'><img src="/images/green_add.png" alt="" /> Приемка</Link>
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />

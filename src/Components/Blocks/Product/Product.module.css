@@ -5,6 +5,24 @@
   border-bottom: 1px solid #b4b4b4;
 }
 
+.name_operation {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #b4b4b4;
+  /* transform: scale(1); */
+  /* cursor: pointer; */
+  /* transition: transform 0.3s ease; */
+  /* transform-origin: left center; */
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.name_operation:hover {
+  /* transform: scale(1.25); */
+  background-color: #e7e7e7;
+}
+
 .product_wrapper p {
   font-size: 16px;
   line-height: 19.5px;
@@ -20,8 +38,13 @@
 }
 
 .code {
-  flex-basis: 10%;
+  flex-basis: 5%;
   text-align: right;
+}
+
+.cost_price {
+  flex-basis: 15%;
+  text-align: center;
 }
 
 .unit_of_measurement {
@@ -30,5 +53,6 @@
 }
 
 .sale_price {
-  flex-basis: 25%;
+  flex-basis: 20%;
+  text-align: center;
 }

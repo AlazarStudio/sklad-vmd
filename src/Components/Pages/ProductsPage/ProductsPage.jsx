@@ -35,11 +35,12 @@ function ProductsPage({ children, ...props }) {
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
 					<p className={styles.unit_of_measurement}>Количество</p>
+					<p className={styles.cost_price}>Себестоимость</p>
 					<p className={styles.sale_price}>Цена продажи</p>
 				</div>
 				<div>
 					{products.slice(-5).map((product, index) => (
-						<Product key={index} {...product} />
+						<Product key={index} operation='/update-product' {...product} />
 					))}
 				</div>
 			</section>

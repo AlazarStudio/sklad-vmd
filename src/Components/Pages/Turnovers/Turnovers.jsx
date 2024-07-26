@@ -58,14 +58,14 @@ function Turnovers({ children, ...props }) {
 			</div>
 			<section className={styles.products_wrapper}>
 				<div className={styles.periods}>
-					<div className={styles.period_item}>
+					{/* <div className={styles.period_item}>
 						<p>Начало периода</p>
-					</div>
+					</div> */}
 					<p>Приход</p>
 					<p>Расход</p>
-					<div className={styles.period_item}>
+					{/* <div className={styles.period_item}>
 						<p>Конец периода</p>
-					</div>
+					</div> */}
 				</div>
 				<div className={styles.products_wrapper__head}>
 					<div className={styles.checkBox_wrapper}>
@@ -74,8 +74,7 @@ function Turnovers({ children, ...props }) {
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
 					<div className={styles.quantity_sum}>
-						<p className={styles.quantity}>Кол-во</p>
-						<p className={styles.sum}>Сумма</p>
+						<p className={styles.date_sale}>Дата продажи</p>
 					</div>
 					<div className={styles.quantity_sum}>
 						<p className={styles.quantity}>Кол-во</p>
@@ -86,8 +85,7 @@ function Turnovers({ children, ...props }) {
 						<p className={styles.sum}>Сумма</p>
 					</div>
 					<div className={styles.quantity_sum}>
-						<p className={styles.quantity}>Кол-во</p>
-						<p className={styles.sum}>Сумма</p>
+						<p className={styles.income}>Доход</p>
 					</div>
 				</div>
 				<div>

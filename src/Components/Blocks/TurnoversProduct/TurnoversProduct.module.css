@@ -24,17 +24,28 @@
   text-align: right;
 }
 
+.date_sale {
+  flex-basis: 18%;
+  text-align: center;
+}
+
 .quantity_sum {
   flex-basis: 18%;
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
   gap: 0;
 }
 
-.quantity {
-  flex-basis: 40%;
+.income {
+  flex-basis: 80%;
   text-align: center;
+}
+
+.quantity {
+  padding-left: 15px;
+  flex-basis: 40%;
+  text-align: left;
 }
 
 .sum {

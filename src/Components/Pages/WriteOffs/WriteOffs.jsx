@@ -1,4 +1,5 @@
 import { products } from '../../../../data'
+import Product from '../../Blocks/Product/Product'
 import WriteOffProduct from '../../Blocks/WriteOffProduct/WriteOffProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
@@ -12,7 +13,6 @@ function WriteOffs({ children, ...props }) {
 				<p className={styles.operations__title}>Списания</p>
 				<div className={styles.operation_buttons__wrapper}>
 					<AddButton img='/images/green_add.png' text='Списание' />
-					<AddButton text='Фильтр' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -23,16 +23,16 @@ function WriteOffs({ children, ...props }) {
 					<div className={styles.checkBox_wrapper}>
 						<CheckBox />
 					</div>
-					<p className={styles.number}>№</p>
-					<p className={styles.time}>Время</p>
-					<p className={styles.warehouse}>Со склада</p>
-					<p className={styles.org}>Организация</p>
-					<p className={styles.sum}>Сумма</p>
+					<p className={styles.name}>Наименование</p>
+					<p className={styles.code}>Код</p>
+					<p className={styles.unit_of_measurement}>Количество</p>
+					<p className={styles.cost_price}>Себестоимость</p>
+					<p className={styles.sale_price}>Цена продажи</p>
 				</div>
 				<div>
 					{products.map((product, index) =>
 						product.writtenOff === true ? (
-							<WriteOffProduct key={index} {...product} />
+							<Product key={index} {...product} />
 						) : null
 					)}
 				</div>

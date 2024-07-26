@@ -1,4 +1,6 @@
 .checkBox {
+  position: relative;
+  z-index: 10;
   width: 16px;
   height: 16px;
   background-color: white;

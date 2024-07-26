@@ -32,6 +32,22 @@
   flex-basis: auto;
 }
 
+.operation_buttons__wrapper a {
+  padding-inline: 20px;
+  flex-basis: auto;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
 
 
 

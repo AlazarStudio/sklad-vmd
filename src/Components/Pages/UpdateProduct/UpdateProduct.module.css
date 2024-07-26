@@ -4,14 +4,36 @@ form {
   gap: 50px;
 }
 
-.form_product label {
+.form_product label, option, p {
   font-size: 16px;
   line-height: 19.5px;
 }
 
-.form_product input {
+.form_product p {
+  font-weight: 500 !important;
+}
+
+.form_product option {
+  cursor: pointer;
+}
+
+.form_product input, select {
   height: 44px !important;
   padding: 0 25px !important;
+  border: 1px solid #b4b4b4 !important;
+  border-radius: 10px !important;
+  outline: none !important;
+  font-size: 16px !important;
+}
+
+.form_product select {
+  cursor: pointer;
+}
+
+.form_product textarea {
+  padding: 16px 25px;
+  resize: none;
+  height: 200px !important;
   border: 1px solid #b4b4b4 !important;
   border-radius: 10px !important;
   outline: none !important;
@@ -21,15 +43,14 @@ form {
 .products_header__wrapper {
   display: flex;
   flex-direction: column;
-  /* gap: 30px; */
+  gap: 30px;
 }
 
 .products_buttons {
-  width: 50%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  /* gap: 69px; */
+  justify-content: flex-start;
+  gap: 69px;
 }
 
 .products_buttons :first-child {
@@ -40,7 +61,7 @@ form {
 }
 
 .products_buttons button {
-  flex-basis: 48%;
+  flex-basis: 21%;
   height: 44px;
   display: flex;
   justify-content: center;
@@ -97,10 +118,9 @@ form {
 }
 
 .item2 {
-  flex-basis: 50%;
+  flex-basis: 45%;
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .item2 button {

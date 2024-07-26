@@ -558,7 +558,8 @@ export const products = [
 		rubber: 'Kenda 700 x 38C',
 		amor: 'Двухподвес',
 		writtenOff: false,
-		additionalDetails: false
+		additionalDetails: false,
+		dateSale:'2024-06-18'
 	},
 	{
 		img: ['/images/card2.png', '/images/card1.png', '/images/card3.png'],
@@ -597,7 +598,8 @@ export const products = [
 		rubber: 'Kenda 700 x 38C',
 		amor: 'Хардтейл',
 		writtenOff: false,
-		additionalDetails: false
+		additionalDetails: false,
+		dateSale:'2024-06-09'
 	},
 	{
 		img: ['/images/card3.png', '/images/card1.png', '/images/card2.png'],
@@ -636,7 +638,8 @@ export const products = [
 		rubber: 'Kenda 700 x 38C',
 		amor: 'Жесткая вилка',
 		writtenOff: false,
-		additionalDetails: false
+		additionalDetails: false,
+		dateSale:'2024-06-04'
 	},
 	{
 		img: ['/images/card1.png', '/images/card2.png', '/images/card3.png'],
@@ -675,7 +678,8 @@ export const products = [
 		rubber: 'Kenda 700 x 38C',
 		amor: 'Двухподвес',
 		writtenOff: false,
-		additionalDetails: false
+		additionalDetails: false,
+		dateSale:'2024-06-30'
 	},
 	{
 		img: ['/images/card2.png', '/images/card1.png', '/images/card3.png'],
@@ -714,7 +718,8 @@ export const products = [
 		rubber: 'Kenda 700 x 38C',
 		amor: 'Жесткая вилка',
 		writtenOff: false,
-		additionalDetails: false
+		additionalDetails: false,
+		dateSale:'2024-06-12'
 	},
 	{
 		img: ['/images/card3.png', '/images/card1.png', '/images/card2.png'],
@@ -758,7 +763,8 @@ export const products = [
 			disposalTime: '00:00',
 			fromWarehouse: 'Вселенная',
 			organization: 'Космос'
-		}
+		},
+		dateSale:'2024-06-01'
 	},
 	{
 		img: ['/images/card3.png', '/images/card1.png', '/images/card2.png'],
@@ -802,7 +808,8 @@ export const products = [
 			disposalTime: '11:00',
 			fromWarehouse: 'Основной склад',
 			organization: 'Вело Мото & Drive'
-		}
+		},
+		dateSale:'2024-06-11'
 	}
 ]
 
