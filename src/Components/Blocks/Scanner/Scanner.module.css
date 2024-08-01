@@ -1,0 +1,75 @@
+.scanner_wrapper {
+  overflow: hidden;
+  position: relative;
+  margin: 30px 0 50px 0;
+}
+
+.scanner {
+  display: flex;
+  flex-direction: column;
+  justify-content: 'center';
+  align-items: 'center';
+  width: 600px;
+  height: 450px;
+  overflow: hidden;
+  border: 1px solid #b4b4b4;
+  border-radius: 20px;
+}
+
+.button_wrapper {
+  margin: 20px 0 0 0;
+  display: flex;
+  justify-content: flex-start;
+  gap: 160px;
+}
+
+.button_wrapper button {
+  height: 44px;
+  width: 220px;
+  background-color: #f77532;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.camera {
+  font-size: 24px;
+  color: #fff;
+  font-weight: 700;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.file_scan {
+  position: absolute;
+  top: 37%;
+  transform: translateX(-50%);
+  left: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.file_scan p {
+  font-size: 16px;
+}
+
+.file_scan input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: #b4b4b4;
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+.file_scan input[type=file]::file-selector-button:hover {
+  background: #f77532;
+}

@@ -10,7 +10,7 @@ function Purchases({ children, ...props }) {
 	return (
 		<div className={styles.products_header__wrapper}>
 			<div className={styles.products_buttons}>
-				<Link
+				{/* <Link
 					to='/purchases/acceptance'
 					className={
 						location.pathname === '/purchases/acceptance' ||
@@ -30,7 +30,7 @@ function Purchases({ children, ...props }) {
 					}
 				>
 					Счета-фактуры полученные
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	)

@@ -10,8 +10,6 @@ import AddReport from '../AddReport/AddReport'
 import Contractors from '../Contractors/Contractors'
 import ContractorsPage from '../ContractorsPage/ContractorsPage'
 import Contracts from '../Contracts/Contracts'
-import InvoicesIssued from '../InvoicesIssued/InvoicesIssued'
-import InvoicesReceived from '../InvoicesReceived/InvoicesReceived'
 import NotFoundPage from '../NotFoundPage/NotFoundPage'
 import Products from '../Products/Products'
 import ProductsPage from '../ProductsPage/ProductsPage'
@@ -51,9 +49,7 @@ function MainPage({ children, ...props }) {
 		'turnovers',
 		'contracts',
 		'acceptance',
-		'invoices-received',
 		'shipments',
-		'invoices-issued',
 		undefined
 	]
 	return (
@@ -77,14 +73,10 @@ function MainPage({ children, ...props }) {
 					{id == 'purchases' && !idType && <Acceptance />}
 					{id == 'purchases' && idType == 'acceptance' && <Acceptance />}
 					{id == 'add-acceptance' && <AddAcceptance />}
-					{id == 'purchases' && idType == 'invoices-received' && (
-						<InvoicesReceived />
-					)}
 					{id == 'sales' && <Sales />}
 					{id == 'sales' && !idType && <Shipments />}
 					{id == 'sales' && idType == 'shipments' && <Shipments />}
 					{id == 'add-shipment' && <AddShipment />}
-					{id == 'sales' && idType == 'invoices-issued' && <InvoicesIssued />}
 					{id == 'reports' && <Reports />}
 					{id == 'add-report' && <AddReport />}
 					{!ids.includes(id) && <NotFoundPage />}

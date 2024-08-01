@@ -17,7 +17,7 @@ function Shipments({ ...props }) {
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
 					<Link to='/add-shipment'>
 						<img src='/images/qr-code.png' alt='' />
-						Найти товар
+						Продать товар
 					</Link>
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>

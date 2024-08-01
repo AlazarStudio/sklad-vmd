@@ -88,7 +88,7 @@ function UpdateProduct({ children, ...props }) {
 						<input
 							type='text'
 							id='vat'
-							required
+							// required
 							value={product.vat || ''}
 							onChange={e => setProduct({ ...product, vat: e.target.value })}
 						/>
@@ -133,7 +133,7 @@ function UpdateProduct({ children, ...props }) {
 							<input
 								type='text'
 								placeholder='EAN13'
-								required
+								// required
 								value={product.ean13 || ''}
 								onChange={e =>
 									setProduct({ ...product, ean13: e.target.value })
@@ -142,7 +142,7 @@ function UpdateProduct({ children, ...props }) {
 							<input
 								type='text'
 								placeholder='2000000000022'
-								required
+								// required
 								value={product.barcode || ''}
 								onChange={e =>
 									setProduct({ ...product, barcode: e.target.value })
