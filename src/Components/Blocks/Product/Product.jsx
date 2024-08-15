@@ -5,11 +5,19 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './Product.module.css'
 
-function Product({ onSelect, operation, linkName, quantity, ...props }) {
+function Product({
+	onSelect,
+	operation,
+	linkName,
+	quantity,
+	...props
+}) {
 	const navigate = useNavigate()
 
 	const goToProductDetail = () => {
-		navigate(`/product/${linkName}`)
+		navigate(`/product/${linkName}`, {
+			state: { fromWarehouse: false }
+		})
 	}
 
 	const handleCheckBoxChange = event => {

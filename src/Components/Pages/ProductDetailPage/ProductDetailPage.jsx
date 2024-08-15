@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Modal from 'react-modal'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { Colors, products } from '../../../../data'
 import ProductCard from '../../Blocks/ProductCard/ProductCard'
@@ -16,6 +16,8 @@ Modal.setAppElement('#root')
 
 function ProductDetailPage() {
 	const { linkName } = useParams()
+	const location = useLocation()
+	const { fromWarehouse } = location.state || {}
 	const navigate = useNavigate()
 
 	const [filteredProducts, setFilteredProducts] = useState([])
@@ -184,9 +186,14 @@ function ProductDetailPage() {
 			`Списано: ${JSON.stringify(modalQuantities)} по причине ${writeOffReason}`
 		)
 		setIsWriteOffModalOpen(false)
+		navigate('/products/write-offs')
 	}
 
 	const handleMoveToShopButtonClick = () => {
+		setIsMoveToShopModalOpen(true)
+	}
+
+	const handleMoveToWarehouseButtonClick = () => {
 		setIsMoveToShopModalOpen(true)
 	}
 
@@ -313,9 +320,16 @@ function ProductDetailPage() {
 									{selectedProducts.length}
 								</p>
 								<div className={styles.actions_buttons}>
-									<button onClick={handleMoveToShopButtonClick}>
-										Переместить в магазин
-									</button>
+									{!fromWarehouse ? (
+										<button onClick={handleMoveToWarehouseButtonClick}>
+											Переместить на склад
+										</button>
+									) : (
+										<button onClick={handleMoveToShopButtonClick}>
+											Переместить в магазин
+										</button>
+									)}
+
 									<button onClick={handleWriteOffButtonClick}>Списать</button>
 									<button onClick={handleSellButtonClick}>Продать</button>
 								</div>
@@ -333,7 +347,7 @@ function ProductDetailPage() {
 						{selectedProducts.map(product => (
 							<div key={product.code} className={styles.modal_item}>
 								<p>
-									{product.name} {' '} {product.color} {' '} {product.frameGrowth}"{' '}
+									{product.name} {product.color} {product.frameGrowth}"{' '}
 									{product.wheelsSize}
 								</p>
 								<input

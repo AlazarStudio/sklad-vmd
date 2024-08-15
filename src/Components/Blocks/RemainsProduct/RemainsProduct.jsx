@@ -4,11 +4,18 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './RemainsProduct.module.css'
 
-function RemainsProduct({ onSelect, operation, linkName, ...props }) {
+function RemainsProduct({
+	onSelect,
+	operation,
+	linkName,
+	...props
+}) {
 	const navigate = useNavigate()
 
 	const goToProductDetail = () => {
-		navigate(`/product/${linkName}`)
+		navigate(`/product/${linkName}`, {
+			state: { fromWarehouse: true }
+		})
 	}
 
 	const handleCheckBoxChange = event => {

@@ -259,6 +259,7 @@ select {
   background: white;
   padding: 30px;
   border-radius: 20px;
+  min-width: 500px;
   max-width: fit-content;
   max-height: fit-content;
   outline: none;
@@ -295,6 +296,7 @@ select {
   font-size: 28px;
   line-height: 32px;
   font-weight: 700;
+  text-align: center;
 }
 
 .totalPrice p {
@@ -304,13 +306,14 @@ select {
 }
 
 .modalButtons {
+  padding: 0 10%;
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
 .modalButtons button {
-  width: 257px;
+  width: 100%;
   height: 44px;
   font-size: 16px;
   font-weight: 700;
@@ -319,5 +322,15 @@ select {
   border: none;
   border-radius: 10px;
   outline: none;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 14px;
+  right: 17px;
+  font-size: 18px;
+  font-weight: 700;
+  color: gray;
   cursor: pointer;
 }

@@ -162,11 +162,11 @@ function AddShipment({ ...props }) {
 						))}
 					</div>
 					<div className={styles.totalPrice}>
-						<p>Сумма: {totalEnteredPrice.toFixed(2)}</p>
+						<p>Сумма: {totalEnteredPrice.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</p>
 					</div>
 					<div className={styles.modalButtons}>
-						<button onClick={closeModal}>Отмена</button>
 						<button onClick={handleSubmit}>Подтвердить</button>
+						<div className={styles.close} onClick={closeModal}>X</div>
 					</div>
 				</div>
 			</ReactModal>
