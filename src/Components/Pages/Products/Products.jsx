@@ -18,7 +18,7 @@ function Products({ children, ...props }) {
 							: ''
 					}
 				>
-					Товары
+					Магазин
 				</Link>
 				<Link
 					to='/products/write-offs'
@@ -28,14 +28,14 @@ function Products({ children, ...props }) {
 				>
 					Списания
 				</Link>
-				<Link
+				{/* <Link
 					to='/products/remains'
 					className={
 						location.pathname === '/products/remains' ? styles.active : ''
 					}
 				>
 					Остатки
-				</Link>
+				</Link> */}
 				<Link
 					to='/products/turnovers'
 					className={

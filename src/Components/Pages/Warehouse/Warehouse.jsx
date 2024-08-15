@@ -2,13 +2,13 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { products, types } from '../../../../data'
-import Product from '../../Blocks/Product/Product'
+import RemainsProduct from '../../Blocks/RemainsProduct/RemainsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
-import styles from './ProductsPage.module.css'
+import styles from './Warehouse.module.css'
 
-function ProductsPage() {
+function Warehouse() {
 	const [selectedProducts, setSelectedProducts] = useState([])
 	const [selectedType, setSelectedType] = useState('')
 	const navigate = useNavigate()
@@ -89,6 +89,14 @@ function ProductsPage() {
 			.join('')
 	}
 
+	const handleProductSelect = (product, isChecked) => {
+		if (isChecked) {
+			setSelectedProducts(prev => [...prev, product])
+		} else {
+			setSelectedProducts(prev => prev.filter(p => p.code !== product.code))
+		}
+	}
+
 	// Создаем объект для хранения уникальных продуктов
 	const uniqueProducts = {}
 
@@ -112,39 +120,27 @@ function ProductsPage() {
 			)
 		: productsToDisplay
 
-	const handleProductSelect = (product, isChecked) => {
-		if (isChecked) {
-			setSelectedProducts(prev => [...prev, product])
-		} else {
-			setSelectedProducts(prev => prev.filter(p => p.code !== product.code))
-		}
-	}
-
 	const handleTypeChange = event => {
 		setSelectedType(event.target.value)
 	}
 
-	const totalQuantity = selectedProducts.length
-
-	const navBack = e => {
-		e.preventDefault()
-		navigate('/warehouse')
+	const navToShop = e => {
+		navigate('/products')
 	}
 
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Магазин</p>
+				<p className={styles.operations__title}>Склад</p>
 				<div className={styles.operation_buttons__wrapper}>
-					{/* <Link to='/add-product'>
-						<img src='/images/green_add.png' alt='' />
-						Товар
-					</Link> */}
-					{/* <Link to='/add-product-group'>
+					{/* <AddButton img='/images/qr-code.png' text='Добавить товар' /> */}
+					<Link to='/add-product'>
+						<img src='/images/green_add.png' alt='' /> Товар
+					</Link>
+					<Link to='/add-product-group'>
 						<img src='/images/blue_add.png' alt='' />
 						Группа
-					</Link> */}
-					{/* <AddButton text='Фильтр' /> */}
+					</Link>
 					<select name='group' id='' required onChange={handleTypeChange}>
 						<option value='' defaultValue>
 							Все товары
@@ -154,11 +150,6 @@ function ProductsPage() {
 								{type}
 							</option>
 						))}
-						{/* <option value=''>Велосипеды</option>
-						<option value=''>Мопеды</option>
-						<option value=''>Самокаты</option>
-						<option value=''>Квадроциклы</option>
-						<option value=''>Мотоциклы</option> */}
 					</select>
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -171,13 +162,15 @@ function ProductsPage() {
 					</div>
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
-					<p className={styles.unit_of_measurement}>Количество</p>
+					<p className={styles.remains}>Остаток</p>
 					<p className={styles.cost_price}>Себестоимость</p>
+					<p className={styles.cost_price_sum}>Сумма себестоимости</p>
 					<p className={styles.sale_price}>Цена продажи</p>
+					<p className={styles.sale_price_sum}>Сумма продажи</p>
 				</div>
 				<div>
-					{filteredProducts.map((product, index) => (
-						<Product
+					{filteredProducts.slice(-5).map((product, index) => (
+						<RemainsProduct
 							key={index}
 							operation={true}
 							{...product}
@@ -187,15 +180,16 @@ function ProductsPage() {
 				</div>
 			</section>
 
+			{/* Блок действий */}
 			{selectedProducts.length > 0 && (
 				<div className={styles.actions}>
 					<div className={styles.actions_width}>
 						<p>
 							<span style={{ fontWeight: '400' }}>Выбрано товаров:</span>{' '}
-							{totalQuantity}
+							{selectedProducts.length}
 						</p>
 						<div className={styles.actions_buttons}>
-							<button onClick={navBack}>Переместить на склад</button>
+							<button onClick={navToShop}>Переместить в магазин</button>
 							{/* <button>Списать</button> */}
 							{/* <button>Продать</button> */}
 						</div>
@@ -206,4 +200,4 @@ function ProductsPage() {
 	)
 }
 
-export default ProductsPage
+export default Warehouse

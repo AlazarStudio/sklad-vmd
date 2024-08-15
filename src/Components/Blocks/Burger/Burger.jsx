@@ -7,8 +7,8 @@ function Burger({ children, ...props }) {
 		<nav>
 			<ul className={styles.nav_list}>
 				<li>
-					<Link to='/purchases' className={styles.nav_list__item}>
-						ЗАКУПКИ
+					<Link to='/warehouse' className={styles.nav_list__item}>
+						СКЛАД
 					</Link>
 				</li>
 				<li>

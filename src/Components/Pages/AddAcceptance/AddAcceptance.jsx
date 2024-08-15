@@ -14,7 +14,7 @@ function AddAcceptance({ ...props }) {
 
 	const navBack = e => {
 		e.preventDefault()
-		navigate('/purchases')
+		navigate('/warehouse')
 	}
 	return (
 		<form onSubmit={handleSubmit} className={styles.form_product}>

@@ -77,25 +77,33 @@
 
 
 .number {
-  flex-basis: 7%;
+  flex-basis: 5%;
 }
 
 .time {
-  flex-basis: 18%;
+  flex-basis: 15%;
+}
+
+.name {
+  flex-basis: 20%;
 }
 
 .to_warehouse {
-  flex-basis: 18%;
+  flex-basis: 15%;
+  /* text-align: center; */
 }
 
 .contractors {
-  flex-basis: 18%;
+  flex-basis: 15%;
+  text-align: center;
 }
 
 .organization {
-  flex-basis: 18%;
+  flex-basis: 15%;
+  text-align: center;
 }
 
 .sum {
-  flex-basis: 18%;
+  flex-basis: 12%;
+  text-align: right;
 }

@@ -3,13 +3,12 @@ import { Link, useLocation } from 'react-router-dom'
 import styles from './Sales.module.css'
 
 function Sales({ children, ...props }) {
-
 	let location = useLocation()
-	
+
 	return (
 		<div className={styles.products_header__wrapper}>
 			<div className={styles.products_buttons}>
-				{/* <Link
+				<Link
 					to='/sales/shipments'
 					className={
 						location.pathname === '/sales/shipments' ||
@@ -18,16 +17,16 @@ function Sales({ children, ...props }) {
 							: ''
 					}
 				>
-					Отгрузки
+					Оптовые
 				</Link>
 				<Link
-					to='/sales/invoices-issued'
+					to='/sales/retails'
 					className={
-						location.pathname === '/sales/invoices-issued' ? styles.active : ''
+						location.pathname === '/sales/retails' ? styles.active : ''
 					}
 				>
-					Счета-фактуры выданные
-				</Link> */}
+					Розничные
+				</Link>
 			</div>
 		</div>
 	)

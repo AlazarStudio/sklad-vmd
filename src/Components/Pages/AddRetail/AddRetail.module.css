@@ -4,7 +4,9 @@ form {
   gap: 50px;
 }
 
-.form_product label, option, p {
+.form_product label,
+option,
+p {
   font-size: 16px;
   line-height: 19.5px;
 }
@@ -17,9 +19,10 @@ form {
   cursor: pointer;
 }
 
-.form_product input, select {
-  height: 44px;
-  padding: 0 25px;
+.form_product input,
+select {
+  height: 44px !important;
+  padding: 0 25px !important;
   border: 1px solid #b4b4b4 !important;
   border-radius: 10px !important;
   outline: none !important;
@@ -30,27 +33,17 @@ form {
   cursor: pointer;
 }
 
-.form_product textarea {
-  padding: 16px 25px;
-  resize: none;
-  height: 200px !important;
-  border: 1px solid #b4b4b4 !important;
-  border-radius: 10px !important;
-  outline: none !important;
-  font-size: 16px !important;
-}
-
 .products_header__wrapper {
   display: flex;
   flex-direction: column;
-  gap: 30px;
 }
 
 .products_buttons {
+  width: 50%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 69px;
+  justify-content: space-between;
+  gap: 0;
 }
 
 .products_buttons :first-child {
@@ -61,7 +54,7 @@ form {
 }
 
 .products_buttons button {
-  flex-basis: 21%;
+  flex-basis: 48%;
   height: 44px;
   display: flex;
   justify-content: center;
@@ -76,7 +69,7 @@ form {
 }
 
 .products_buttons a {
-  flex-basis: 21%;
+  flex-basis: 48%;
   height: 44px;
   display: flex;
   justify-content: center;
@@ -97,7 +90,7 @@ form {
 }
 
 .form_inputs :last-child {
-  /* padding: 0; */
+  padding: 0;
   border: none;
 }
 
@@ -111,7 +104,7 @@ form {
 }
 
 .item {
-  flex-basis: 45%;
+  flex-basis: 50%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -136,23 +129,113 @@ form {
   flex-basis: 48%;
 }
 
-.image_input {
-  padding: 0 25px 0 0 !important;
+
+.products_name {
+  padding: 20px 0;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 36px;
+  border-bottom: 1px solid #b4b4b4;
 }
 
-.image_input::file-selector-button {
-  height: 100%;
-  margin-right: 20px;
-  border: none;
-  background: #b4b4b4;
-  padding: 0 20px;
-  border-radius: 10px;
+.products_wrapper__head {
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #f77532;
+}
+
+.products_wrapper__head p {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 19.5px;
+}
+
+.checkBox_wrapper {
+  padding-left: 8px;
+  flex-basis: 3%;
+}
+
+.name {
+  flex-basis: 20%;
+}
+
+.code {
+  flex-basis: 5%;
+  text-align: center;
+}
+
+.cost_price {
+  flex-basis: 15%;
+  text-align: center;
+}
+
+.unit_of_measurement {
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.sale_price {
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.color {
+  flex-basis: 12%;
+  text-align: center;
+}
+
+.frameGrowth {
+  flex-basis: 12%;
+  text-align: center;
+}
+
+.wheelsSize {
+  flex-basis: 13%;
+  text-align: center;
+}
+
+
+.sale_products {
+  margin-bottom: 100px;
+}
+
+.sale {
+  width: 100%;
+  height: 100px;
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  z-index: 999999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px -4px 8px 0px rgba(0, 0, 0, 0.1);
+}
+
+.sale_width {
+  width: 1300px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sale_width p {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.sale button {
+  width: 257px;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 700;
   color: #fff;
+  background-color: #f77532;
+  border: none;
+  border-radius: 10px;
+  outline: none;
   cursor: pointer;
-  transition: background .2s ease-in-out;
-  font-size: 14px;
-}
-
-.image_input::file-selector-button:hover {
-  background: #54a540;
 }

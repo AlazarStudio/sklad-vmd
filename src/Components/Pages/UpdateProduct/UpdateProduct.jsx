@@ -22,7 +22,7 @@ function UpdateProduct({ children, ...props }) {
 
 	const navBack = e => {
 		e.preventDefault()
-		navigate('/products')
+		navigate(-1)
 	}
 
 	useEffect(() => {
@@ -56,9 +56,18 @@ function UpdateProduct({ children, ...props }) {
 						/>
 					</div>
 					<div className={styles.item}>
-						<p>Изображения</p>
+						<label htmlFor='img'>Изображения</label>
 						<div className={styles.item2}>
-							<AddButton img='/images/green_add.png' text='Изображение' />
+							<input
+								className={styles.image_input}
+								id='img'
+								type='file'
+								accept='images/*'
+								multiple='multiple'
+								required
+								// value={product.img || ''}
+								// onChange={e => setProduct({ ...product, img: e.target.value })}
+							/>
 						</div>
 					</div>
 				</div>
@@ -83,6 +92,16 @@ function UpdateProduct({ children, ...props }) {
 							placeholder='00001'
 							value={product.code || ''}
 							onChange={e => setProduct({ ...product, code: e.target.value })}
+						/>
+						<label htmlFor='quantity'>Количество</label>
+						<input
+							type='text'
+							id='quantity'
+							// required
+							value={product.quantity || ''}
+							onChange={e =>
+								setProduct({ ...product, quantity: e.target.value })
+							}
 						/>
 						<label htmlFor='vat'>НДС</label>
 						<input
@@ -160,7 +179,9 @@ function UpdateProduct({ children, ...props }) {
 							id='frame'
 							required
 							value={product.frameMaterial || ''}
-							onChange={e => setProduct({ ...product, frameMaterial: e.target.value })}
+							onChange={e =>
+								setProduct({ ...product, frameMaterial: e.target.value })
+							}
 						/>
 						<label htmlFor='size'>Размер</label>
 						<input
@@ -216,6 +237,24 @@ function UpdateProduct({ children, ...props }) {
 								setProduct({ ...product, rearDerailleur: e.target.value })
 							}
 						/>
+						<label htmlFor='wheelsSize'>Диаметр колеса</label>
+						<input
+							type='text'
+							id='wheelsSize'
+							required
+							value={product.wheelsSize || ''}
+							onChange={e =>
+								setProduct({ ...product, wheelsSize: e.target.value })
+							}
+						/>
+						<label htmlFor='color'>Цвет</label>
+						<input
+							type='text'
+							id='color'
+							required
+							value={product.color || ''}
+							onChange={e => setProduct({ ...product, color: e.target.value })}
+						/>
 					</div>
 					<div className={styles.item}>
 						<label htmlFor='system'>Система</label>
@@ -224,9 +263,7 @@ function UpdateProduct({ children, ...props }) {
 							id='system'
 							required
 							value={product.system || ''}
-							onChange={e =>
-								setProduct({ ...product, system: e.target.value })
-							}
+							onChange={e => setProduct({ ...product, system: e.target.value })}
 						/>
 						<label htmlFor='cassette'>Кассета трещотка</label>
 						<input
@@ -270,15 +307,37 @@ function UpdateProduct({ children, ...props }) {
 							id='bushings'
 							required
 							value={product.bushings || ''}
-							onChange={e => setProduct({ ...product, bushings: e.target.value })}
+							onChange={e =>
+								setProduct({ ...product, bushings: e.target.value })
+							}
 						/>
 						<label htmlFor='rubber'>Резина</label>
 						<input
-							type='text' 
+							type='text'
 							id='rubber'
 							required
 							value={product.rubber || ''}
 							onChange={e => setProduct({ ...product, rubber: e.target.value })}
+						/>
+						<label htmlFor='frameGrowth'>Ростовка рамы</label>
+						<input
+							type='text'
+							id='frameGrowth'
+							required
+							value={product.frameGrowth || ''}
+							onChange={e =>
+								setProduct({ ...product, frameGrowth: e.target.value })
+							}
+						/>
+						<label htmlFor='gender'>Пол</label>
+						<input
+							type='text'
+							id='пол'
+							required
+							value={product.gender || ''}
+							onChange={e =>
+								setProduct({ ...product, gender: e.target.value })
+							}
 						/>
 					</div>
 				</div>

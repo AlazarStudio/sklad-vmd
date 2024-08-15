@@ -5,14 +5,14 @@
 }
 
 .operations__title {
-  flex-basis: 12%;
+  flex-basis: 10%;
   font-size: 32px;
   font-weight: 500;
 }
 
 .operations input {
   padding: 0 25px;
-  flex-basis: 40%;
+  flex-basis: 33%;
   height: 44px;
   font-size: 14px;
   border: 1px solid #b4b4b4;
@@ -21,18 +21,19 @@
 }
 
 .operation_buttons__wrapper {
-  flex-basis: 40%;
+  flex-basis: 52%;
   display: flex;
   justify-content: flex-end;
-  gap: 50px;
+  gap: 35px;
 }
 
 .operation_buttons__wrapper button {
-  flex-basis: 25%;
+  padding-inline: 16px;
+  flex-basis: auto;
 }
 
 .operation_buttons__wrapper a {
-  flex-basis: 25%;
+  flex-basis: 22%;
   height: 44px;
   display: flex;
   justify-content: center;
@@ -45,6 +46,7 @@
   outline: none;
   cursor: pointer;
 }
+
 
 
 
@@ -70,32 +72,37 @@
 
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 5%;
+  flex-basis: 4%;
 }
 
-
 .name {
-  flex-basis: 23%;
+  flex-basis: 20%;
 }
 
 .code {
-  flex-basis: 5%;
+  flex-basis: 6%;
   text-align: right;
 }
 
-.cost_price {
-  flex-basis: 15%;
+.remains {
+  flex-basis: 13%;
   text-align: center;
 }
 
-.unit_of_measurement {
-  flex-basis: 20%;
-  text-align: center;
+.cost_price {
+  flex-basis: 14%;
+}
+
+.cost_price_sum {
+  flex-basis: 18%;
 }
 
 .sale_price {
-  flex-basis: 20%;
-  text-align: center;
+  flex-basis: 14%;
+}
+
+.sale_price_sum {
+  flex-basis: 11%;
 }
 
 .products_wrapper {

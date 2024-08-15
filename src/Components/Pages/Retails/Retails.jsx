@@ -1,19 +1,24 @@
 import { Link } from 'react-router-dom'
+
 import { products } from '../../../../data'
 import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
-import styles from './Acceptance.module.css'
+import styles from './Retails.module.css'
 
-function Acceptance({ ...props }) {
+function Retails({ ...props }) {
 	return (
 		<>
 			<div className={styles.operations}>
-				<p className={styles.operations__title}>Приемки</p>
+				<p className={styles.operations__title}>Продажи</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton img='/images/qr-code.png' text='Добавить товар' />
-					<Link to='/add-acceptance'><img src="/images/green_add.png" alt="" /> Приемка</Link>
+					{/* <AddButton img='/images/qr-code.png' text='Найти товар' /> */}
+					<Link to='/add-retails'>
+						<img src='/images/qr-code.png' alt='' />
+						Продать товар
+					</Link>
+					<AddButton img='/images/green_add.png' text='Отгрузка' />
 					<AddButton img='/images/print.png' text='Печать' />
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -25,6 +30,7 @@ function Acceptance({ ...props }) {
 					</div>
 					<p className={styles.number}>№</p>
 					<p className={styles.time}>Время</p>
+					<p className={styles.name}>Наименование</p>
 					<p className={styles.to_warehouse}>На склад</p>
 					<p className={styles.contractors}>Контрагент</p>
 					<p className={styles.organization}>Организация</p>
@@ -40,4 +46,4 @@ function Acceptance({ ...props }) {
 	)
 }
 
-export default Acceptance
+export default Retails

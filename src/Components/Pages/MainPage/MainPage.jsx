@@ -2,11 +2,13 @@ import { useParams } from 'react-router-dom'
 
 import CenterBlock from '../../Standart/CenterBlock/CenterBlock'
 import WidthBlock from '../../Standart/WidthBlock/WidthBlock'
-import Acceptance from '../Acceptance/Acceptance'
+import AddAcceptance from '../AddAcceptance/AddAcceptance'
 import AddContractors from '../AddContractors/AddContractors'
 import AddGroup from '../AddGroup/AddGroup'
 import AddProduct from '../AddProduct/AddProduct'
 import AddReport from '../AddReport/AddReport'
+import AddRetail from '../AddRetail/AddRetail'
+import AddShipment from '../AddShipment/AddShipment'
 import Contractors from '../Contractors/Contractors'
 import ContractorsPage from '../ContractorsPage/ContractorsPage'
 import Contracts from '../Contracts/Contracts'
@@ -16,13 +18,13 @@ import ProductsPage from '../ProductsPage/ProductsPage'
 import Purchases from '../Purchases/Purchases'
 import Remains from '../Remains/Remains'
 import Reports from '../Reports/Reports'
+import Retails from '../Retails/Retails'
 import Sales from '../Sales/Sales'
 import Shipments from '../Shipments/Shipments'
 import Turnovers from '../Turnovers/Turnovers'
-import WriteOffs from '../WriteOffs/WriteOffs'
-import AddShipment from '../AddShipment/AddShipment'
-import AddAcceptance from '../AddAcceptance/AddAcceptance'
 import UpdateProduct from '../UpdateProduct/UpdateProduct'
+import Warehouse from '../Warehouse/Warehouse'
+import WriteOffs from '../WriteOffs/WriteOffs'
 
 function MainPage({ children, ...props }) {
 	let { id, idType } = useParams()
@@ -34,9 +36,10 @@ function MainPage({ children, ...props }) {
 		'add-product-group',
 		'contractors',
 		'add-contractors',
-		'purchases',
+		'warehouse',
 		'sales',
 		'add-shipment',
+		'add-retails',
 		'add-acceptance',
 		'reports',
 		'add-report',
@@ -50,6 +53,7 @@ function MainPage({ children, ...props }) {
 		'contracts',
 		'acceptance',
 		'shipments',
+		'retails',
 		undefined
 	]
 	return (
@@ -69,14 +73,16 @@ function MainPage({ children, ...props }) {
 					{id == 'contractors' && !idType && <ContractorsPage />}
 					{id == 'contractors' && idType == 'contracts' && <Contracts />}
 					{id == 'add-contractors' && <AddContractors />}
-					{id == 'purchases' && <Purchases />}
-					{id == 'purchases' && !idType && <Acceptance />}
-					{id == 'purchases' && idType == 'acceptance' && <Acceptance />}
+					{id == 'warehouse' && <Warehouse />}
+					{/* {id == 'warehouse' && !idType && <Acceptance />} */}
+					{/* {id == 'warehouse' && idType == 'acceptance' && <Acceptance />} */}
 					{id == 'add-acceptance' && <AddAcceptance />}
 					{id == 'sales' && <Sales />}
 					{id == 'sales' && !idType && <Shipments />}
 					{id == 'sales' && idType == 'shipments' && <Shipments />}
+					{id == 'sales' && idType == 'retails' && <Retails />}
 					{id == 'add-shipment' && <AddShipment />}
+					{id == 'add-retails' && <AddRetail />}
 					{id == 'reports' && <Reports />}
 					{id == 'add-report' && <AddReport />}
 					{!ids.includes(id) && <NotFoundPage />}

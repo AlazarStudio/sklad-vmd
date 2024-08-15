@@ -32,7 +32,7 @@ function WriteOffs({ children, ...props }) {
 				<div>
 					{products.map((product, index) =>
 						product.writtenOff === true ? (
-							<Product key={index} {...product} />
+							<Product key={index} linkName={null} {...product} />
 						) : null
 					)}
 				</div>

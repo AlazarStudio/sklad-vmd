@@ -1,14 +1,28 @@
+import { useNavigate } from 'react-router-dom'
+
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './RemainsProduct.module.css'
 
-function RemainsProduct({ ...props }) {
+function RemainsProduct({ onSelect, operation, linkName, ...props }) {
+	const navigate = useNavigate()
+
+	const goToProductDetail = () => {
+		navigate(`/product/${linkName}`)
+	}
+
+	const handleCheckBoxChange = event => {
+		onSelect(props, event.target.checked)
+	}
 	return (
-		<div className={styles.product_wrapper}>
+		<div
+			className={styles.product_wrapper}
+			onClick={operation ? goToProductDetail : null}
+		>
 			<div className={styles.checkBox_wrapper}>
-				<CheckBox />
+				<CheckBox onChange={handleCheckBoxChange} />
 			</div>
-			<p className={styles.name}> {props.name} </p>
+			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
 			<p className={styles.remains}>{props.remains}</p>
 			<p className={styles.cost_price}>

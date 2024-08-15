@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Contractors from './Components/Pages/Contractors/Contractors'
 import MainPage from './Components/Pages/MainPage/MainPage'
 import NotFoundPage from './Components/Pages/NotFoundPage/NotFoundPage'
+import ProductDetailPage from './Components/Pages/ProductDetailPage/ProductDetailPage'
 import Products from './Components/Pages/Products/Products'
 import Purchases from './Components/Pages/Purchases/Purchases'
 import Sales from './Components/Pages/Sales/Sales'
@@ -17,6 +18,7 @@ function App() {
 					<Route index element={<MainPage />} />
 					<Route path='/:id' element={<MainPage />} />
 					<Route path='/:id/:idType' element={<MainPage />} />
+					<Route path='/product/:linkName' element={<ProductDetailPage />} />
 
 					{/* <Route path='/purchases' element={<Purchases />} />
 					<Route path='/sales' element={<Sales />} />

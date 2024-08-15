@@ -10,6 +10,7 @@ function AcceptanceProduct({ ...props }) {
 			</div>
 			<p className={styles.number}>0001</p>
 			<p className={styles.time}>09.07.2024  12:00</p>
+			<p className={styles.name}>{props.name}</p>
 			<p className={styles.to_warehouse}>Основной склад</p>
 			<p className={styles.contractors}>Контрагент</p>
 			<p className={styles.organization}>Вело Мото & Drive</p>

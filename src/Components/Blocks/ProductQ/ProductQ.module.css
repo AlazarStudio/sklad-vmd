@@ -3,8 +3,6 @@
   display: flex;
   align-items: center;
   border-bottom: 1px solid #b4b4b4;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
 }
 
 .name_operation {
@@ -20,7 +18,7 @@
   cursor: pointer;
 }
 
-.product_wrapper:hover {
+.name_operation:hover {
   /* transform: scale(1.25); */
   background-color: #ececec;
 }

@@ -1,6 +1,7 @@
 .product_wrapper {
   padding: 20px 0;
   display: flex;
+  /* justify-content: center; */
   align-items: center;
   border-bottom: 1px solid #b4b4b4;
   transition: all 0.3s ease-in-out;
@@ -17,7 +18,6 @@
   /* transition: transform 0.3s ease; */
   /* transform-origin: left center; */
   transition: transform 0.3s ease, background-color 0.3s ease;
-  cursor: pointer;
 }
 
 .product_wrapper:hover {
@@ -30,18 +30,19 @@
   line-height: 19.5px;
 }
 
+
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 5%;
+  flex-basis: 3%;
 }
 
 .name {
-  flex-basis: 23%;
+  flex-basis: 20%;
 }
 
 .code {
   flex-basis: 5%;
-  text-align: right;
+  text-align: center;
 }
 
 .cost_price {
@@ -50,11 +51,26 @@
 }
 
 .unit_of_measurement {
-  flex-basis: 20%;
+  flex-basis: 10%;
   text-align: center;
 }
 
 .sale_price {
-  flex-basis: 20%;
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.color {
+  flex-basis: 12%;
+  text-align: center;
+}
+
+.frameGrowth {
+  flex-basis: 12%;
+  text-align: center;
+}
+
+.wheelsSize {
+  flex-basis: 12%;
   text-align: center;
 }

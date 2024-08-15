@@ -17,16 +17,27 @@ function AddProduct({ children, ...props }) {
 
 	const navBack = e => {
 		e.preventDefault()
-		navigate('/products')
+		// navigate('/products')
+		navigate(-1)
 	}
 
 	return (
 		<>
-			<Scanner />
+			{/* <Scanner /> */}
 			<form onSubmit={handleSubmit} className={styles.form_product}>
 				<div className={styles.products_header__wrapper}>
 					<div className={styles.products_buttons}>
 						<button>Сохранить</button>
+						<button
+							style={{
+								backgroundColor: '#f77532',
+								color: '#fff',
+								fontWeight: '700',
+								border: 'none'
+							}}
+						>
+							Опубликовать
+						</button>
 						<button type='button' onClick={navBack}>
 							Закрыть
 						</button>
@@ -43,7 +54,12 @@ function AddProduct({ children, ...props }) {
 						<div className={styles.item}>
 							<p>Изображения</p>
 							<div className={styles.item2}>
-								<AddButton img='/images/green_add.png' text='Изображение' />
+								<input
+									className={styles.image_input}
+									type='file'
+									accept='images/*'
+									multiple='multiple'
+								/>
 							</div>
 						</div>
 					</div>
@@ -59,6 +75,8 @@ function AddProduct({ children, ...props }) {
 							></textarea>
 							<label htmlFor=''>Код</label>
 							<input type='text' name='' id='' required placeholder='00001' />
+							<label htmlFor=''>Количество</label>
+							<input type='text' required />
 							<label htmlFor=''>НДС</label>
 							<input type='text' required />
 						</div>
@@ -102,6 +120,10 @@ function AddProduct({ children, ...props }) {
 							<input type='text' required />
 							<label htmlFor=''>Задний переключатель</label>
 							<input type='text' required />
+							<label htmlFor=''>Диаметр колеса</label>
+							<input type='text' required />
+							<label htmlFor=''>Цвет</label>
+							<input type='text' required />
 						</div>
 
 						<div className={styles.item}>
@@ -118,6 +140,10 @@ function AddProduct({ children, ...props }) {
 							<label htmlFor=''>Втулки</label>
 							<input type='text' required />
 							<label htmlFor=''>Резина</label>
+							<input type='text' required />
+							<label htmlFor=''>Ростовка рамы</label>
+							<input type='text' required />
+							<label htmlFor=''>Пол</label>
 							<input type='text' required />
 						</div>
 					</div>
