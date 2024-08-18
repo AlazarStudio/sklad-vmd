@@ -22,16 +22,16 @@ function ProductCard({ linkName, operation, onSelect, ...props }) {
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
-			<p className={styles.unit_of_measurement}>{props.quantity}</p>
+			<p className={styles.unit_of_measurement}>{props.itemCount}</p>
 			<p className={styles.cost_price}>
-				{props.costPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.sale_price}>
-				{props.originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.color}>{props.color}</p>
-			<p className={styles.frameGrowth}>{props.frameGrowth}"</p>
-			<p className={styles.wheelsSize}>{props.wheelsSize}</p>
+			<p className={styles.frameGrowth}>{props.frameGrouve}"</p>
+			<p className={styles.wheelsSize}>{props.wheelSize}</p>
 		</div>
 	)
 }

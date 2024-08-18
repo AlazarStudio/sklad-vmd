@@ -9,6 +9,7 @@ import Products from './Components/Pages/Products/Products'
 import Purchases from './Components/Pages/Purchases/Purchases'
 import Sales from './Components/Pages/Sales/Sales'
 import Layout from './Components/Standart/Layout/Layout'
+import UpdateProduct from './Components/Pages/UpdateProduct/UpdateProduct'
 
 function App() {
 	return (
@@ -19,6 +20,8 @@ function App() {
 					<Route path='/:id' element={<MainPage />} />
 					<Route path='/:id/:idType' element={<MainPage />} />
 					<Route path='/product/:linkName' element={<ProductDetailPage />} />
+
+					<Route path='/update-product/:id' element={<UpdateProduct />} />
 
 					{/* <Route path='/purchases' element={<Purchases />} />
 					<Route path='/sales' element={<Sales />} />

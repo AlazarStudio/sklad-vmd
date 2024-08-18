@@ -14,10 +14,10 @@ function Shipments({ ...props }) {
 				<p className={styles.operations__title}>Продажи</p>
 				<div className={styles.operation_buttons__wrapper}>
 					{/* <AddButton img='/images/qr-code.png' text='Найти товар' /> */}
-					<Link to='/add-shipment'>
+					{/* <Link to='/add-shipment'>
 						<img src='/images/qr-code.png' alt='' />
 						Продать товар
-					</Link>
+					</Link> */}
 					<Link to='/add-shipment'>
 						<img src='/images/green_add.png' alt='' />
 						Продать товар

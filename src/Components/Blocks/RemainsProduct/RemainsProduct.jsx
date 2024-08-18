@@ -31,20 +31,20 @@ function RemainsProduct({
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
-			<p className={styles.remains}>{props.remains}</p>
+			<p className={styles.remains}>{props.itemCount}</p>
 			<p className={styles.cost_price}>
-				{props.costPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.cost_price_sum}>
-				{(parseInt(props.costPrice) * parseInt(props.remains))
+				{(parseInt(props.price) * parseInt(props.itemCount))
 					.toString()
 					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.sale_price}>
-				{props.currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.sale_price_sum}>
-				{(parseInt(props.currentPrice) * parseInt(props.remains))
+				{(parseInt(props.priceForSale) * parseInt(props.itemCount))
 					.toString()
 					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>

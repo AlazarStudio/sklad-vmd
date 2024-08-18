@@ -1,5 +1,8 @@
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import serverConfig from '../../../serverConfig'
 import Scanner from '../../Blocks/Scanner/Scanner'
 import AddButton from '../../UI/AddButton/AddButton'
 
@@ -11,8 +14,113 @@ function AddProduct({ children, ...props }) {
 	const navigate = useNavigate()
 	// console.log(id)
 
-	const handleSubmit = e => {
+	const [formData, setFormData] = useState({
+		name: '',
+		images: [], // Для примера пустой массив, требуется реализация для добавления изображений
+		description: '',
+		gender: '',
+		color: '',
+		groupId: '', // ID группы, которую нужно получить динамически
+		type: '',
+		price: '',
+		priceForSale: '',
+		ageGroup: '',
+		code: '',
+		barcode: '',
+		nds: '',
+		frame: '',
+		system: '',
+		size: '',
+		ratchet: '',
+		weight: '',
+		wheelSize: '12',
+		frameGrouve: '13',
+		amortization: '',
+		speed: '',
+		fork: '',
+		carriage: '',
+		flywheels: '',
+		breaks: '',
+		frontDerailleur: '',
+		backDerailleur: '',
+		bushings: '',
+		rubber: '',
+		itemCount: 0 // Например, можно установить значение по умолчанию
+	})
+
+	const [selectedFile, setSelectedFile] = useState(null)
+	const [groups, setGroups] = useState([])
+
+	useEffect(() => {
+		const fetchGroups = async () => {
+			try {
+				const response = await axios.get(`${serverConfig}/groups`)
+				console.log(response)
+				setGroups(response.data)
+			} catch (error) {
+				console.error('Error fetching groups:', error)
+			}
+		}
+		fetchGroups()
+	}, [])
+
+	const handleChange = e => {
+		const { name, value } = e.target
+		setFormData({
+			...formData,
+			[name]: value
+		})
+	}
+
+	const handleFileChange = e => {
+		setSelectedFile(e.target.files[0])
+	}
+
+	const handleSubmit = async e => {
 		e.preventDefault()
+
+		let uploadedFilePath = ''
+		if (selectedFile) {
+			const formData = new FormData()
+			formData.append('image', selectedFile)
+
+			try {
+				const uploadResponse = await axios.post(
+					`${serverConfig}/upload`,
+					formData,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						}
+					}
+				)
+				uploadedFilePath = uploadResponse.data.filePath
+			} catch (error) {
+				console.error('Error uploading file:', error)
+				return
+			}
+		}
+
+		const preparedData = {
+			...formData,
+			images: [uploadedFilePath],
+			groupId: parseInt(formData.groupId),
+			price: parseInt(formData.price),
+			priceForSale: parseInt(formData.priceForSale),
+			code: parseInt(formData.code),
+			nds: parseInt(formData.nds),
+			itemCount: parseInt(formData.itemCount)
+		}
+
+		console.log('Submitting form data:', preparedData)
+
+		try {
+			const response = await axios.post(`${serverConfig}/items`, preparedData)
+			console.log('Response from server:', response.data)
+			navigate('/warehouse') // Перенаправление после успешного создания товара
+		} catch (error) {
+			console.error('Error creating item:', error)
+		}
 	}
 
 	const navBack = e => {
@@ -46,10 +154,16 @@ function AddProduct({ children, ...props }) {
 				<div className={styles.form_inputs}>
 					<div className={styles.form_item}>
 						<div className={styles.item}>
-							<label htmlFor='' style={{ fontWeight: '500' }}>
+							<label htmlFor='name' style={{ fontWeight: '500' }}>
 								Наименование товара
 							</label>
-							<input type='text' required />
+							<input
+								type='text'
+								name='name'
+								value={formData.name}
+								onChange={handleChange}
+								required
+							/>
 						</div>
 						<div className={styles.item}>
 							<p>Изображения</p>
@@ -59,6 +173,7 @@ function AddProduct({ children, ...props }) {
 									type='file'
 									accept='images/*'
 									multiple='multiple'
+									onChange={handleFileChange}
 								/>
 							</div>
 						</div>
@@ -66,38 +181,84 @@ function AddProduct({ children, ...props }) {
 					<div className={styles.form_item}>
 						<p style={{ flexBasis: '100%' }}>Общие данные</p>
 						<div className={styles.item}>
-							<label htmlFor=''>Описание</label>
+							<label htmlFor='description'>Описание</label>
 							<textarea
-								name=''
-								id=''
+								name='description'
+								value={formData.description}
+								onChange={handleChange}
 								required
 								style={{ resize: 'none' }}
 							></textarea>
-							<label htmlFor=''>Код</label>
-							<input type='text' name='' id='' required placeholder='00001' />
-							<label htmlFor=''>Количество</label>
-							<input type='text' required />
-							<label htmlFor=''>НДС</label>
-							<input type='text' required />
+							<label htmlFor='code'>Код</label>
+							<input
+								type='text'
+								name='code'
+								value={formData.code}
+								onChange={handleChange}
+								required
+								placeholder='00001'
+							/>
+							<label htmlFor='itemCount'>Количество</label>
+							<input
+								type='number'
+								name='itemCount'
+								value={formData.itemCount}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='nds'>НДС</label>
+							<input
+								type='number'
+								name='nds'
+								value={formData.nds}
+								onChange={handleChange}
+								required
+							/>
 						</div>
 						<div className={styles.item}>
-							<label htmlFor=''>Группа</label>
-							<select name='group' id='' required>
-								<option value='' defaultValue hidden></option>
-								<option value=''>Велосипеды</option>
-								<option value=''>Мопеды</option>
-								<option value=''>Самокаты</option>
-								<option value=''>Квадроциклы</option>
-								<option value=''>Мотоциклы</option>
+							<label htmlFor='groupId'>Группа</label>
+							<select
+								name='groupId'
+								value={formData.groupId}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите группу
+								</option>
+								{groups.map(group => (
+									<option key={group.id} value={group.id}>
+										{group.name}
+									</option>
+								)).reverse()}
 							</select>
-							<label htmlFor=''>Себестоимость</label>
-							<input type='text' required />
-							<label htmlFor=''>Цена продажи</label>
-							<input type='text' required />
-							<label htmlFor=''>Штрихкоды товара</label>
-							<div className={styles.item_half}>
-								<input type='text' placeholder='EAN13' required />
-								<input type='text' placeholder='2000000000022' required />
+							<label htmlFor='price'>Себестоимость</label>
+							<input
+								type='text'
+								name='price'
+								value={formData.price}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='priceForSale'>Цена продажи</label>
+							<input
+								type='text'
+								name='priceForSale'
+								value={formData.priceForSale}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='barcode'>Штрихкоды товара</label>
+							<div className={styles.item}>
+								<input
+									type='text'
+									name='barcode'
+									value={formData.barcode}
+									onChange={handleChange}
+									placeholder='EAN13'
+									required
+								/>
+								{/* <input type='text' placeholder='2000000000022' required /> */}
 							</div>
 						</div>
 					</div>
@@ -106,45 +267,261 @@ function AddProduct({ children, ...props }) {
 						<p style={{ flexBasis: '100%' }}>Данные велосипеда</p>
 
 						<div className={styles.item}>
-							<label htmlFor=''>Рама</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Размер</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Вес</label>
-							<input type='text' required />
-							<label htmlFor=''>Вилка</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Манетки</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Передний переключатель</label>
-							<input type='text' required />
-							<label htmlFor=''>Задний переключатель</label>
-							<input type='text' required />
-							<label htmlFor=''>Диаметр колеса</label>
-							<input type='text' required />
-							<label htmlFor=''>Цвет</label>
-							<input type='text' required />
+							<label htmlFor='frame'>Рама (Материал)</label>
+							<input
+								type='text'
+								name='frame'
+								value={formData.frame}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='size'>Размер</label>
+							<input
+								type='text'
+								name='size'
+								value={formData.size}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='weight'>Вес</label>
+							<input
+								type='text'
+								name='weight'
+								value={formData.weight}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='fork'>Вилка</label>
+							<input
+								type='text'
+								name='fork'
+								value={formData.fork}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='flywheels'>Манетки</label>
+							<input
+								type='text'
+								name='flywheels'
+								value={formData.flywheels}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='frontDerailleur'>Передний переключатель</label>
+							<input
+								type='text'
+								name='frontDerailleur'
+								value={formData.frontDerailleur}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='backDerailleur'>Задний переключатель</label>
+							<input
+								type='text'
+								name='backDerailleur'
+								value={formData.backDerailleur}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='wheelSize'>Диаметр колеса</label>
+							<input
+								type='number'
+								name='wheelSize'
+								min={12}
+								max={29}
+								value={formData.wheelSize}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='color'>Цвет</label>
+							<select
+								name='color'
+								value={formData.color}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите цвет
+								</option>
+								<option value='черный'>черный</option>
+								<option value='графитовый'>графитовый</option>
+								<option value='синий'>синий</option>
+								<option value='белый'>белый</option>
+								<option value='желтый'>желтый</option>
+								<option value='оранжевый'>оранжевый</option>
+								<option value='красный'>красный</option>
+								<option value='зеленый'>зеленый</option>
+								<option value='голубой'>голубой</option>
+								<option value='серый'>серый</option>
+								<option value='фиолетовый'>фиолетовый</option>
+								<option value='розовый'>розовый</option>
+							</select>
+							{/* <input
+								type='text'
+								name='color'
+								value={formData.color}
+								onChange={handleChange}
+								required
+							/> */}
+							<label htmlFor='ageGroup'>Возрастная группа</label>
+							<select
+								name='ageGroup'
+								value={formData.ageGroup}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите группу
+								</option>
+								<option value='Для взрослых'>Для взрослых</option>
+								<option value='От 2 до 5 лет'>От 2 до 5 лет</option>
+								<option value='От 3 до 6 лет'>От 3 до 6 лет</option>
+								<option value='От 5 до 8 лет'>От 5 до 8 лет</option>
+								<option value='Подростковый'>Подростковый</option>
+							</select>
+
+							<label htmlFor='amortization'>Амортизация</label>
+							<select
+								name='amortization'
+								value={formData.amortization}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите амортизацию
+								</option>
+								<option value='Двухподвес'>Двухподвес</option>
+								<option value='Жесткая вилка'>Жесткая вилка</option>
+								<option value='Хардтейл'>Хардтейл</option>
+							</select>
 						</div>
 
 						<div className={styles.item}>
-							<label htmlFor=''>Система</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Кассета трещотка</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Скорость</label>
-							<input type='text' required />
-							<label htmlFor=''>Каретка</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Тормоза</label>
-							<input type='text' name='' id='' required />
-							<label htmlFor=''>Втулки</label>
-							<input type='text' required />
-							<label htmlFor=''>Резина</label>
-							<input type='text' required />
-							<label htmlFor=''>Ростовка рамы</label>
-							<input type='text' required />
-							<label htmlFor=''>Пол</label>
-							<input type='text' required />
+							<label htmlFor='system'>Система</label>
+							<input
+								type='text'
+								name='system'
+								value={formData.system}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='ratchet'>Кассета трещотка</label>
+							<input
+								type='text'
+								name='ratchet'
+								value={formData.ratchet}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='speed'>Скорость</label>
+							<input
+								type='number'
+								name='speed'
+								min={1}
+								max={27}
+								value={formData.speed}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='carriage'>Каретка</label>
+							<input
+								type='text'
+								name='carriage'
+								value={formData.carriage}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='breaks'>Тормоза</label>
+							<select
+								name='breaks'
+								value={formData.breaks}
+								onChange={handleChange}
+							>
+								<option value='' disabled hidden defaultValue>
+									Выберите тормоза
+								</option>
+								<option value='U-brake'>U-brake</option>
+								<option value='V-brake'>V-brake</option>
+								<option value='Дисковые гидравлические'>
+									Дисковые гидравлические
+								</option>
+								<option value='Дисковые механические'>
+									Дисковые механические
+								</option>
+								<option value='Клещевой'>Клещевой</option>
+								<option value='Ножной тормоз'>Ножной тормоз</option>
+								<option value='Передний V-brake'>Передний V-brake</option>
+								<option value='Передний клещевой'>Передний клещевой</option>
+							</select>
+							{/* <input
+								type='text'
+								name='breaks'
+								value={formData.breaks}
+								onChange={handleChange}
+								required
+							/> */}
+							<label htmlFor='bushings'>Втулки</label>
+							<input
+								type='text'
+								name='bushings'
+								value={formData.bushings}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='rubber'>Резина</label>
+							<input
+								type='text'
+								name='rubber'
+								value={formData.rubber}
+								onChange={handleChange}
+								required
+							/>
+							<label htmlFor='frameGrouve'>Ростовка рамы</label>
+							<input
+								type='number'
+								name='frameGrouve'
+								min={13}
+								max={23}
+								value={formData.frameGrouve}
+								required
+								onChange={handleChange}
+							/>
+							<label htmlFor='gender'>Пол</label>
+							<select
+								name='gender'
+								value={formData.gender}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите пол
+								</option>
+								<option value='Мужской'>Мужской</option>
+								<option value='Женский'>Женский</option>
+							</select>
+							{/* <input
+								type='text'
+								name='gender'
+								value={formData.gender}
+								required
+								onChange={handleChange}
+							/> */}
+							<label htmlFor='type'>Тип</label>
+							<select
+								name='type'
+								value={formData.type}
+								onChange={handleChange}
+								required
+							>
+								<option value='' defaultValue hidden>
+									Выберите тип
+								</option>
+								<option value='Горный'>Горный</option>
+								<option value='Городской'>Городской</option>
+								<option value='Складной'>Складной</option>
+								<option value='Шоссейный'>Шоссейный</option>
+								<option value='Подростковый'>Подростковый</option>
+							</select>
 						</div>
 					</div>
 				</div>

@@ -5,9 +5,10 @@
 }
 
 .products_buttons {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 69px;
 }
 

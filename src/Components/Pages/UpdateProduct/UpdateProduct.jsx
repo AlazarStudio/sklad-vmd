@@ -1,6 +1,10 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import serverConfig from '../../../serverConfig'
+import CenterBlock from '../../Standart/CenterBlock/CenterBlock'
+import WidthBlock from '../../Standart/WidthBlock/WidthBlock'
 import AddButton from '../../UI/AddButton/AddButton'
 
 import styles from './UpdateProduct.module.css'
@@ -10,339 +14,516 @@ function UpdateProduct({ children, ...props }) {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [product, setProduct] = useState(location.state?.product || {})
+	const [selectedFile, setSelectedFile] = useState(null)
+	const [groups, setGroups] = useState([])
 
-	const handleSubmit = e => {
+	useEffect(() => {
+		if (!location.state?.product) {
+			const fetchProduct = async () => {
+				try {
+					const response = await axios.get(`${serverConfig}/items/${id}`)
+					setProduct(response.data)
+				} catch (error) {
+					console.error('Error fetching product:', error)
+				}
+			}
+			fetchProduct()
+		}
+
+		const fetchGroups = async () => {
+			try {
+				const response = await axios.get(`${serverConfig}/groups`)
+				console.log(response)
+				setGroups(response.data)
+			} catch (error) {
+				console.error('Error fetching groups:', error)
+			}
+		}
+		fetchGroups()
+	}, [id, location.state])
+
+	const handleChange = e => {
+		const { name, value } = e.target
+		setProduct({
+			...product,
+			[name]: value
+		})
+	}
+
+	const handleFileChange = e => {
+		setSelectedFile(e.target.files[0])
+	}
+
+	const handleSubmit = async e => {
 		e.preventDefault()
-		// Сохранить изменения продукта
-		// Здесь можно добавить логику для обработки отправки данных,
-		// например, сохранить данные в локальном хранилище или в каком-то другом месте
-		console.log('Product updated:', product)
-		alert('Changes saved successfully!')
+
+		let uploadedFilePath = product.images[0] || ''
+		if (selectedFile) {
+			const formData = new FormData()
+			formData.append('image', selectedFile)
+
+			try {
+				const uploadResponse = await axios.post(
+					`${serverConfig}/upload`,
+					formData,
+					{
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						}
+					}
+				)
+				uploadedFilePath = uploadResponse.data.filePath
+			} catch (error) {
+				console.error('Error uploading file:', error)
+				return
+			}
+		}
+
+		const updatedData = {
+			...product,
+			images: [uploadedFilePath],
+			groupId: parseInt(product.groupId),
+			price: parseInt(product.price),
+			priceForSale: parseInt(product.priceForSale),
+			code: parseInt(product.code),
+			nds: parseInt(product.nds),
+			itemCount: parseInt(product.itemCount)
+		}
+
+		try {
+			const response = await axios.put(
+				`${serverConfig}/items/${id}`,
+				updatedData
+			)
+			console.log('Response from server:', response.data)
+			navigate('/products') // Перенаправление после успешного обновления товара
+		} catch (error) {
+			console.error('Error updating item:', error)
+		}
 	}
 
 	const navBack = e => {
 		e.preventDefault()
+		// navigate('/products')
 		navigate(-1)
 	}
 
-	useEffect(() => {
-		if (location.state?.product) {
-			setProduct(location.state.product)
-		}
-	}, [location.state])
+	// useEffect(() => {
+	// 	if (location.state?.product) {
+	// 		setProduct(location.state.product)
+	// 	}
+	// }, [location.state])
 
 	return (
-		<form onSubmit={handleSubmit} className={styles.form_product}>
-			<div className={styles.products_header__wrapper}>
-				<div className={styles.products_buttons}>
-					<button type='submit'>Изменить</button>
-					<button type='button' onClick={navBack}>
-						Закрыть
-					</button>
-				</div>
-			</div>
-			<div className={styles.form_inputs}>
-				<div className={styles.form_item}>
-					<div className={styles.item}>
-						<label htmlFor='name' style={{ fontWeight: '500' }}>
-							Наименование товара
-						</label>
-						<input
-							type='text'
-							id='name'
-							required
-							value={product.name || ''}
-							onChange={e => setProduct({ ...product, name: e.target.value })}
-						/>
-					</div>
-					<div className={styles.item}>
-						<label htmlFor='img'>Изображения</label>
-						<div className={styles.item2}>
-							<input
-								className={styles.image_input}
-								id='img'
-								type='file'
-								accept='images/*'
-								multiple='multiple'
-								required
-								// value={product.img || ''}
-								// onChange={e => setProduct({ ...product, img: e.target.value })}
-							/>
+		<main>
+			<CenterBlock>
+				<WidthBlock>
+					<form onSubmit={handleSubmit} className={styles.form_product}>
+						<div className={styles.products_header__wrapper}>
+							<div className={styles.products_buttons}>
+								<button type='submit'>Изменить</button>
+								<button type='button' onClick={navBack}>
+									Закрыть
+								</button>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div className={styles.form_item}>
-					<p style={{ flexBasis: '100%' }}>Общие данные</p>
-					<div className={styles.item}>
-						<label htmlFor='description'>Описание</label>
-						<textarea
-							id='description'
-							required
-							style={{ resize: 'none' }}
-							value={product.description || ''}
-							onChange={e =>
-								setProduct({ ...product, description: e.target.value })
-							}
-						></textarea>
-						<label htmlFor='code'>Код</label>
-						<input
-							type='text'
-							id='code'
-							required
-							placeholder='00001'
-							value={product.code || ''}
-							onChange={e => setProduct({ ...product, code: e.target.value })}
-						/>
-						<label htmlFor='quantity'>Количество</label>
-						<input
-							type='text'
-							id='quantity'
-							// required
-							value={product.quantity || ''}
-							onChange={e =>
-								setProduct({ ...product, quantity: e.target.value })
-							}
-						/>
-						<label htmlFor='vat'>НДС</label>
-						<input
-							type='text'
-							id='vat'
-							// required
-							value={product.vat || ''}
-							onChange={e => setProduct({ ...product, vat: e.target.value })}
-						/>
-					</div>
-					<div className={styles.item}>
-						<label htmlFor='group'>Группа</label>
-						<select
-							id='type'
-							required
-							value={product.type || ''}
-							onChange={e => setProduct({ ...product, type: e.target.value })}
-						>
-							<option value='' defaultValue hidden></option>
-							<option value='Велосипеды'>Велосипеды</option>
-							<option value='Мопеды'>Мопеды</option>
-							<option value='Самокаты'>Самокаты</option>
-							<option value='Квадроциклы'>Квадроциклы</option>
-							<option value='Мотоциклы'>Мотоциклы</option>
-						</select>
-						<label htmlFor='costPrice'>Себестоимость</label>
-						<input
-							type='text'
-							id='costPrice'
-							required
-							value={product.costPrice + ' ₽' || ''}
-							onChange={e =>
-								setProduct({ ...product, costPrice: e.target.value })
-							}
-						/>
-						<label htmlFor='salePrice'>Цена продажи</label>
-						<input
-							type='text'
-							id='salePrice'
-							required
-							value={product.currentPrice + ' ₽' || ''}
-							onChange={e =>
-								setProduct({ ...product, currentPrice: e.target.value })
-							}
-						/>
-						<label htmlFor='barcodes'>Штрихкоды товара</label>
-						<div className={styles.item_half}>
-							<input
-								type='text'
-								placeholder='EAN13'
-								// required
-								value={product.ean13 || ''}
-								onChange={e =>
-									setProduct({ ...product, ean13: e.target.value })
-								}
-							/>
-							<input
-								type='text'
-								placeholder='2000000000022'
-								// required
-								value={product.barcode || ''}
-								onChange={e =>
-									setProduct({ ...product, barcode: e.target.value })
-								}
-							/>
+						<div className={styles.form_inputs}>
+							<div className={styles.form_item}>
+								<div className={styles.item}>
+									<label htmlFor='name' style={{ fontWeight: '500' }}>
+										Наименование товара
+									</label>
+									<input
+										type='text'
+										id='name'
+										name='name'
+										required
+										value={product.name || ''}
+										onChange={handleChange}
+									/>
+								</div>
+								<div className={styles.item}>
+									<label htmlFor='img'>Изображения</label>
+									<div className={styles.item2}>
+										<input
+											className={styles.image_input}
+											id='img'
+											type='file'
+											accept='images/*'
+											multiple='multiple'
+											// required
+											onChange={handleFileChange}
+											// value={product.img || ''}
+											// onChange={e => setProduct({ ...product, img: e.target.value })}
+										/>
+									</div>
+								</div>
+							</div>
+							<div className={styles.form_item}>
+								<p style={{ flexBasis: '100%' }}>Общие данные</p>
+								<div className={styles.item}>
+									<label htmlFor='description'>Описание</label>
+									<textarea
+										id='description'
+										name='description'
+										required
+										style={{ resize: 'none' }}
+										value={product.description || ''}
+										onChange={handleChange}
+									></textarea>
+									<label htmlFor='code'>Код</label>
+									<input
+										type='text'
+										id='code'
+										name='code'
+										required
+										placeholder='00001'
+										value={product.code || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='itemCount'>Количество</label>
+									<input
+										type='number'
+										id='itemCount'
+										name='itemCount'
+										required
+										value={product.itemCount || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='nds'>НДС</label>
+									<input
+										type='number'
+										id='nds'
+										name='nds'
+										required
+										value={product.nds || ''}
+										onChange={handleChange}
+									/>
+								</div>
+								<div className={styles.item}>
+									<label htmlFor='groupId'>Группа</label>
+									<select
+										id='groupId'
+										name='groupId'
+										required
+										value={product.groupId || ''}
+										onChange={handleChange}
+									>
+										<option value='' defaultValue hidden>
+											Выберите группу
+										</option>
+										{groups.map(group => (
+											<option key={group.id} value={group.id}>
+												{group.name}
+											</option>
+										)).reverse()}
+									</select>
+									<label htmlFor='price'>Себестоимость</label>
+									<input
+										type='text'
+										id='price'
+										name='price'
+										required
+										value={product.price || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='priceForSale'>Цена продажи</label>
+									<input
+										type='text'
+										id='priceForSale'
+										name='priceForSale'
+										required
+										value={product.priceForSale || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='barcode'>Штрихкоды товара</label>
+									<div className={styles.item}>
+										<input
+											type='text'
+											placeholder='EAN13'
+											id='barcode'
+											name='barcode'
+											required
+											value={product.barcode || ''}
+											onChange={handleChange}
+										/>
+										{/* <input
+											type='text'
+											placeholder='2000000000022'
+											// required
+											value={product.barcode || ''}
+											onChange={e =>
+												setProduct({ ...product, barcode: e.target.value })
+											}
+										/> */}
+									</div>
+								</div>
+							</div>
+							<div className={styles.form_item}>
+								<p style={{ flexBasis: '100%' }}>Данные велосипеда</p>
+								<div className={styles.item}>
+									<label htmlFor='frame'>Рама (Материал)</label>
+									<input
+										type='text'
+										id='frame'
+										name='frame'
+										required
+										value={product.frame || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='size'>Размер</label>
+									<input
+										type='text'
+										id='size'
+										name='size'
+										required
+										value={product.size || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='weight'>Вес</label>
+									<input
+										type='text'
+										id='weight'
+										name='weight'
+										required
+										value={product.weight || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='fork'>Вилка</label>
+									<input
+										type='text'
+										id='fork'
+										name='fork'
+										required
+										value={product.fork || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='flywheels'>Манетки</label>
+									<input
+										type='text'
+										id='flywheels'
+										name='flywheels'
+										required
+										value={product.flywheels || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='frontDerailleur'>
+										Передний переключатель
+									</label>
+									<input
+										type='text'
+										id='frontDerailleur'
+										name='frontDerailleur'
+										required
+										value={product.frontDerailleur || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='backDerailleur'>Задний переключатель</label>
+									<input
+										type='text'
+										id='backDerailleur'
+										name='backDerailleur'
+										required
+										value={product.backDerailleur || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='wheelSize'>Диаметр колеса</label>
+									<input
+										type='number'
+										id='wheelSize'
+										name='wheelSize'
+										min={12}
+										max={29}
+										value={product.wheelSize || ''}
+										onChange={handleChange}
+										required
+									/>
+									<label htmlFor='color'>Цвет</label>
+									<select
+										type='text'
+										id='color'
+										value={product.color || ''}
+										onChange={e =>
+											setProduct({ ...product, color: e.target.value })
+										}
+										required
+									>
+										<option value='' defaultValue hidden>
+											Выберите цвет
+										</option>
+										<option value='черный'>черный</option>
+										<option value='графитовый'>графитовый</option>
+										<option value='синий'>синий</option>
+										<option value='белый'>белый</option>
+										<option value='желтый'>желтый</option>
+										<option value='оранжевый'>оранжевый</option>
+										<option value='красный'>красный</option>
+										<option value='зеленый'>зеленый</option>
+										<option value='голубой'>голубой</option>
+										<option value='серый'>серый</option>
+										<option value='фиолетовый'>фиолетовый</option>
+										<option value='розовый'>розовый</option>
+									</select>
+
+									<label htmlFor='ageGroup'>Возрастная группа</label>
+									<select
+										name='ageGroup'
+										value={product.ageGroup || ''}
+										onChange={handleChange}
+										required
+									>
+										<option value='' defaultValue hidden>
+											Выберите группу
+										</option>
+										<option value='Для взрослых'>Для взрослых</option>
+										<option value='От 2 до 5 лет'>От 2 до 5 лет</option>
+										<option value='От 3 до 6 лет'>От 3 до 6 лет</option>
+										<option value='От 5 до 8 лет'>От 5 до 8 лет</option>
+										<option value='Подростковый'>Подростковый</option>
+									</select>
+
+									<label htmlFor='amortization'>Амортизация</label>
+									<select
+										name='amortization'
+										value={product.amortization || ''}
+										onChange={handleChange}
+										required
+									>
+										<option value='' defaultValue hidden>
+											Выберите амортизацию
+										</option>
+										<option value='Двухподвес'>Двухподвес</option>
+										<option value='Жесткая вилка'>Жесткая вилка</option>
+										<option value='Хардтейл'>Хардтейл</option>
+									</select>
+								</div>
+
+								<div className={styles.item}>
+									<label htmlFor='system'>Система</label>
+									<input
+										type='text'
+										id='system'
+										name='system'
+										required
+										value={product.system || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='ratchet'>Кассета трещотка</label>
+									<input
+										type='text'
+										id='ratchet'
+										name='ratchet'
+										required
+										value={product.ratchet || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='speed'>Скорость</label>
+									<input
+										type='number'
+										id='speed'
+										name='speed'
+										min={1}
+										max={27}
+										value={product.speed || ''}
+										onChange={handleChange}
+										required
+									/>
+									<label htmlFor='carriage'>Каретка</label>{' '}
+									<input
+										type='text'
+										id='carriage'
+										name='carriage'
+										required
+										value={product.carriage || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='breaks'>Тормоза</label>
+									<select
+										name='breaks'
+										value={product.breaks || ''}
+										onChange={handleChange}
+									>
+										<option value='' disabled hidden defaultValue>
+											Выберите тормоза
+										</option>
+										<option value='U-brake'>U-brake</option>
+										<option value='V-brake'>V-brake</option>
+										<option value='Дисковые гидравлические'>
+											Дисковые гидравлические
+										</option>
+										<option value='Дисковые механические'>
+											Дисковые механические
+										</option>
+										<option value='Клещевой'>Клещевой</option>
+										<option value='Ножной тормоз'>Ножной тормоз</option>
+										<option value='Передний V-brake'>Передний V-brake</option>
+										<option value='Передний клещевой'>Передний клещевой</option>
+									</select>
+									<label htmlFor='bushings'>Втулки</label>
+									<input
+										type='text'
+										id='bushings'
+										name='bushings'
+										required
+										value={product.bushings || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='rubber'>Резина</label>
+									<input
+										type='text'
+										id='rubber'
+										name='rubber'
+										required
+										value={product.rubber || ''}
+										onChange={handleChange}
+									/>
+									<label htmlFor='frameGrouve'>Ростовка рамы</label>
+									<input
+										type='number'
+										id='frameGrouve'
+										name='frameGrouve'
+										min={13}
+										max={23}
+										value={product.frameGrouve || ''}
+										onChange={handleChange}
+										required
+									/>
+									<label htmlFor='gender'>Пол</label>
+									<select
+										name='gender'
+										value={product.gender || ''}
+										onChange={handleChange}
+										required
+									>
+										<option value='' defaultValue hidden>
+											Выберите пол
+										</option>
+										<option value='Мужской'>Мужской</option>
+										<option value='Женский'>Женский</option>
+									</select>
+									<label htmlFor='type'>Тип</label>
+									<select
+										name='type'
+										value={product.type || ''}
+										onChange={handleChange}
+										required
+									>
+										<option value='' defaultValue hidden>
+											Выберите тип
+										</option>
+										<option value='Горный'>Горный</option>
+										<option value='Городской'>Городской</option>
+										<option value='Складной'>Складной</option>
+										<option value='Шоссейный'>Шоссейный</option>
+										<option value='Подростковый'>Подростковый</option>
+									</select>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<div className={styles.form_item}>
-					<p style={{ flexBasis: '100%' }}>Данные велосипеда</p>
-					<div className={styles.item}>
-						<label htmlFor='frame'>Рама</label>
-						<input
-							type='text'
-							id='frame'
-							required
-							value={product.frameMaterial || ''}
-							onChange={e =>
-								setProduct({ ...product, frameMaterial: e.target.value })
-							}
-						/>
-						<label htmlFor='size'>Размер</label>
-						<input
-							type='text'
-							id='size'
-							required
-							value={product.size || ''}
-							onChange={e => setProduct({ ...product, size: e.target.value })}
-						/>
-						<label htmlFor='weight'>Вес</label>
-						<input
-							type='text'
-							id='weight'
-							required
-							value={product.weight + ' кг' || ''}
-							onChange={e => setProduct({ ...product, weight: e.target.value })}
-						/>
-						<label htmlFor='fork'>Вилка</label>
-						<input
-							type='text'
-							id='fork'
-							required
-							value={product.fork || ''}
-							onChange={e => setProduct({ ...product, fork: e.target.value })}
-						/>
-						<label htmlFor='shifters'>Манетки</label>
-						<input
-							type='text'
-							id='manettes'
-							required
-							value={product.manettes || ''}
-							onChange={e =>
-								setProduct({ ...product, manettes: e.target.value })
-							}
-						/>
-						<label htmlFor='frontDerailleur'>Передний переключатель</label>
-						<input
-							type='text'
-							id='frontDerailleur'
-							required
-							value={product.frontDerailleur || ''}
-							onChange={e =>
-								setProduct({ ...product, frontDerailleur: e.target.value })
-							}
-						/>
-						<label htmlFor='rearDerailleur'>Задний переключатель</label>
-						<input
-							type='text'
-							id='rearDerailleur'
-							required
-							value={product.rearDerailleur || ''}
-							onChange={e =>
-								setProduct({ ...product, rearDerailleur: e.target.value })
-							}
-						/>
-						<label htmlFor='wheelsSize'>Диаметр колеса</label>
-						<input
-							type='text'
-							id='wheelsSize'
-							required
-							value={product.wheelsSize || ''}
-							onChange={e =>
-								setProduct({ ...product, wheelsSize: e.target.value })
-							}
-						/>
-						<label htmlFor='color'>Цвет</label>
-						<input
-							type='text'
-							id='color'
-							required
-							value={product.color || ''}
-							onChange={e => setProduct({ ...product, color: e.target.value })}
-						/>
-					</div>
-					<div className={styles.item}>
-						<label htmlFor='system'>Система</label>
-						<input
-							type='text'
-							id='system'
-							required
-							value={product.system || ''}
-							onChange={e => setProduct({ ...product, system: e.target.value })}
-						/>
-						<label htmlFor='cassette'>Кассета трещотка</label>
-						<input
-							type='text'
-							id='cassette'
-							required
-							value={product.cassetteAndRatchet || ''}
-							onChange={e =>
-								setProduct({ ...product, cassetteAndRatchet: e.target.value })
-							}
-						/>
-						<label htmlFor='speed'>Скорость</label>
-						<input
-							type='text'
-							id='speed'
-							required
-							value={product.speed || ''}
-							onChange={e => setProduct({ ...product, speed: e.target.value })}
-						/>
-						<label htmlFor='carriage'>Каретка</label>{' '}
-						<input
-							type='text'
-							id='carriage'
-							required
-							value={product.carriage || ''}
-							onChange={e =>
-								setProduct({ ...product, carriage: e.target.value })
-							}
-						/>
-						<label htmlFor='brakes'>Тормоза</label>
-						<input
-							type='text'
-							id='brakes'
-							required
-							value={product.brakes || ''}
-							onChange={e => setProduct({ ...product, brakes: e.target.value })}
-						/>
-						<label htmlFor='bushings'>Втулки</label>
-						<input
-							type='text'
-							id='bushings'
-							required
-							value={product.bushings || ''}
-							onChange={e =>
-								setProduct({ ...product, bushings: e.target.value })
-							}
-						/>
-						<label htmlFor='rubber'>Резина</label>
-						<input
-							type='text'
-							id='rubber'
-							required
-							value={product.rubber || ''}
-							onChange={e => setProduct({ ...product, rubber: e.target.value })}
-						/>
-						<label htmlFor='frameGrowth'>Ростовка рамы</label>
-						<input
-							type='text'
-							id='frameGrowth'
-							required
-							value={product.frameGrowth || ''}
-							onChange={e =>
-								setProduct({ ...product, frameGrowth: e.target.value })
-							}
-						/>
-						<label htmlFor='gender'>Пол</label>
-						<input
-							type='text'
-							id='пол'
-							required
-							value={product.gender || ''}
-							onChange={e =>
-								setProduct({ ...product, gender: e.target.value })
-							}
-						/>
-					</div>
-				</div>
-			</div>
-		</form>
+					</form>
+				</WidthBlock>
+			</CenterBlock>
+		</main>
 	)
 }
 

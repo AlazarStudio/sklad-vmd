@@ -9,7 +9,7 @@ function Product({
 	onSelect,
 	operation,
 	linkName,
-	quantity,
+	itemCount,
 	...props
 }) {
 	const navigate = useNavigate()
@@ -34,12 +34,12 @@ function Product({
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
-			<p className={styles.unit_of_measurement}>{quantity}</p>
+			<p className={styles.unit_of_measurement}>{itemCount}</p>
 			<p className={styles.cost_price}>
-				{props.costPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.sale_price}>
-				{props.originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 		</div>
 	)

@@ -1,8 +1,10 @@
+import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import Modal from 'react-modal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { Colors, products } from '../../../../data'
+import serverConfig from '../../../serverConfig'
 import ProductCard from '../../Blocks/ProductCard/ProductCard'
 import Scale from '../../Blocks/Scale/Scale'
 import CenterBlock from '../../Standart/CenterBlock/CenterBlock'
@@ -14,15 +16,26 @@ import styles from './ProductDetailPage.module.css'
 // Для правильного отображения модального окна, необходимо установить appElement
 Modal.setAppElement('#root')
 
+const fetchProducts = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/items`)
+		return response.data
+	} catch (error) {
+		console.error('Error fetching products:', error)
+		return []
+	}
+}
+
 function ProductDetailPage() {
 	const { linkName } = useParams()
 	const location = useLocation()
 	const { fromWarehouse } = location.state || {}
 	const navigate = useNavigate()
+	// console.log(linkName)
 
 	const [filteredProducts, setFilteredProducts] = useState([])
 	const [selectedProducts, setSelectedProducts] = useState([])
-	const [speedRange, setSpeedRange] = useState([1, 27])
+	// const [speedRange, setSpeedRange] = useState([1, 27])
 	const [wheelSizeRange, setWheelSizeRange] = useState([12, 29])
 	const [frameSizeRange, setFrameSizeRange] = useState([13, 23])
 	const [selectedColor, setSelectedColor] = useState('')
@@ -32,14 +45,102 @@ function ProductDetailPage() {
 	const [modalQuantities, setModalQuantities] = useState({}) // Данные о количестве для модальных окон
 	const [writeOffReason, setWriteOffReason] = useState('')
 
-	const totalQuantity = filteredProducts.reduce(
-		(sum, product) => sum + +product.quantity,
-		0
-	)
+	const [productsDB, setProducts] = useState([])
 
 	useEffect(() => {
-		const initialFilteredProducts = products.filter(
-			product => product.linkName === linkName
+		const getProducts = async () => {
+			const productsDB = await fetchProducts()
+			// console.log(productsDB)
+			setProducts(productsDB)
+		}
+		getProducts()
+	}, [])
+
+	const transliterate = text => {
+		if (!text || typeof text !== 'string') {
+			return ''
+		}
+
+		const map = {
+			А: 'A',
+			Б: 'B',
+			В: 'V',
+			Г: 'G',
+			Д: 'D',
+			Е: 'E',
+			Ё: 'Yo',
+			Ж: 'Zh',
+			З: 'Z',
+			И: 'I',
+			Й: 'J',
+			К: 'K',
+			Л: 'L',
+			М: 'M',
+			Н: 'N',
+			О: 'O',
+			П: 'P',
+			Р: 'R',
+			С: 'S',
+			Т: 'T',
+			У: 'U',
+			Ф: 'F',
+			Х: 'Kh',
+			Ц: 'Ts',
+			Ч: 'Ch',
+			Ш: 'Sh',
+			Щ: 'Shch',
+			Ъ: '',
+			Ы: 'Y',
+			Ь: '',
+			Э: 'E',
+			Ю: 'Yu',
+			Я: 'Ya',
+			а: 'a',
+			б: 'b',
+			в: 'v',
+			г: 'g',
+			д: 'd',
+			е: 'e',
+			ё: 'yo',
+			ж: 'zh',
+			з: 'z',
+			и: 'i',
+			й: 'j',
+			к: 'k',
+			л: 'l',
+			м: 'm',
+			н: 'n',
+			о: 'o',
+			п: 'p',
+			р: 'r',
+			с: 's',
+			т: 't',
+			у: 'u',
+			ф: 'f',
+			х: 'kh',
+			ц: 'ts',
+			ч: 'ch',
+			ш: 'sh',
+			щ: 'shch',
+			ъ: '',
+			ы: 'y',
+			ь: '',
+			э: 'e',
+			ю: 'yu',
+			я: 'ya'
+		}
+
+		return text
+			.toLowerCase()
+			.split('')
+			.map(char => map[char] || char)
+			.join('')
+			.replace(/ /g, '_')
+	}
+
+	useEffect(() => {
+		const initialFilteredProducts = productsDB.filter(
+			product => transliterate(product.name) === linkName
 		)
 		setFilteredProducts(initialFilteredProducts)
 	}, [linkName])
@@ -47,7 +148,7 @@ function ProductDetailPage() {
 	useEffect(() => {
 		if (selectedProducts.length > 0) {
 			const maxQty = selectedProducts.reduce(
-				(max, product) => Math.max(max, product.quantity),
+				(max, product) => Math.max(max, product.itemCount),
 				0
 			)
 			// Удалено: setMaxQuantity(maxQty)
@@ -67,6 +168,10 @@ function ProductDetailPage() {
 		}
 	}
 
+	const totalQuantity = filteredProducts.reduce(
+		(sum, product) => sum + +product.itemCount,
+		0
+	)
 	const handleWheelSizeChange = newRange => setWheelSizeRange(newRange)
 	const handleFrameSizeChange = newRange => setFrameSizeRange(newRange)
 
@@ -107,15 +212,12 @@ function ProductDetailPage() {
 	}, [isDropdownOpen])
 
 	const filterProducts = () => {
-		const newFilteredProducts = products.filter(product => {
-			const speed = parseInt(product.speed, 10)
-			const wheelSize = parseInt(product.wheelsSize, 10)
-			const frameSize = parseInt(product.frameGrowth, 10)
+		const newFilteredProducts = productsDB.filter(product => {
+			const wheelSize = parseInt(product.wheelSize, 10)
+			const frameSize = parseInt(product.frameGrouve, 10)
 
 			return (
-				product.linkName === linkName &&
-				speed >= speedRange[0] &&
-				speed <= speedRange[1] &&
+				transliterate(product.name) === linkName &&
 				wheelSize >= wheelSizeRange[0] &&
 				wheelSize <= wheelSizeRange[1] &&
 				frameSize >= frameSizeRange[0] &&
@@ -129,13 +231,13 @@ function ProductDetailPage() {
 
 	useEffect(() => {
 		filterProducts()
-	}, [speedRange, wheelSizeRange, frameSizeRange, selectedColor])
+	}, [wheelSizeRange, frameSizeRange, selectedColor, productsDB])
 
 	const resetFilters = () => {
-		setSpeedRange([1, 27])
 		setWheelSizeRange([12, 29])
 		setFrameSizeRange([13, 23])
 		setSelectedColor('')
+		filterProducts()
 	}
 
 	const handleSellButtonClick = () => {
@@ -158,7 +260,7 @@ function ProductDetailPage() {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.quantity || 0,
+				filteredProducts.find(p => p.code === code)?.itemCount || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -171,7 +273,7 @@ function ProductDetailPage() {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.quantity || 0,
+				filteredProducts.find(p => p.code === code)?.itemCount || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -191,17 +293,19 @@ function ProductDetailPage() {
 
 	const handleMoveToShopButtonClick = () => {
 		setIsMoveToShopModalOpen(true)
+		navigate('/products')
 	}
 
 	const handleMoveToWarehouseButtonClick = () => {
 		setIsMoveToShopModalOpen(true)
+		navigate('/warehouse')
 	}
 
 	const handleMoveToShopQuantityChange = (code, value) => {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.quantity || 0,
+				filteredProducts.find(p => p.code === code)?.itemCount || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -296,10 +400,10 @@ function ProductDetailPage() {
 								<p className={styles.wheelsSize}>Диаметр колеса</p>
 							</div>
 							<div>
-								{filteredProducts.map((product, index) => (
+								{filteredProducts.map(product => (
 									<ProductCard
-										key={index}
-										operation={'/update-product'}
+										key={product.id}
+										operation={`/update-product/${product.id}`}
 										{...product}
 										onSelect={handleProductSelect}
 									/>
@@ -347,8 +451,8 @@ function ProductDetailPage() {
 						{selectedProducts.map(product => (
 							<div key={product.code} className={styles.modal_item}>
 								<p>
-									{product.name} {product.color} {product.frameGrowth}"{' '}
-									{product.wheelsSize}
+									{product.name} {product.color} {product.frameGrouve}"{' '}
+									{product.wheelSize}
 								</p>
 								<input
 									className={styles.sale_input}
@@ -357,7 +461,7 @@ function ProductDetailPage() {
 									onChange={e =>
 										handleQuantityChange(product.code, e.target.value)
 									}
-									max={product.quantity}
+									max={product.itemCount}
 								/>
 							</div>
 						))}
@@ -380,8 +484,8 @@ function ProductDetailPage() {
 						{selectedProducts.map(product => (
 							<div key={product.code} className={styles.modal_item}>
 								<p>
-									{product.name} {product.color} {product.frameGrowth}"{' '}
-									{product.wheelsSize}
+									{product.name} {product.color} {product.frameGrouve}"{' '}
+									{product.wheelSize}
 								</p>
 								<input
 									className={styles.sale_input}
@@ -390,7 +494,7 @@ function ProductDetailPage() {
 									onChange={e =>
 										handleWriteOffQuantityChange(product.code, e.target.value)
 									}
-									max={product.quantity}
+									max={product.itemCount}
 								/>
 							</div>
 						))}
@@ -453,8 +557,8 @@ function ProductDetailPage() {
 						{selectedProducts.map(product => (
 							<div key={product.code} className={styles.modal_item}>
 								<p>
-									{product.name} {product.color} {product.frameGrowth}"{' '}
-									{product.wheelsSize}
+									{product.name} {product.color} {product.frameGrouve}"{' '}
+									{product.wheelSize}
 								</p>
 								<input
 									className={styles.sale_input}
@@ -463,7 +567,7 @@ function ProductDetailPage() {
 									onChange={e =>
 										handleMoveToShopQuantityChange(product.code, e.target.value)
 									}
-									max={product.quantity}
+									max={product.itemCount}
 								/>
 							</div>
 						))}

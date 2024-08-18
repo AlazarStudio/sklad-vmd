@@ -32,7 +32,7 @@ function MainPage({ children, ...props }) {
 	const ids = [
 		'products',
 		'add-product',
-		'update-product',
+		// 'update-product',
 		'add-product-group',
 		'contractors',
 		'add-contractors',
@@ -63,7 +63,7 @@ function MainPage({ children, ...props }) {
 					{(id == 'products' || !id) && <Products />}
 					{!id && !idType && <ProductsPage />}
 					{id == 'products' && !idType && <ProductsPage />}
-					{id == 'update-product' && !idType && <UpdateProduct />}
+					{/* {id == 'update-product' && !idType && <UpdateProduct />} */}
 					{id == 'add-product' && <AddProduct />}
 					{id == 'add-product-group' && <AddGroup />}
 					{id == 'products' && idType == 'write-offs' && <WriteOffs />}

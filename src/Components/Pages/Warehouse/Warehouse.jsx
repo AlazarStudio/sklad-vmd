@@ -1,19 +1,45 @@
-import { useState } from 'react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { products, types } from '../../../../data'
+import serverConfig from '../../../serverConfig'
 import RemainsProduct from '../../Blocks/RemainsProduct/RemainsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './Warehouse.module.css'
 
+const fetchProducts = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/items`)
+		return response.data
+	} catch (error) {
+		console.error('Error fetching products:', error)
+		return []
+	}
+}
+
 function Warehouse() {
 	const [selectedProducts, setSelectedProducts] = useState([])
 	const [selectedType, setSelectedType] = useState('')
 	const navigate = useNavigate()
 
+	const [productsDB, setProducts] = useState([])
+
+	useEffect(() => {
+		const getProducts = async () => {
+			const productsDB = await fetchProducts()
+			setProducts(productsDB)
+		}
+		getProducts()
+	}, [])
+
 	const transliterate = text => {
+		if (!text || typeof text !== 'string') {
+			return ''
+		}
+
 		const map = {
 			А: 'A',
 			Б: 'B',
@@ -84,10 +110,26 @@ function Warehouse() {
 		}
 
 		return text
+			.toLowerCase()
 			.split('')
 			.map(char => map[char] || char)
 			.join('')
+			.replace(/ /g, '_')
 	}
+
+	const [groups, setGroups] = useState([])
+
+	useEffect(() => {
+		const fetchGroups = async () => {
+			try {
+				const response = await axios.get(`${serverConfig}/groups`)
+				setGroups(response.data)
+			} catch (error) {
+				console.error('Error fetching groups:', error)
+			}
+		}
+		fetchGroups()
+	}, [])
 
 	const handleProductSelect = (product, isChecked) => {
 		if (isChecked) {
@@ -101,23 +143,27 @@ function Warehouse() {
 	const uniqueProducts = {}
 
 	// Проходим по каждому продукту и суммируем их количество, если они имеют одинаковое имя
-	products.forEach(product => {
+	productsDB.forEach(product => {
 		if (uniqueProducts[product.name]) {
-			uniqueProducts[product.name].quantity += +product.quantity
+			uniqueProducts[product.name].itemCount += +product.itemCount
 		} else {
 			uniqueProducts[product.name] = { ...product }
-			uniqueProducts[product.name].quantity = +product.quantity
+			uniqueProducts[product.name].itemCount = +product.itemCount
 		}
 	})
 
 	// Преобразуем объект обратно в массив для рендеринга
 	const productsToDisplay = Object.values(uniqueProducts)
 
-	// Фильтрация продуктов по выбранному типу
+	// Фильтрация продуктов по выбранной группе
 	const filteredProducts = selectedType
-		? productsToDisplay.filter(
-				product => transliterate(product.type).toLowerCase() === selectedType
-			)
+		? productsToDisplay.filter(product => {
+				const groupName =
+					product.group && product.group.name
+						? transliterate(product.group.name).toLowerCase()
+						: ''
+				return groupName === selectedType
+			})
 		: productsToDisplay
 
 	const handleTypeChange = event => {
@@ -125,6 +171,7 @@ function Warehouse() {
 	}
 
 	const navToShop = e => {
+		e.preventDefault()
 		navigate('/products')
 	}
 
@@ -145,11 +192,14 @@ function Warehouse() {
 						<option value='' defaultValue>
 							Все товары
 						</option>
-						{types.map((type, index) => (
-							<option key={index} value={transliterate(type).toLowerCase()}>
-								{type}
+						{groups.map(group => (
+							<option
+								key={group.id}
+								value={transliterate(group.name).toLowerCase()}
+							>
+								{group.name}
 							</option>
-						))}
+						)).reverse()}
 					</select>
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -158,7 +208,7 @@ function Warehouse() {
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
 					<div className={styles.checkBox_wrapper}>
-						<CheckBox />
+						{/* <CheckBox /> */}
 					</div>
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
@@ -173,6 +223,7 @@ function Warehouse() {
 						<RemainsProduct
 							key={index}
 							operation={true}
+							linkName={transliterate(product.name)}
 							{...product}
 							onSelect={handleProductSelect}
 						/>

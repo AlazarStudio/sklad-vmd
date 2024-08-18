@@ -91,18 +91,22 @@
 
 .cost_price {
   flex-basis: 14%;
+  text-align: center;
 }
 
 .cost_price_sum {
   flex-basis: 18%;
+  text-align: center;
 }
 
 .sale_price {
   flex-basis: 14%;
+  text-align: center;
 }
 
 .sale_price_sum {
   flex-basis: 11%;
+  text-align: center;
 }
 
 .products_wrapper {

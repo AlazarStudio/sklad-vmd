@@ -12,8 +12,8 @@ function WriteOffs({ children, ...props }) {
 			<div className={styles.operations}>
 				<p className={styles.operations__title}>Списания</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<AddButton img='/images/green_add.png' text='Списание' />
-					<AddButton img='/images/print.png' text='Печать' />
+					{/* <AddButton img='/images/green_add.png' text='Списание' /> */}
+					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
 				<input type='search' placeholder='Поиск...' />
 			</div>
