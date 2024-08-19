@@ -6,6 +6,7 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 import styles from './Product.module.css'
 
 function Product({
+	isVisCheckBox,
 	onSelect,
 	operation,
 	linkName,
@@ -30,7 +31,7 @@ function Product({
 			onClick={operation ? goToProductDetail : null}
 		>
 			<div className={styles.checkBox_wrapper}>
-				<CheckBox onChange={handleCheckBoxChange} />
+				{isVisCheckBox ? <CheckBox onChange={handleCheckBoxChange} /> : null}
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>

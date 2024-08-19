@@ -222,6 +222,7 @@ function Warehouse() {
 					{filteredProducts.slice(-5).map((product, index) => (
 						<RemainsProduct
 							key={index}
+							isVisCheckBox={false}
 							operation={true}
 							linkName={transliterate(product.name)}
 							{...product}

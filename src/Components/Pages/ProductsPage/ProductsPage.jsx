@@ -195,14 +195,16 @@ function ProductsPage() {
 						<option value='' defaultValue>
 							Все товары
 						</option>
-						{groups.map(group => (
-							<option
-								key={group.id}
-								value={transliterate(group.name).toLowerCase()}
-							>
-								{group.name}
-							</option>
-						)).reverse()}
+						{groups
+							.map(group => (
+								<option
+									key={group.id}
+									value={transliterate(group.name).toLowerCase()}
+								>
+									{group.name}
+								</option>
+							))
+							.reverse()}
 					</select>
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -210,9 +212,7 @@ function ProductsPage() {
 
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
-					<div className={styles.checkBox_wrapper}>
-						{/* <CheckBox /> */}
-					</div>
+					<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
 					<p className={styles.unit_of_measurement}>Количество</p>
@@ -222,6 +222,7 @@ function ProductsPage() {
 				<div>
 					{filteredProducts.map((product, index) => (
 						<Product
+							isVisCheckBox={false}
 							key={index}
 							operation={true}
 							linkName={transliterate(product.name)}

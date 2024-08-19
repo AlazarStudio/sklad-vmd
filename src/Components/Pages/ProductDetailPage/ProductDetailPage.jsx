@@ -292,12 +292,14 @@ function ProductDetailPage() {
 	}
 
 	const handleMoveToShopButtonClick = () => {
-		setIsMoveToShopModalOpen(true)
+		console.log(`Перемещено в магазин: ${JSON.stringify(modalQuantities)}`)
+		setIsMoveToShopModalOpen(false)
 		navigate('/products')
 	}
 
 	const handleMoveToWarehouseButtonClick = () => {
-		setIsMoveToShopModalOpen(true)
+		console.log(`Перемещено на склад: ${JSON.stringify(modalQuantities)}`)
+		setIsMoveToShopModalOpen(false)
 		navigate('/warehouse')
 	}
 
@@ -312,7 +314,9 @@ function ProductDetailPage() {
 	}
 
 	const handleMoveToShopConfirm = () => {
-		console.log(`Перемещено в магазин: ${JSON.stringify(modalQuantities)}`)
+		console.log(
+			`Перемещено в магазин (склад): ${JSON.stringify(modalQuantities)}`
+		)
 		setIsMoveToShopModalOpen(false)
 	}
 
@@ -424,15 +428,11 @@ function ProductDetailPage() {
 									{selectedProducts.length}
 								</p>
 								<div className={styles.actions_buttons}>
-									{!fromWarehouse ? (
-										<button onClick={handleMoveToWarehouseButtonClick}>
-											Переместить на склад
-										</button>
-									) : (
-										<button onClick={handleMoveToShopButtonClick}>
-											Переместить в магазин
-										</button>
-									)}
+									<button onClick={() => setIsMoveToShopModalOpen(true)}>
+										{!fromWarehouse
+											? 'Переместить на склад'
+											: 'Переместить в магазин'}
+									</button>
 
 									<button onClick={handleWriteOffButtonClick}>Списать</button>
 									<button onClick={handleSellButtonClick}>Продать</button>
@@ -470,7 +470,12 @@ function ProductDetailPage() {
 								Продать контрагенту
 							</button>
 							<button onClick={handleSellToCustomer}>Продать клиенту</button>
-							<button onClick={() => setIsSellModalOpen(false)}>Отмена</button>
+							<div
+								className={styles.close_modal}
+								onClick={() => setIsSellModalOpen(false)}
+							>
+								X
+							</div>
 						</div>
 					</Modal>
 
@@ -541,9 +546,12 @@ function ProductDetailPage() {
 							<button onClick={handleWriteOffConfirm}>
 								Подтвердить списание
 							</button>
-							<button onClick={() => setIsWriteOffModalOpen(false)}>
-								Отмена
-							</button>
+							<div
+								className={styles.close_modal}
+								onClick={() => setIsWriteOffModalOpen(false)}
+							>
+								X
+							</div>
 						</div>
 					</Modal>
 
@@ -572,12 +580,22 @@ function ProductDetailPage() {
 							</div>
 						))}
 						<div className={styles.modal_buttons}>
-							<button onClick={handleMoveToShopConfirm}>
-								Переместить в магазин
-							</button>
-							<button onClick={() => setIsMoveToShopModalOpen(false)}>
-								Отмена
-							</button>
+							{fromWarehouse ? (
+								<button onClick={handleMoveToShopButtonClick}>
+									Переместить в магазин
+								</button>
+							) : (
+								<button onClick={handleMoveToWarehouseButtonClick}>
+									Переместить на склад
+								</button>
+							)}
+
+							<div
+								className={styles.close_modal}
+								onClick={() => setIsMoveToShopModalOpen(false)}
+							>
+								X
+							</div>
 						</div>
 					</Modal>
 				</WidthBlock>
