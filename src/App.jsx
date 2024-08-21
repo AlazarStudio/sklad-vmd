@@ -8,8 +8,9 @@ import ProductDetailPage from './Components/Pages/ProductDetailPage/ProductDetai
 import Products from './Components/Pages/Products/Products'
 import Purchases from './Components/Pages/Purchases/Purchases'
 import Sales from './Components/Pages/Sales/Sales'
-import Layout from './Components/Standart/Layout/Layout'
+import UpdateContractor from './Components/Pages/UpdateContractor/UpdateContractor'
 import UpdateProduct from './Components/Pages/UpdateProduct/UpdateProduct'
+import Layout from './Components/Standart/Layout/Layout'
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 					<Route path='/product/:linkName' element={<ProductDetailPage />} />
 
 					<Route path='/update-product/:id' element={<UpdateProduct />} />
+					<Route path='/update-contractor/:id' element={<UpdateContractor />} />
 
 					{/* <Route path='/purchases' element={<Purchases />} />
 					<Route path='/sales' element={<Sales />} />

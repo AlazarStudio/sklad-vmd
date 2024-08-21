@@ -83,7 +83,7 @@
 }
 
 .created {
-  flex-basis: 16.25%;
+  flex-basis: 20%;
   padding-left: 30px;
 }
 
@@ -93,7 +93,7 @@
 }
 
 .email {
-  flex-basis: 16.25%;
+  flex-basis: 20%;
   padding-left: 20px;
 }
 

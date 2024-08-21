@@ -44,6 +44,7 @@
   padding: 20px 0;
   display: flex;
   align-items: center;
+  gap: 21px;
   border-bottom: 2px solid #f77532;
 }
 
@@ -68,15 +69,21 @@
   text-align: right;
 }
 
-.cost_price {
-  flex-basis: 15%;
+.unit_of_measurement {
+  flex-basis: 10%;
   text-align: center;
 }
 
-.unit_of_measurement {
-  flex-basis: 20%;
-  text-align: center;
+.reason {
+  flex-basis: 12%;
+  text-align: end;
 }
+
+.cost_price {
+  flex-basis: 15%;
+  text-align: end;
+}
+
 
 .sale_price {
   flex-basis: 20%;

@@ -96,7 +96,8 @@ function UpdateProduct({ children, ...props }) {
 				updatedData
 			)
 			console.log('Response from server:', response.data)
-			navigate('/products') // Перенаправление после успешного обновления товара
+			// navigate('/products') // Перенаправление после успешного обновления товара
+			navigate(-1)
 		} catch (error) {
 			console.error('Error updating item:', error)
 		}
@@ -137,9 +138,9 @@ function UpdateProduct({ children, ...props }) {
 										type='text'
 										id='name'
 										name='name'
-										required
 										value={product.name || ''}
 										onChange={handleChange}
+										required
 									/>
 								</div>
 								<div className={styles.item}>
@@ -212,11 +213,13 @@ function UpdateProduct({ children, ...props }) {
 										<option value='' defaultValue hidden>
 											Выберите группу
 										</option>
-										{groups.map(group => (
-											<option key={group.id} value={group.id}>
-												{group.name}
-											</option>
-										)).reverse()}
+										{groups
+											.map(group => (
+												<option key={group.id} value={group.id}>
+													{group.name}
+												</option>
+											))
+											.reverse()}
 									</select>
 									<label htmlFor='price'>Себестоимость</label>
 									<input

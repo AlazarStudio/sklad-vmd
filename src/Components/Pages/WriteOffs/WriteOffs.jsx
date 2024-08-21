@@ -1,4 +1,8 @@
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+
 import { products } from '../../../../data'
+import serverConfig from '../../../serverConfig'
 import Product from '../../Blocks/Product/Product'
 import WriteOffProduct from '../../Blocks/WriteOffProduct/WriteOffProduct'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -6,7 +10,27 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './WriteOffs.module.css'
 
+const fetchWriteOffs = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/writeoffs`)
+		return response.data
+	} catch (error) {
+		console.error('Error fetching products:', error)
+		return []
+	}
+}
+
 function WriteOffs({ children, ...props }) {
+	const [writeOffProduct, setWriteOffProduct] = useState([])
+
+	useEffect(() => {
+		const getWriteOff = async () => {
+			const writeOffProduct = await fetchWriteOffs()
+			setWriteOffProduct(writeOffProduct)
+		}
+		getWriteOff()
+	}, [])
+
 	return (
 		<>
 			<div className={styles.operations}>
@@ -25,16 +49,22 @@ function WriteOffs({ children, ...props }) {
 					</div>
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
+					<p className={styles.sale_price}>Время</p>
 					<p className={styles.unit_of_measurement}>Количество</p>
+					<p className={styles.reason}>Статус</p>
 					<p className={styles.cost_price}>Себестоимость</p>
-					<p className={styles.sale_price}>Цена продажи</p>
 				</div>
 				<div>
-					{products.map((product, index) =>
-						product.writtenOff === true ? (
-							<Product key={index} linkName={null} {...product} />
-						) : null
-					)}
+					{writeOffProduct.map(product => (
+						<WriteOffProduct
+							key={product.id}
+							quantity={product.quantity}
+							reason={product.reason}
+							isVisCheckBox={true}
+							linkName={null}
+							{...product.item}
+						/>
+					))}
 				</div>
 			</section>
 		</>

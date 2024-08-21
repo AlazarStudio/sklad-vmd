@@ -1,12 +1,24 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { products } from '../../../../data'
+import serverConfig from '../../../serverConfig'
 import ProductCard from '../../Blocks/ProductCard/ProductCard'
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './AddShipment.module.css'
+
+const fetchContractors = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/contragents`)
+		return response.data
+	} catch (error) {
+		console.error('Error fetching products:', error)
+		return []
+	}
+}
 
 ReactModal.setAppElement('#root') // Указываем корневой элемент для доступности
 
@@ -18,6 +30,16 @@ function AddShipment({ ...props }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [selectedProducts, setSelectedProducts] = useState([])
 	const [prices, setPrices] = useState({})
+
+	const [contractors, setContractors] = useState([])
+
+	useEffect(() => {
+		const getContractors = async () => {
+			const contractors = await fetchContractors()
+			setContractors(contractors)
+		}
+		getContractors()
+	}, [])
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -75,13 +97,16 @@ function AddShipment({ ...props }) {
 							<label htmlFor=''>Контрагент</label>
 							<select name='group' id='' required>
 								<option value='' defaultValue>
-									Контрагент1
+									Выберите контрагента
 								</option>
-								<option value=''>Контрагент2</option>
+								{contractors.map(contractor => (
+									<option value={contractor.id}>{contractor.name}</option>
+								))}
+								{/* <option value=''>Контрагент2</option>
 								<option value=''>Контрагент3</option>
 								<option value=''>Контрагент4</option>
 								<option value=''>Контрагент5</option>
-								<option value=''>Контрагент6</option>
+								<option value=''>Контрагент6</option> */}
 							</select>
 							<label htmlFor=''>Организация</label>
 							<input type='text' value={'Вело Мото & Drive'} required />
@@ -162,11 +187,19 @@ function AddShipment({ ...props }) {
 						))}
 					</div>
 					<div className={styles.totalPrice}>
-						<p>Сумма: {totalEnteredPrice.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}</p>
+						<p>
+							Сумма:{' '}
+							{totalEnteredPrice
+								.toFixed(2)
+								.toString()
+								.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+						</p>
 					</div>
 					<div className={styles.modalButtons}>
 						<button onClick={handleSubmit}>Подтвердить</button>
-						<div className={styles.close} onClick={closeModal}>X</div>
+						<div className={styles.close} onClick={closeModal}>
+							X
+						</div>
 					</div>
 				</div>
 			</ReactModal>

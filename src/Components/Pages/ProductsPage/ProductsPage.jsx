@@ -193,7 +193,7 @@ function ProductsPage() {
 					{/* <AddButton text='Фильтр' /> */}
 					<select name='group' id='' required onChange={handleTypeChange}>
 						<option value='' defaultValue>
-							Все товары
+							Все группы
 						</option>
 						{groups
 							.map(group => (
