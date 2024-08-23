@@ -30,9 +30,11 @@ function Product({
 			className={styles.product_wrapper}
 			onClick={operation ? goToProductDetail : null}
 		>
-			<div className={styles.checkBox_wrapper}>
-				{isVisCheckBox ? <CheckBox onChange={handleCheckBoxChange} /> : null}
-			</div>
+			{isVisCheckBox ? (
+				<div className={styles.checkBox_wrapper}>
+					<CheckBox onChange={handleCheckBoxChange} />
+				</div>
+			) : null}
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
 			<p className={styles.unit_of_measurement}>{itemCount}</p>

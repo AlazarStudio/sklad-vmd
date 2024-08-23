@@ -3,7 +3,7 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './ContractorsProduct.module.css'
 
-function ContractorsProduct({ operation, ...props }) {
+function ContractorsProduct({ operation, onSelect, ...props }) {
 	const navigate = useNavigate()
 
 	const formatDate = dateString => {
@@ -26,7 +26,7 @@ function ContractorsProduct({ operation, ...props }) {
 	return (
 		<div className={styles.product_wrapper} onClick={goToUpdateContractor}>
 			<div className={styles.checkBox_wrapper}>
-				<CheckBox />
+				<CheckBox onChange={onSelect} />
 			</div>
 			<p className={styles.name}> {props.name} </p>
 			{/* <p className={styles.code}> {props.code} </p> */}

@@ -36,6 +36,7 @@
 }
 
 .name {
+  margin-left: 50px;
   flex-basis: 23%;
 }
 

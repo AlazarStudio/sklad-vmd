@@ -2,6 +2,7 @@
   padding: 20px 0;
   display: flex;
   align-items: center;
+  gap: 13px;
   border-bottom: 1px solid #b4b4b4;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
@@ -18,7 +19,7 @@
 
 .checkBox_wrapper {
   padding-left: 8px;
-  flex-basis: 5%;
+  flex-basis: 3%;
 }
 
 
@@ -33,19 +34,15 @@
 
 .created {
   flex-basis: 20%;
-  padding-left: 30px;
 }
 
 .phone {
-  flex-basis: 16.25%;
-  padding-left: 20px;
+  flex-basis: 12%;
 }
 .email {
   flex-basis: 20%;
-  padding-left: 20px;
 }
 
 .address {
-  flex-basis: 16.25%;
-  padding-left: 20px;
+  flex-basis: 20%;
 }

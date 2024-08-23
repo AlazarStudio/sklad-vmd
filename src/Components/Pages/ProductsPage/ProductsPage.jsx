@@ -212,7 +212,7 @@ function ProductsPage() {
 
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
-					<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
+					{/* <div className={styles.checkBox_wrapper}><CheckBox /></div> */}
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
 					<p className={styles.unit_of_measurement}>Количество</p>

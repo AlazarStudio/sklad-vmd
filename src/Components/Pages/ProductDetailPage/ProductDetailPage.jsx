@@ -283,10 +283,30 @@ function ProductDetailPage() {
 		setWriteOffReason(reason)
 	}
 
-	const handleWriteOffConfirm = () => {
-		console.log(
-			`Списано: ${JSON.stringify(modalQuantities)} по причине ${writeOffReason}`
-		)
+	const handleWriteOffConfirm = async () => {
+		try {
+			for (const product of selectedProducts) {
+				const response = await axios.post(`${serverConfig}/writeoffs`, {
+					itemId: product.id,
+					quantity: modalQuantities[product.code],
+					reason: writeOffReason
+				})
+
+				if (response.status === 200) {
+					console.log(
+						`Списано: ${modalQuantities[product.code]} шт. ${product.name}`
+					)
+				} else {
+					console.error('Error by write off: ', response.data)
+				}
+			}
+		} catch (error) {
+			console.error('Catch error: ', error)
+		}
+
+		// console.log(
+		// 	`Списано: ${JSON.stringify(modalQuantities)} по причине ${writeOffReason}`
+		// )
 		setIsWriteOffModalOpen(false)
 		navigate('/products/write-offs')
 	}
@@ -509,10 +529,10 @@ function ProductDetailPage() {
 								<input
 									type='radio'
 									name='writeOffReason'
-									value='Списано по причине спонсорства'
-									checked={writeOffReason === 'Списано по причине спонсорства'}
+									value='Спонсорство'
+									checked={writeOffReason === 'Спонсорство'}
 									onChange={() =>
-										handleWriteOffReasonChange('Списано по причине спонсорства')
+										handleWriteOffReasonChange('Спонсорство')
 									}
 								/>
 								Спонсорство
@@ -521,10 +541,10 @@ function ProductDetailPage() {
 								<input
 									type='radio'
 									name='writeOffReason'
-									value='Списано по причине ремонта'
-									checked={writeOffReason === 'Списано по причине ремонта'}
+									value='Ремонт'
+									checked={writeOffReason === 'Ремонт'}
 									onChange={() =>
-										handleWriteOffReasonChange('Списано по причине ремонта')
+										handleWriteOffReasonChange('Ремонт')
 									}
 								/>
 								Ремонт
@@ -533,10 +553,10 @@ function ProductDetailPage() {
 								<input
 									type='radio'
 									name='writeOffReason'
-									value='Списано по причине дефекта'
-									checked={writeOffReason === 'Списано по причине дефекта'}
+									value='Дефект'
+									checked={writeOffReason === 'Дефект'}
 									onChange={() =>
-										handleWriteOffReasonChange('Списано по причине дефекта')
+										handleWriteOffReasonChange('Дефект')
 									}
 								/>
 								Дефект

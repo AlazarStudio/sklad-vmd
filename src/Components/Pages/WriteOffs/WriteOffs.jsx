@@ -44,9 +44,9 @@ function WriteOffs({ children, ...props }) {
 
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
-					<div className={styles.checkBox_wrapper}>
+					{/* <div className={styles.checkBox_wrapper}>
 						<CheckBox />
-					</div>
+					</div> */}
 					<p className={styles.name}>Наименование</p>
 					<p className={styles.code}>Код</p>
 					<p className={styles.sale_price}>Время</p>
