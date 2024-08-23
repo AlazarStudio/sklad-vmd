@@ -64,7 +64,7 @@ function WriteOffs({ children, ...props }) {
 							linkName={null}
 							{...product.item}
 						/>
-					))}
+					)).reverse()}
 				</div>
 			</section>
 		</>

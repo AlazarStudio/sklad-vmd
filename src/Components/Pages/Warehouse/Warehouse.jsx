@@ -228,7 +228,7 @@ function Warehouse() {
 							{...product}
 							onSelect={handleProductSelect}
 						/>
-					))}
+					)).reverse()}
 				</div>
 			</section>
 

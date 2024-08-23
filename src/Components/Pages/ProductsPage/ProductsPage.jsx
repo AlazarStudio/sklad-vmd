@@ -229,7 +229,7 @@ function ProductsPage() {
 							{...product}
 							onSelect={handleProductSelect}
 						/>
-					))}
+					)).reverse()}
 				</div>
 			</section>
 
