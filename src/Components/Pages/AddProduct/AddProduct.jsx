@@ -45,10 +45,14 @@ function AddProduct({ children, ...props }) {
 		backDerailleur: '',
 		bushings: '',
 		rubber: '',
-		itemCount: 0 // Например, можно установить значение по умолчанию
+		warehouseCount: 0, // Например, можно установить значение по умолчанию
+		storeCount: 0
 	})
 
-	const [selectedFile, setSelectedFile] = useState(null)
+	// const [selectedFile, setSelectedFile] = useState(null)
+	const [selectedFiles, setSelectedFiles] = useState([]) // Было selectedFile
+	const [previewImages, setPreviewImages] = useState([])
+
 	const [groups, setGroups] = useState([])
 
 	useEffect(() => {
@@ -72,17 +76,90 @@ function AddProduct({ children, ...props }) {
 		})
 	}
 
-	const handleFileChange = e => {
-		setSelectedFile(e.target.files[0])
+	const handleWarehouseStoreChange = e => {
+		const { name, value } = e.target
+		setFormData({
+			...formData,
+			[name.split('.')[0]]: {
+				...formData[name.split('.')[0]],
+				[name.split('.')[1]]: parseInt(value, 10)
+			}
+		})
 	}
+
+	// const handleFileChange = e => {
+	// 	setSelectedFile(e.target.files[0])
+	// }
+
+	const handleFileChange = e => {
+		const files = Array.from(e.target.files)
+		setSelectedFiles(files)
+
+		const imagePreviews = files.map(file => URL.createObjectURL(file))
+		setPreviewImages(imagePreviews)
+	}
+
+	// const handleSubmit = async e => {
+	// 	e.preventDefault()
+
+	// 	let uploadedFilePath = ''
+	// 	if (selectedFile) {
+	// 		const formData = new FormData()
+	// 		formData.append('image', selectedFile)
+
+	// 		try {
+	// 			const uploadResponse = await axios.post(
+	// 				`${serverConfig}/upload`,
+	// 				formData,
+	// 				{
+	// 					headers: {
+	// 						'Content-Type': 'multipart/form-data'
+	// 					}
+	// 				}
+	// 			)
+	// 			uploadedFilePath = uploadResponse.data.filePath
+	// 		} catch (error) {
+	// 			console.error('Error uploading file:', error)
+	// 			return
+	// 		}
+	// 	}
+
+	// 	const preparedData = {
+	// 		...formData,
+	// 		images: [uploadedFilePath],
+	// 		groupId: parseInt(formData.groupId),
+	// 		price: parseInt(formData.price),
+	// 		priceForSale: parseInt(formData.priceForSale),
+	// 		code: parseInt(formData.code),
+	// 		nds: parseInt(formData.nds),
+	// 		// Warehouse: { count: parseInt(formData.Warehouse.count) }
+	// 		warehouseCount: parseInt(formData.warehouseCount)
+	// 	}
+
+	// 	console.log('Submitting form data:', preparedData)
+
+	// 	try {
+	// 		const response = await axios.post(`${serverConfig}/items`, preparedData)
+	// 		console.log('Response from server:', response.data)
+	// 		navigate('/warehouse') // Перенаправление после успешного создания товара
+	// 	} catch (error) {
+	// 		console.error('Error creating item:', error)
+	// 	}
+	// }
 
 	const handleSubmit = async e => {
 		e.preventDefault()
 
-		let uploadedFilePath = ''
-		if (selectedFile) {
+		let uploadedFilePaths = [] // Массив для хранения путей загруженных файлов
+
+		// Проверяем, есть ли выбранные файлы
+		if (selectedFiles.length > 0) {
 			const formData = new FormData()
-			formData.append('image', selectedFile)
+
+			// Добавляем каждый файл в FormData
+			selectedFiles.forEach(file => {
+				formData.append('images', file)
+			})
 
 			try {
 				const uploadResponse = await axios.post(
@@ -94,22 +171,22 @@ function AddProduct({ children, ...props }) {
 						}
 					}
 				)
-				uploadedFilePath = uploadResponse.data.filePath
+				uploadedFilePaths = uploadResponse.data.filePaths // Предполагается, что сервер возвращает массив путей
 			} catch (error) {
-				console.error('Error uploading file:', error)
+				console.error('Error uploading files:', error)
 				return
 			}
 		}
 
 		const preparedData = {
 			...formData,
-			images: [uploadedFilePath],
+			images: uploadedFilePaths,
 			groupId: parseInt(formData.groupId),
 			price: parseInt(formData.price),
 			priceForSale: parseInt(formData.priceForSale),
 			code: parseInt(formData.code),
 			nds: parseInt(formData.nds),
-			itemCount: parseInt(formData.itemCount)
+			warehouseCount: parseInt(formData.warehouseCount)
 		}
 
 		console.log('Submitting form data:', preparedData)
@@ -125,8 +202,8 @@ function AddProduct({ children, ...props }) {
 
 	const navBack = e => {
 		e.preventDefault()
-		// navigate('/products')
-		navigate(-1)
+		navigate('/warehouse')
+		// navigate(-1)
 	}
 
 	return (
@@ -135,7 +212,7 @@ function AddProduct({ children, ...props }) {
 			<form onSubmit={handleSubmit} className={styles.form_product}>
 				<div className={styles.products_header__wrapper}>
 					<div className={styles.products_buttons}>
-						<button>Сохранить</button>
+						<button type='submit'>Сохранить</button>
 						<button
 							style={{
 								backgroundColor: '#f77532',
@@ -172,9 +249,20 @@ function AddProduct({ children, ...props }) {
 									className={styles.image_input}
 									type='file'
 									accept='images/*'
-									multiple='multiple'
+									multiple
 									onChange={handleFileChange}
 								/>
+							</div>
+							<div className={styles.preview}>
+								{previewImages.map((src, index) => (
+									<div key={index} className={styles.previewImage}>
+									<img
+										key={index}
+										src={src}
+										alt={`preview-${index}`}
+									/>
+									</div>
+								))}
 							</div>
 						</div>
 					</div>
@@ -198,11 +286,11 @@ function AddProduct({ children, ...props }) {
 								required
 								placeholder='00001'
 							/>
-							<label htmlFor='itemCount'>Количество</label>
+							<label htmlFor='warehouseCount'>Количество</label>
 							<input
 								type='number'
-								name='itemCount'
-								value={formData.itemCount}
+								name='warehouseCount'
+								value={formData.warehouseCount}
 								onChange={handleChange}
 								required
 							/>
@@ -226,11 +314,13 @@ function AddProduct({ children, ...props }) {
 								<option value='' defaultValue hidden>
 									Выберите группу
 								</option>
-								{groups.map(group => (
-									<option key={group.id} value={group.id}>
-										{group.name}
-									</option>
-								)).reverse()}
+								{groups
+									.map(group => (
+										<option key={group.id} value={group.id}>
+											{group.name}
+										</option>
+									))
+									.reverse()}
 							</select>
 							<label htmlFor='price'>Себестоимость</label>
 							<input

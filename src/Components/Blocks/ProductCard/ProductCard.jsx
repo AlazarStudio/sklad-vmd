@@ -4,7 +4,7 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './ProductCard.module.css'
 
-function ProductCard({ linkName, operation, onSelect, ...props }) {
+function ProductCard({ fromWarehouse, linkName, operation, onSelect, ...props }) {
 	const navigate = useNavigate()
 
 	const goToUpdateProduct = () => {
@@ -15,6 +15,8 @@ function ProductCard({ linkName, operation, onSelect, ...props }) {
 		onSelect(props, event.target.checked)
 	}
 
+	const itemCount = fromWarehouse ? props.Warehouse.count : props.Store.count
+
 	return (
 		<div className={styles.product_wrapper} onClick={goToUpdateProduct}>
 			<div className={styles.checkBox_wrapper}>
@@ -22,7 +24,7 @@ function ProductCard({ linkName, operation, onSelect, ...props }) {
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
-			<p className={styles.unit_of_measurement}>{props.itemCount}</p>
+			<p className={styles.unit_of_measurement}>{itemCount}</p>
 			<p className={styles.cost_price}>
 				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>

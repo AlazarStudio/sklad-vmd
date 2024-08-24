@@ -37,7 +37,7 @@ function Product({
 			) : null}
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>
-			<p className={styles.unit_of_measurement}>{itemCount}</p>
+			<p className={styles.unit_of_measurement}>{props.Store.count}</p>
 			<p className={styles.cost_price}>
 				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>

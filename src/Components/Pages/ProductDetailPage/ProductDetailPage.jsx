@@ -169,7 +169,10 @@ function ProductDetailPage() {
 	}
 
 	const totalQuantity = filteredProducts.reduce(
-		(sum, product) => sum + +product.itemCount,
+		(sum, product) =>
+			fromWarehouse
+				? sum + +product.Warehouse.count
+				: sum + +product.Store.count,
 		0
 	)
 	const handleWheelSizeChange = newRange => setWheelSizeRange(newRange)
@@ -260,7 +263,9 @@ function ProductDetailPage() {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.itemCount || 0,
+				fromWarehouse
+					? filteredProducts.find(p => p.code === code)?.Warehouse.count || 0
+					: filteredProducts.find(p => p.code === code)?.Store.count || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -273,7 +278,9 @@ function ProductDetailPage() {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.itemCount || 0,
+				fromWarehouse
+					? filteredProducts.find(p => p.code === code)?.Warehouse.count || 0
+					: filteredProducts.find(p => p.code === code)?.Store.count || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -289,7 +296,8 @@ function ProductDetailPage() {
 				const response = await axios.post(`${serverConfig}/writeoffs`, {
 					itemId: product.id,
 					quantity: modalQuantities[product.code],
-					reason: writeOffReason
+					reason: writeOffReason,
+					source: fromWarehouse ? 'warehouse' : 'store',
 				})
 
 				if (response.status === 200) {
@@ -400,7 +408,7 @@ function ProductDetailPage() {
 						<div className={styles.detail_name}>
 							<img
 								style={{ cursor: 'pointer' }}
-								onClick={() => navigate(-1)}
+								onClick={() => navigate(fromWarehouse ? '/warehouse' : '/')}
 								src='/images/back.png'
 								alt='Back'
 							/>
@@ -426,8 +434,11 @@ function ProductDetailPage() {
 							<div>
 								{filteredProducts.map(product => (
 									<ProductCard
+										fromWarehouse={fromWarehouse}
 										key={product.id}
-										operation={`/update-product/${product.id}`}
+										operation={
+											fromWarehouse ? `/update-product/${product.id}` : null
+										}
 										{...product}
 										onSelect={handleProductSelect}
 									/>
@@ -531,9 +542,7 @@ function ProductDetailPage() {
 									name='writeOffReason'
 									value='Спонсорство'
 									checked={writeOffReason === 'Спонсорство'}
-									onChange={() =>
-										handleWriteOffReasonChange('Спонсорство')
-									}
+									onChange={() => handleWriteOffReasonChange('Спонсорство')}
 								/>
 								Спонсорство
 							</label>
@@ -543,9 +552,7 @@ function ProductDetailPage() {
 									name='writeOffReason'
 									value='Ремонт'
 									checked={writeOffReason === 'Ремонт'}
-									onChange={() =>
-										handleWriteOffReasonChange('Ремонт')
-									}
+									onChange={() => handleWriteOffReasonChange('Ремонт')}
 								/>
 								Ремонт
 							</label>
@@ -555,9 +562,7 @@ function ProductDetailPage() {
 									name='writeOffReason'
 									value='Дефект'
 									checked={writeOffReason === 'Дефект'}
-									onChange={() =>
-										handleWriteOffReasonChange('Дефект')
-									}
+									onChange={() => handleWriteOffReasonChange('Дефект')}
 								/>
 								Дефект
 							</label>

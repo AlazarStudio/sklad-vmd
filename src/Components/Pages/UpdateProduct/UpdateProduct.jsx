@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import serverConfig from '../../../serverConfig'
+import uploadsConfig from '../../../uploadsConfig'
 import CenterBlock from '../../Standart/CenterBlock/CenterBlock'
 import WidthBlock from '../../Standart/WidthBlock/WidthBlock'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -14,7 +15,11 @@ function UpdateProduct({ children, ...props }) {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [product, setProduct] = useState(location.state?.product || {})
-	const [selectedFile, setSelectedFile] = useState(null)
+	const [selectedFiles, setSelectedFiles] = useState([])
+	const [uploadedFilePaths, setUploadedFilePaths] = useState(
+		product.images || []
+	)
+
 	const [groups, setGroups] = useState([])
 
 	useEffect(() => {
@@ -22,6 +27,7 @@ function UpdateProduct({ children, ...props }) {
 			const fetchProduct = async () => {
 				try {
 					const response = await axios.get(`${serverConfig}/items/${id}`)
+					console.log(response.data)
 					setProduct(response.data)
 				} catch (error) {
 					console.error('Error fetching product:', error)
@@ -44,23 +50,96 @@ function UpdateProduct({ children, ...props }) {
 
 	const handleChange = e => {
 		const { name, value } = e.target
-		setProduct({
-			...product,
-			[name]: value
-		})
+
+		// Проверяем, изменяется ли поле, относящееся к Warehouse
+		if (name === 'warehouseCount') {
+			setProduct(prevProduct => ({
+				...prevProduct,
+				Warehouse: {
+					...prevProduct.Warehouse,
+					count: parseInt(value)
+				}
+			}))
+		} else {
+			setProduct({
+				...product,
+				[name]: value
+			})
+		}
 	}
 
 	const handleFileChange = e => {
-		setSelectedFile(e.target.files[0])
+		setSelectedFiles([...selectedFiles, ...Array.from(e.target.files)])
 	}
+
+	const handleRemoveImage = index => {
+		setUploadedFilePaths(uploadedFilePaths.filter((_, i) => i !== index))
+	}
+
+	const handleRemoveNewImage = index => {
+		setSelectedFiles(selectedFiles.filter((_, i) => i !== index))
+	}
+
+	// const handleSubmit = async e => {
+	// 	e.preventDefault()
+
+	// 	let uploadedFilePath = product.images[0] || ''
+	// 	if (selectedFile) {
+	// 		const formData = new FormData()
+	// 		formData.append('image', selectedFile)
+
+	// 		try {
+	// 			const uploadResponse = await axios.post(
+	// 				`${serverConfig}/upload`,
+	// 				formData,
+	// 				{
+	// 					headers: {
+	// 						'Content-Type': 'multipart/form-data'
+	// 					}
+	// 				}
+	// 			)
+	// 			uploadedFilePath = uploadResponse.data.filePath
+	// 		} catch (error) {
+	// 			console.error('Error uploading file:', error)
+	// 			return
+	// 		}
+	// 	}
+
+	// 	const updatedData = {
+	// 		...product,
+	// 		images: [uploadedFilePath],
+	// 		groupId: parseInt(product.groupId),
+	// 		price: parseInt(product.price),
+	// 		priceForSale: parseInt(product.priceForSale),
+	// 		code: parseInt(product.code),
+	// 		nds: parseInt(product.nds),
+	// 		warehouseCount: parseInt(product.Warehouse.count)
+	// 	}
+
+	// 	try {
+	// 		const response = await axios.put(
+	// 			`${serverConfig}/items/${id}`,
+	// 			updatedData
+	// 		)
+	// 		console.log('Response from server:', response.data)
+	// 		// navigate('/products') // Перенаправление после успешного обновления товара
+	// 		navigate(-1)
+	// 	} catch (error) {
+	// 		console.error('Error updating item:', error)
+	// 	}
+	// }
 
 	const handleSubmit = async e => {
 		e.preventDefault()
 
-		let uploadedFilePath = product.images[0] || ''
-		if (selectedFile) {
+		let newUploadedFilePaths = [...uploadedFilePaths]
+
+		if (selectedFiles.length > 0) {
 			const formData = new FormData()
-			formData.append('image', selectedFile)
+
+			selectedFiles.forEach(file => {
+				formData.append('images', file)
+			})
 
 			try {
 				const uploadResponse = await axios.post(
@@ -72,22 +151,25 @@ function UpdateProduct({ children, ...props }) {
 						}
 					}
 				)
-				uploadedFilePath = uploadResponse.data.filePath
+				newUploadedFilePaths = [
+					...newUploadedFilePaths,
+					...uploadResponse.data.filePaths
+				]
 			} catch (error) {
-				console.error('Error uploading file:', error)
+				console.error('Error uploading files:', error)
 				return
 			}
 		}
 
 		const updatedData = {
 			...product,
-			images: [uploadedFilePath],
+			images: newUploadedFilePaths,
 			groupId: parseInt(product.groupId),
 			price: parseInt(product.price),
 			priceForSale: parseInt(product.priceForSale),
 			code: parseInt(product.code),
 			nds: parseInt(product.nds),
-			itemCount: parseInt(product.itemCount)
+			warehouseCount: parseInt(product.Warehouse.count)
 		}
 
 		try {
@@ -96,8 +178,7 @@ function UpdateProduct({ children, ...props }) {
 				updatedData
 			)
 			console.log('Response from server:', response.data)
-			// navigate('/products') // Перенаправление после успешного обновления товара
-			navigate(-1)
+			navigate(-1) // Перенаправление после успешного обновления товара
 		} catch (error) {
 			console.error('Error updating item:', error)
 		}
@@ -151,12 +232,45 @@ function UpdateProduct({ children, ...props }) {
 											id='img'
 											type='file'
 											accept='images/*'
-											multiple='multiple'
+											multiple
 											// required
 											onChange={handleFileChange}
 											// value={product.img || ''}
 											// onChange={e => setProduct({ ...product, img: e.target.value })}
 										/>
+									</div>
+									<div className={styles.preview}>
+										{uploadedFilePaths.map((file, index) => (
+											<div key={index} className={styles.previewImage}>
+												<img
+													src={`${uploadsConfig}${file}`}
+													alt={`Uploaded preview ${index + 1}`}
+												/>
+												<button
+													type='button'
+													onClick={() => handleRemoveImage(index)}
+												>
+													Удалить
+												</button>
+											</div>
+										))}
+										{selectedFiles.map((file, index) => (
+											<div
+												key={index + uploadedFilePaths.length}
+												className={styles.previewImage}
+											>
+												<img
+													src={URL.createObjectURL(file)}
+													alt={`Preview ${index + 1}`}
+												/>
+												<button
+													type='button'
+													onClick={() => handleRemoveNewImage(index)}
+												>
+													Удалить
+												</button>
+											</div>
+										))}
 									</div>
 								</div>
 							</div>
@@ -182,13 +296,13 @@ function UpdateProduct({ children, ...props }) {
 										value={product.code || ''}
 										onChange={handleChange}
 									/>
-									<label htmlFor='itemCount'>Количество</label>
+									<label htmlFor='warehouseCount'>Количество</label>
 									<input
 										type='number'
-										id='itemCount'
-										name='itemCount'
+										id='warehouseCount'
+										name='warehouseCount'
 										required
-										value={product.itemCount || ''}
+										value={product.Warehouse.count || ''}
 										onChange={handleChange}
 									/>
 									<label htmlFor='nds'>НДС</label>

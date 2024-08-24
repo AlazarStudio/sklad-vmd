@@ -144,11 +144,23 @@ function Warehouse() {
 
 	// Проходим по каждому продукту и суммируем их количество, если они имеют одинаковое имя
 	productsDB.forEach(product => {
-		if (uniqueProducts[product.name]) {
-			uniqueProducts[product.name].itemCount += +product.itemCount
+		const productName = product.name
+
+		// Если продукт с таким именем уже есть в uniqueProducts
+		if (uniqueProducts[productName]) {
+			// Увеличиваем его количество
+			uniqueProducts[productName].Warehouse.count += Number(
+				product.Warehouse.count
+			)
 		} else {
-			uniqueProducts[product.name] = { ...product }
-			uniqueProducts[product.name].itemCount = +product.itemCount
+			// Иначе, создаем новую запись в uniqueProducts
+			uniqueProducts[productName] = {
+				...product,
+				Warehouse: {
+					...product.Warehouse,
+					count: Number(product.Warehouse.count)
+				}
+			}
 		}
 	})
 
@@ -192,14 +204,16 @@ function Warehouse() {
 						<option value='' defaultValue>
 							Все группы
 						</option>
-						{groups.map(group => (
-							<option
-								key={group.id}
-								value={transliterate(group.name).toLowerCase()}
-							>
-								{group.name}
-							</option>
-						)).reverse()}
+						{groups
+							.map(group => (
+								<option
+									key={group.id}
+									value={transliterate(group.name).toLowerCase()}
+								>
+									{group.name}
+								</option>
+							))
+							.reverse()}
 					</select>
 				</div>
 				<input type='search' placeholder='Поиск...' />
@@ -219,16 +233,19 @@ function Warehouse() {
 					<p className={styles.sale_price_sum}>Сумма продажи</p>
 				</div>
 				<div>
-					{filteredProducts.slice(-5).map((product, index) => (
-						<RemainsProduct
-							key={index}
-							isVisCheckBox={false}
-							operation={true}
-							linkName={transliterate(product.name)}
-							{...product}
-							onSelect={handleProductSelect}
-						/>
-					)).reverse()}
+					{filteredProducts
+						.slice(-5)
+						.map((product, index) => (
+							<RemainsProduct
+								key={index}
+								isVisCheckBox={false}
+								operation={true}
+								linkName={transliterate(product.name)}
+								{...product}
+								onSelect={handleProductSelect}
+							/>
+						))
+						.reverse()}
 				</div>
 			</section>
 
