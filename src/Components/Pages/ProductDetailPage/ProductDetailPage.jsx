@@ -297,7 +297,7 @@ function ProductDetailPage() {
 					itemId: product.id,
 					quantity: modalQuantities[product.code],
 					reason: writeOffReason,
-					source: fromWarehouse ? 'warehouse' : 'store',
+					source: fromWarehouse ? 'warehouse' : 'store'
 				})
 
 				if (response.status === 200) {
@@ -319,6 +319,35 @@ function ProductDetailPage() {
 		navigate('/products/write-offs')
 	}
 
+	const transfer = async () => {
+		try {
+			for (const product of selectedProducts) {
+				const response = await axios.post(`${serverConfig}/transfer`, {
+					itemId: product.id,
+					quantity: modalQuantities[product.code],
+					from: fromWarehouse ? 'warehouse' : 'store',
+					to: !fromWarehouse ? 'warehouse' : 'store'
+				})
+
+				if (response.status === 200) {
+					console.log(
+						`Перемещено товаров: ${modalQuantities[product.code]} шт. ${product.name}`
+					)
+				} else {
+					console.log(
+						response.status,
+						'Ошибка в перемещении товара',
+						response.data
+					)
+				}
+			}
+		} catch (error) {
+			console.error('Catch error: ', error)
+		}
+		setIsMoveToShopModalOpen(false)
+		navigate(fromWarehouse ? '/products' : '/warehouse')
+	}
+
 	const handleMoveToShopButtonClick = () => {
 		console.log(`Перемещено в магазин: ${JSON.stringify(modalQuantities)}`)
 		setIsMoveToShopModalOpen(false)
@@ -335,7 +364,9 @@ function ProductDetailPage() {
 		setModalQuantities(prev => ({
 			...prev,
 			[code]: Math.min(
-				filteredProducts.find(p => p.code === code)?.itemCount || 0,
+				fromWarehouse
+					? filteredProducts.find(p => p.code === code)?.Warehouse.count || 0
+					: filteredProducts.find(p => p.code === code)?.Store.count || 0,
 				Math.max(1, Number(value))
 			)
 		}))
@@ -412,7 +443,10 @@ function ProductDetailPage() {
 								src='/images/back.png'
 								alt='Back'
 							/>
-							<p>Продукты модели {filteredProducts[0]?.name}</p>
+							<p>
+								Продукты модели {filteredProducts[0]?.name}{' '}
+								{!fromWarehouse ? 'в магазине' : 'на складе'}{' '}
+							</p>
 						</div>
 						<p className={styles.quantity_product}>{totalQuantity} шт.</p>
 					</div>
@@ -600,19 +634,19 @@ function ProductDetailPage() {
 									onChange={e =>
 										handleMoveToShopQuantityChange(product.code, e.target.value)
 									}
-									max={product.itemCount}
+									max={
+										fromWarehouse
+											? product.Warehouse.count
+											: product.Store.count
+									}
 								/>
 							</div>
 						))}
 						<div className={styles.modal_buttons}>
 							{fromWarehouse ? (
-								<button onClick={handleMoveToShopButtonClick}>
-									Переместить в магазин
-								</button>
+								<button onClick={transfer}>Переместить в магазин</button>
 							) : (
-								<button onClick={handleMoveToWarehouseButtonClick}>
-									Переместить на склад
-								</button>
+								<button onClick={transfer}>Переместить на склад</button>
 							)}
 
 							<div

@@ -4,7 +4,13 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './ProductCard.module.css'
 
-function ProductCard({ fromWarehouse, linkName, operation, onSelect, ...props }) {
+function ProductCard({
+	fromWarehouse,
+	linkName,
+	operation,
+	onSelect,
+	...props
+}) {
 	const navigate = useNavigate()
 
 	const goToUpdateProduct = () => {
@@ -20,7 +26,7 @@ function ProductCard({ fromWarehouse, linkName, operation, onSelect, ...props })
 	return (
 		<div className={styles.product_wrapper} onClick={goToUpdateProduct}>
 			<div className={styles.checkBox_wrapper}>
-				<CheckBox onChange={handleCheckBoxChange} />
+				{itemCount === 0 ? null : <CheckBox onChange={handleCheckBoxChange} />}
 			</div>
 			<p className={styles.name}>{props.name}</p>
 			<p className={styles.code}>{props.code}</p>

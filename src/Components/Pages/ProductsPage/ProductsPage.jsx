@@ -136,11 +136,18 @@ function ProductsPage() {
 
 	// Проходим по каждому продукту и суммируем их количество, если они имеют одинаковое имя
 	productsDB.forEach(product => {
-		if (uniqueProducts[product.name]) {
-			uniqueProducts[product.name].itemCount += +product.itemCount
+		const productName = product.name
+
+		if (uniqueProducts[productName]) {
+			uniqueProducts[productName].Store.count += +product.Store.count
 		} else {
-			uniqueProducts[product.name] = { ...product }
-			uniqueProducts[product.name].itemCount = +product.itemCount
+			uniqueProducts[productName] = {
+				...product,
+				Store: {
+					...product.Store,
+					count: +product.Store.count
+				}
+			}
 		}
 	})
 
@@ -220,16 +227,18 @@ function ProductsPage() {
 					<p className={styles.sale_price}>Цена продажи</p>
 				</div>
 				<div>
-					{filteredProducts.map((product, index) => (
-						<Product
-							isVisCheckBox={false}
-							key={index}
-							operation={true}
-							linkName={transliterate(product.name)}
-							{...product}
-							onSelect={handleProductSelect}
-						/>
-					)).reverse()}
+					{filteredProducts
+						.map((product, index) => (
+							<Product
+								isVisCheckBox={false}
+								key={index}
+								operation={true}
+								linkName={transliterate(product.name)}
+								{...product}
+								onSelect={handleProductSelect}
+							/>
+						))
+						.reverse()}
 				</div>
 			</section>
 

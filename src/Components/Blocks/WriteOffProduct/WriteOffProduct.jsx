@@ -25,7 +25,7 @@ function WriteOffProduct({ quantity, reason, ...props }) {
 				{formatDate(props.createdAt)}
 			</p>
 			<p className={styles.unit_of_measurement}>{quantity}</p>
-			<p className={styles.reason}>{reason}</p>
+			<p className={styles.reason}>{!reason? 'Не указан' : reason}</p>
 			<p className={styles.cost_price}>
 				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
