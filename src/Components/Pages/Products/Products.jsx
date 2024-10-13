@@ -36,14 +36,14 @@ function Products({ children, ...props }) {
 				>
 					Остатки
 				</Link> */}
-				<Link
+				{/* <Link
 					to='/products/turnovers'
 					className={
 						location.pathname === '/products/turnovers' ? styles.active : ''
 					}
 				>
 					Обороты
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	)

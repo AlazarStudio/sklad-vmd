@@ -52,7 +52,7 @@ function Turnovers({ children, ...props }) {
 				<div className={styles.operation_buttons__wrapper}>
 					<input type='date' defaultValue={start} required />
 					<input type='date' defaultValue={end} required />
-					<AddButton img='/images/print.png' text='Печать' />
+					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
 				<input type='search' placeholder='Поиск...' />
 			</div>

@@ -20,18 +20,25 @@ import Remains from '../Remains/Remains'
 import Reports from '../Reports/Reports'
 import Retails from '../Retails/Retails'
 import Sales from '../Sales/Sales'
+import SelectGroup from '../SelectGroup/SelectGroup'
 import Shipments from '../Shipments/Shipments'
 import Turnovers from '../Turnovers/Turnovers'
 import UpdateProduct from '../UpdateProduct/UpdateProduct'
 import Warehouse from '../Warehouse/Warehouse'
 import WriteOffs from '../WriteOffs/WriteOffs'
+import AddProductMoto from '../AddProductMoto/AddProductMoto'
+import AddProductATVs from '../AddProductATVs/AddProductATVs'
+import AddProductMoped from '../AddProductMoped/AddProductMoped'
 
 function MainPage({ children, ...props }) {
 	let { id, idType } = useParams()
 	// console.log(id)
 	const ids = [
 		'products',
-		'add-product',
+		'add-product-bike',
+		'add-product-motorcycle',
+		'add-product-atvs',
+		'add-product-moped',
 		// 'update-product',
 		'add-product-group',
 		'contractors',
@@ -43,6 +50,7 @@ function MainPage({ children, ...props }) {
 		'add-acceptance',
 		'reports',
 		'add-report',
+		'select-group',
 		undefined
 	]
 
@@ -64,7 +72,10 @@ function MainPage({ children, ...props }) {
 					{!id && !idType && <ProductsPage />}
 					{id == 'products' && !idType && <ProductsPage />}
 					{/* {id == 'update-product' && !idType && <UpdateProduct />} */}
-					{id == 'add-product' && <AddProduct />}
+					{id == 'add-product-bike' && <AddProduct />}
+					{id == 'add-product-motorcycle' && <AddProductMoto />}
+					{id == 'add-product-atvs' && <AddProductATVs />}
+					{id == 'add-product-moped' && <AddProductMoped />}
 					{id == 'add-product-group' && <AddGroup />}
 					{id == 'products' && idType == 'write-offs' && <WriteOffs />}
 					{id == 'products' && idType == 'remains' && <Remains />}
@@ -85,6 +96,7 @@ function MainPage({ children, ...props }) {
 					{id == 'add-retails' && <AddRetail />}
 					{id == 'reports' && <Reports />}
 					{id == 'add-report' && <AddReport />}
+					{id == 'select-group' && <SelectGroup />}
 					{!ids.includes(id) && <NotFoundPage />}
 					{ids.includes(id) && !idTypes.includes(idType) && <NotFoundPage />}
 				</WidthBlock>

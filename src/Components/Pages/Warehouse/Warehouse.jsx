@@ -22,6 +22,7 @@ const fetchProducts = async () => {
 
 function Warehouse() {
 	const [selectedProducts, setSelectedProducts] = useState([])
+	const [searchQuery, setSearchQuery] = useState('')
 	const [selectedType, setSelectedType] = useState('')
 	const navigate = useNavigate()
 
@@ -139,6 +140,45 @@ function Warehouse() {
 		}
 	}
 
+	// // Создаем объект для хранения уникальных продуктов
+	// const uniqueProducts = {}
+
+	// // Проходим по каждому продукту и суммируем их количество, если они имеют одинаковое имя
+	// productsDB.forEach(product => {
+	// 	const productName = product.name
+
+	// 	// Если продукт с таким именем уже есть в uniqueProducts
+	// 	if (uniqueProducts[productName]) {
+	// 		// Увеличиваем его количество
+	// 		uniqueProducts[productName].Warehouse.count += Number(
+	// 			product.Warehouse.count
+	// 		)
+	// 	} else {
+	// 		// Иначе, создаем новую запись в uniqueProducts
+	// 		uniqueProducts[productName] = {
+	// 			...product,
+	// 			Warehouse: {
+	// 				...product.Warehouse,
+	// 				count: Number(product.Warehouse.count)
+	// 			}
+	// 		}
+	// 	}
+	// })
+
+	// // Преобразуем объект обратно в массив для рендеринга
+	// const productsToDisplay = Object.values(uniqueProducts)
+
+	// // Фильтрация продуктов по выбранной группе
+	// const filteredProducts = selectedType
+	// 	? productsToDisplay.filter(product => {
+	// 			const groupName =
+	// 				product.group && product.group.name
+	// 					? transliterate(product.group.name).toLowerCase()
+	// 					: ''
+	// 			return groupName === selectedType
+	// 		})
+	// 	: productsToDisplay
+
 	// Создаем объект для хранения уникальных продуктов
 	const uniqueProducts = {}
 
@@ -146,19 +186,14 @@ function Warehouse() {
 	productsDB.forEach(product => {
 		const productName = product.name
 
-		// Если продукт с таким именем уже есть в uniqueProducts
 		if (uniqueProducts[productName]) {
-			// Увеличиваем его количество
-			uniqueProducts[productName].Warehouse.count += Number(
-				product.Warehouse.count
-			)
+			uniqueProducts[productName].Store.count += +product.Store.count
 		} else {
-			// Иначе, создаем новую запись в uniqueProducts
 			uniqueProducts[productName] = {
 				...product,
-				Warehouse: {
-					...product.Warehouse,
-					count: Number(product.Warehouse.count)
+				Store: {
+					...product.Store,
+					count: +product.Store.count
 				}
 			}
 		}
@@ -167,19 +202,44 @@ function Warehouse() {
 	// Преобразуем объект обратно в массив для рендеринга
 	const productsToDisplay = Object.values(uniqueProducts)
 
-	// Фильтрация продуктов по выбранной группе
+	// Поиск по всем продуктам в базе (productsDB)
+	const searchResults = productsDB.filter(product => {
+		const productName = product.name || ''
+		const productGender = product.gender || ''
+		const productGroupName = product.group?.name || ''
+		const productColor = product.color || ''
+		const productWheelSize = product.wheelSize || ''
+		const productFrameGrouve = product.frameGrouve || ''
+
+		const matchesSearchQuery =
+			searchQuery === '' ||
+			productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productGender.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productGroupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productColor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productWheelSize.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productFrameGrouve.toLowerCase().includes(searchQuery.toLowerCase())
+
+		return matchesSearchQuery
+	})
+
+	// Применяем фильтрацию только к результатам поиска, но отображаем исходный отфильтрованный список
 	const filteredProducts = selectedType
 		? productsToDisplay.filter(product => {
-				const groupName =
-					product.group && product.group.name
-						? transliterate(product.group.name).toLowerCase()
-						: ''
+				const groupName = transliterate(product.group?.name || '').toLowerCase()
 				return groupName === selectedType
 			})
 		: productsToDisplay
 
+	// Отображение продуктов
+	const productsToRender = searchQuery ? searchResults : filteredProducts
+
 	const handleTypeChange = event => {
 		setSelectedType(event.target.value)
+	}
+	
+	const handleSearchChange = event => {
+		setSearchQuery(event.target.value)
 	}
 
 	const navToShop = e => {
@@ -193,7 +253,7 @@ function Warehouse() {
 				<p className={styles.operations__title}>Склад</p>
 				<div className={styles.operation_buttons__wrapper}>
 					{/* <AddButton img='/images/qr-code.png' text='Добавить товар' /> */}
-					<Link to='/add-product'>
+					<Link to='/select-group'>
 						<img src='/images/green_add.png' alt='' /> Товар
 					</Link>
 					<Link to='/add-product-group'>
@@ -216,7 +276,12 @@ function Warehouse() {
 							.reverse()}
 					</select>
 				</div>
-				<input type='search' placeholder='Поиск...' />
+				<input
+					type='search'
+					placeholder='Поиск...'
+					value={searchQuery}
+					onChange={handleSearchChange}
+				/>
 			</div>
 
 			<section className={styles.products_wrapper}>
@@ -233,8 +298,7 @@ function Warehouse() {
 					<p className={styles.sale_price_sum}>Сумма продажи</p>
 				</div>
 				<div>
-					{filteredProducts
-						.slice(-5)
+					{productsToRender
 						.map((product, index) => (
 							<RemainsProduct
 								key={index}

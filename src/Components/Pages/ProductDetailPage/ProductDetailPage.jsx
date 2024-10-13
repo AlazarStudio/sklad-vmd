@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import { Colors, products } from '../../../../data'
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import ProductCard from '../../Blocks/ProductCard/ProductCard'
 import Scale from '../../Blocks/Scale/Scale'
@@ -247,18 +248,6 @@ function ProductDetailPage() {
 		setIsSellModalOpen(true)
 	}
 
-	const handleSellToCounterpart = () => {
-		console.log(`Продать контрагенту: ${JSON.stringify(modalQuantities)}`)
-		setIsSellModalOpen(false)
-		navigate('/add-shipment')
-	}
-
-	const handleSellToCustomer = () => {
-		console.log(`Продать клиенту: ${JSON.stringify(modalQuantities)}`)
-		setIsSellModalOpen(false)
-		navigate('/add-retails')
-	}
-
 	const handleQuantityChange = (code, value) => {
 		setModalQuantities(prev => ({
 			...prev,
@@ -293,12 +282,18 @@ function ProductDetailPage() {
 	const handleWriteOffConfirm = async () => {
 		try {
 			for (const product of selectedProducts) {
-				const response = await axios.post(`${serverConfig}/writeoffs`, {
-					itemId: product.id,
-					quantity: modalQuantities[product.code],
-					reason: writeOffReason,
-					source: fromWarehouse ? 'warehouse' : 'store'
-				})
+				const response = await axios.post(
+					`${serverConfig}/writeoffs`,
+					{
+						itemId: product.id,
+						quantity: modalQuantities[product.code],
+						reason: writeOffReason,
+						source: fromWarehouse ? 'warehouse' : 'store'
+					},
+					{
+						headers: { Authorization: `Bearer ${getToken}` }
+					}
+				)
 
 				if (response.status === 200) {
 					console.log(
@@ -322,12 +317,18 @@ function ProductDetailPage() {
 	const transfer = async () => {
 		try {
 			for (const product of selectedProducts) {
-				const response = await axios.post(`${serverConfig}/transfer`, {
-					itemId: product.id,
-					quantity: modalQuantities[product.code],
-					from: fromWarehouse ? 'warehouse' : 'store',
-					to: !fromWarehouse ? 'warehouse' : 'store'
-				})
+				const response = await axios.post(
+					`${serverConfig}/transfer`,
+					{
+						itemId: product.id,
+						quantity: modalQuantities[product.code],
+						from: fromWarehouse ? 'warehouse' : 'store',
+						to: !fromWarehouse ? 'warehouse' : 'store'
+					},
+					{
+						headers: { Authorization: `Bearer ${getToken}` }
+					}
+				)
 
 				if (response.status === 200) {
 					console.log(
@@ -346,6 +347,57 @@ function ProductDetailPage() {
 		}
 		setIsMoveToShopModalOpen(false)
 		navigate(fromWarehouse ? '/products' : '/warehouse')
+	}
+
+	const WarehouseOrNot = fromWarehouse ? 'warehouse' : 'store'
+
+	const addToCart = async (buyerType, nav) => {
+		try {
+			for (const product of selectedProducts) {
+				const response = await axios.post(
+					`${serverConfig}/cart`,
+					{
+						userId: 1,
+						itemId: product.id,
+						quantity: modalQuantities[product.code],
+						buyertype: buyerType
+					},
+					{ headers: { Authorization: `Bearer ${getToken}` } }
+				)
+				if (response.status !== 200) {
+					console.error('Error blyat', response.data)
+				} else {
+					console.log(`Added to cart ${product.name}`)
+				}
+			}
+			navigate(nav, { state: WarehouseOrNot })
+		} catch (error) {
+			console.log(getToken)
+			console.error('Catch error: ', error)
+		}
+	}
+
+	const handleSellToCounterpart = () => {
+		addToCart('contractor', '/add-shipment')
+		setIsSellModalOpen(false)
+		// console.log(`Продать контрагенту: ${JSON.stringify(modalQuantities)}`)
+		// // Преобразование modalQuantities в массив объектов с id и количеством
+		// const productsForShipment = selectedProducts.map(product => ({
+		// 	id: product.id,
+		// 	quantity: modalQuantities[product.code] || 0
+		// }))
+		// setIsSellModalOpen(false)
+		// navigate('/add-shipment', {
+		// 	state: { shipmentProducts: productsForShipment }
+		// })
+	}
+
+	const handleSellToCustomer = () => {
+		addToCart('customer', '/add-retails')
+		setIsSellModalOpen(false)
+		// console.log(`Продать клиенту: ${JSON.stringify(modalQuantities)}`)
+		// setIsSellModalOpen(false)
+		// navigate('/add-retails')
 	}
 
 	const handleMoveToShopButtonClick = () => {
@@ -454,7 +506,7 @@ function ProductDetailPage() {
 						<section className={styles.margin}>
 							<div className={styles.products_wrapper__head}>
 								<div className={styles.checkBox_wrapper}>
-									<CheckBox onChange={() => {}} />
+									{/* <CheckBox onChange={() => {}} /> */}
 								</div>
 								<p className={styles.name}>Наименование</p>
 								<p className={styles.code}>Код</p>

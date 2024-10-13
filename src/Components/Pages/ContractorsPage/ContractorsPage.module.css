@@ -84,7 +84,7 @@
 }
 
 .created {
-  flex-basis: 20%;
+  flex-basis: 15%;
 }
 
 .phone {
@@ -92,11 +92,11 @@
 }
 
 .email {
-  flex-basis: 20%;
+  flex-basis: 17%;
 }
 
 .address {
-  flex-basis: 20%;
+  flex-basis: 28%;
 }
 
 .actions {

@@ -18,10 +18,10 @@ function Shipments({ ...props }) {
 						<img src='/images/qr-code.png' alt='' />
 						Продать товар
 					</Link> */}
-					<Link to='/add-shipment'>
-						<img src='/images/green_add.png' alt='' />
-						Продать товар
-					</Link>
+					{/* <Link to='/add-shipment'>
+						<img style={{width:'25px', height:'25px'}} src='/images/cart1.png' alt='' />
+						Товары к продаже
+					</Link> */}
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
 					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>

@@ -14,3 +14,70 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.exit {
+  width: 44px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.exit img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  outline: none;
+  width: 400px;
+  text-align: center;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirmButton,
+.cancelButton {
+  padding: 0 20px;
+  height: 44px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.confirmButton {
+  background-color: #f77532;
+  color: white;
+}
+
+.cancelButton {
+  background-color: #aaa;
+  color: white;
+}
+
+.text {
+  font-size: 24px;
+  font-weight: 500;
+}

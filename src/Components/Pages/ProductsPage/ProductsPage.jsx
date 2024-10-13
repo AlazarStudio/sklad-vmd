@@ -23,6 +23,7 @@ const fetchProducts = async () => {
 function ProductsPage() {
 	const [selectedProducts, setSelectedProducts] = useState([])
 	const [selectedType, setSelectedType] = useState('')
+	const [searchQuery, setSearchQuery] = useState('')
 	const navigate = useNavigate()
 
 	const [productsDB, setProducts] = useState([])
@@ -131,6 +132,72 @@ function ProductsPage() {
 			.replace(/ /g, '_')
 	}
 
+		// // Создаем объект для хранения уникальных продуктов
+		// const uniqueProducts = {}
+
+		// // Проходим по каждому продукту и суммируем их количество, если они имеют одинаковое имя
+		// productsDB.forEach(product => {
+		// 	const productName = product.name
+	
+		// 	if (uniqueProducts[productName]) {
+		// 		uniqueProducts[productName].Store.count += +product.Store.count
+		// 	} else {
+		// 		uniqueProducts[productName] = {
+		// 			...product,
+		// 			Store: {
+		// 				...product.Store,
+		// 				count: +product.Store.count
+		// 			}
+		// 		}
+		// 	}
+		// })
+	
+		// // Преобразуем объект обратно в массив для рендеринга
+		// const productsToDisplay = Object.values(uniqueProducts)
+	
+		// // Фильтрация продуктов по выбранной группе
+		// const filteredProducts = selectedType
+		// 	? productsToDisplay.filter(product => {
+		// 			const productName = product.name || ''
+		// 			const productGender = product.gender || ''
+		// 			const productGroupName = product.group?.name || ''
+		// 			const productColor = product.color || ''
+		// 			const productWheelSize = product.wheelSize || ''
+		// 			const productFrameGrouve = product.frameGrouve || ''
+	
+		// 			const matchesSearchQuery =
+		// 				searchQuery === '' ||
+		// 				productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productGender.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productGroupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productColor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productWheelSize.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productFrameGrouve.toLowerCase().includes(searchQuery.toLowerCase())
+	
+		// 			const groupName = transliterate(productGroupName).toLowerCase()
+		// 			return matchesSearchQuery && groupName === selectedType
+		// 		})
+		// 	: productsToDisplay.filter(product => {
+		// 			const productName = product.name || ''
+		// 			const productGender = product.gender || ''
+		// 			const productGroupName = product.group?.name || ''
+		// 			const productColor = product.color || ''
+		// 			const productWheelSize = product.wheelSize || ''
+		// 			const productFrameGrouve = product.frameGrouve || ''
+	
+		// 			const matchesSearchQuery =
+		// 				searchQuery === '' ||
+		// 				productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productGender.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productGroupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productColor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productWheelSize.toLowerCase().includes(searchQuery.toLowerCase()) ||
+		// 				productFrameGrouve.toLowerCase().includes(searchQuery.toLowerCase())
+	
+		// 			return matchesSearchQuery
+		// 		})
+	
+
 	// Создаем объект для хранения уникальных продуктов
 	const uniqueProducts = {}
 
@@ -154,16 +221,37 @@ function ProductsPage() {
 	// Преобразуем объект обратно в массив для рендеринга
 	const productsToDisplay = Object.values(uniqueProducts)
 
-	// Фильтрация продуктов по выбранной группе
+	// Поиск по всем продуктам в базе (productsDB)
+	const searchResults = productsDB.filter(product => {
+		const productName = product.name || ''
+		const productGender = product.gender || ''
+		const productGroupName = product.group?.name || ''
+		const productColor = product.color || ''
+		const productWheelSize = product.wheelSize || ''
+		const productFrameGrouve = product.frameGrouve || ''
+
+		const matchesSearchQuery =
+			searchQuery === '' ||
+			productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productGender.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productGroupName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productColor.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productWheelSize.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			productFrameGrouve.toLowerCase().includes(searchQuery.toLowerCase())
+
+		return matchesSearchQuery
+	})
+
+	// Применяем фильтрацию только к результатам поиска, но отображаем исходный отфильтрованный список
 	const filteredProducts = selectedType
 		? productsToDisplay.filter(product => {
-				const groupName =
-					product.group && product.group.name
-						? transliterate(product.group.name).toLowerCase()
-						: ''
+				const groupName = transliterate(product.group?.name || '').toLowerCase()
 				return groupName === selectedType
 			})
 		: productsToDisplay
+
+	// Отображение продуктов
+	const productsToRender = searchQuery ? searchResults : filteredProducts
 
 	const handleProductSelect = (product, isChecked) => {
 		if (isChecked) {
@@ -182,6 +270,10 @@ function ProductsPage() {
 	const navBack = e => {
 		e.preventDefault()
 		navigate('/warehouse')
+	}
+
+	const handleSearchChange = event => {
+		setSearchQuery(event.target.value)
 	}
 
 	return (
@@ -214,7 +306,12 @@ function ProductsPage() {
 							.reverse()}
 					</select>
 				</div>
-				<input type='search' placeholder='Поиск...' />
+				<input
+					type='search'
+					placeholder='Поиск...'
+					value={searchQuery}
+					onChange={handleSearchChange}
+				/>
 			</div>
 
 			<section className={styles.products_wrapper}>
@@ -227,7 +324,7 @@ function ProductsPage() {
 					<p className={styles.sale_price}>Цена продажи</p>
 				</div>
 				<div>
-					{filteredProducts
+					{productsToRender
 						.map((product, index) => (
 							<Product
 								isVisCheckBox={false}

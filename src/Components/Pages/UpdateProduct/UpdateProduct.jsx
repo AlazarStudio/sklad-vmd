@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import uploadsConfig from '../../../uploadsConfig'
 import CenterBlock from '../../Standart/CenterBlock/CenterBlock'
@@ -26,8 +27,10 @@ function UpdateProduct({ children, ...props }) {
 		if (!location.state?.product) {
 			const fetchProduct = async () => {
 				try {
-					const response = await axios.get(`${serverConfig}/items/${id}`)
-					console.log(response.data)
+					const response = await axios.get(`${serverConfig}/items/${id}`, {
+						headers: { Authorization: `Bearer ${getToken}` }
+					})
+					// console.log(response.data)
 					setProduct(response.data)
 				} catch (error) {
 					console.error('Error fetching product:', error)
@@ -39,7 +42,7 @@ function UpdateProduct({ children, ...props }) {
 		const fetchGroups = async () => {
 			try {
 				const response = await axios.get(`${serverConfig}/groups`)
-				console.log(response)
+				// console.log(response)
 				setGroups(response.data)
 			} catch (error) {
 				console.error('Error fetching groups:', error)
@@ -175,10 +178,14 @@ function UpdateProduct({ children, ...props }) {
 		try {
 			const response = await axios.put(
 				`${serverConfig}/items/${id}`,
-				updatedData
+				updatedData,
+				{
+					headers: { Authorization: `Bearer ${getToken}` }
+				}
 			)
-			console.log('Response from server:', response.data)
-			navigate(-1) // Перенаправление после успешного обновления товара
+			// console.log('Response from server:', response.data)
+			navigate('/warehouse')
+			// navigate(-1) // Перенаправление после успешного обновления товара
 		} catch (error) {
 			console.error('Error updating item:', error)
 		}
@@ -195,6 +202,10 @@ function UpdateProduct({ children, ...props }) {
 	// 		setProduct(location.state.product)
 	// 	}
 	// }, [location.state])
+
+	const print = file => {
+		console.log(URL.createObjectURL(file))
+	}
 
 	return (
 		<main>
@@ -261,6 +272,7 @@ function UpdateProduct({ children, ...props }) {
 											>
 												<img
 													src={URL.createObjectURL(file)}
+													onClick={() => print(file)}
 													alt={`Preview ${index + 1}`}
 												/>
 												<button
@@ -301,7 +313,7 @@ function UpdateProduct({ children, ...props }) {
 										type='number'
 										id='warehouseCount'
 										name='warehouseCount'
-										required
+										// required
 										value={product.Warehouse.count || ''}
 										onChange={handleChange}
 									/>
@@ -516,6 +528,19 @@ function UpdateProduct({ children, ...props }) {
 								</div>
 
 								<div className={styles.item}>
+									<label htmlFor='bearingType'>Тип подшипника</label>
+									<select
+										name='bearingType'
+										value={product.bearingType || ''}
+										onChange={handleChange}
+										// required
+									>
+										<option value='' defaultValue hidden>
+											Выберите тип подшипника
+										</option>
+										<option value='Двухподвес'>Обычный</option>
+										<option value='Жесткая вилка'>Пром</option>
+									</select>
 									<label htmlFor='system'>Система</label>
 									<input
 										type='text'

@@ -13,13 +13,14 @@ function WriteOffProduct({ quantity, reason, ...props }) {
 		}
 
 		return new Date(dateString).toLocaleString('ru-RU', options)
+		
 	}
 
 	return (
 		<div className={styles.product_wrapper}>
 			{/* <div className={styles.checkBox_wrapper}><CheckBox /></div> */}
-			<p className={styles.name}>{props.name} {props.color} {' '} {props.frameGrouve}"{' '} {props.wheelSize}</p>
-			<p className={styles.code}>{props.code}</p>
+			<p className={styles.name}>{props.item.name} {props.item.color} {' '} {props.item.frameGrouve}"{' '} {props.item.wheelSize}</p>
+			<p className={styles.code}>{props.item.code}</p>
 			<p className={styles.sale_price}>
 				{/* {props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} */}
 				{formatDate(props.createdAt)}

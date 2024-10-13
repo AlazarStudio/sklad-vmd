@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import AddButton from '../../UI/AddButton/AddButton'
 
@@ -33,7 +34,12 @@ function AddContractors({ ...props }) {
 		try {
 			const response = await axios.post(
 				`${serverConfig}/contragents`,
-				{...formData}
+				{
+					...formData
+				},
+				{
+					headers: { Authorization: `Bearer ${getToken}` }
+				}
 			)
 			navigate('/contractors')
 		} catch (error) {

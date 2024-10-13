@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 
 import styles from './AddGroup.module.css'
@@ -17,9 +18,15 @@ function AddGroup({ children, ...props }) {
 	const handleSubmit = async e => {
 		e.preventDefault()
 		try {
-			await axios.post(`${serverConfig}/groups`, {
-				name: groupName
-			})
+			await axios.post(
+				`${serverConfig}/groups`,
+				{
+					name: groupName
+				},
+				{
+					headers: { Authorization: `Bearer ${getToken}` }
+				}
+			)
 			navigate('/warehouse') // Перенаправление после успешного создания группы
 		} catch (error) {
 			console.error('Error creating group:', error)

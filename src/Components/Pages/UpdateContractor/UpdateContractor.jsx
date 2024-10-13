@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
@@ -14,12 +15,18 @@ function UpdateContractor({ ...props }) {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [contractor, setContractor] = useState(location.state?.contractor || {})
+	const token = Cookies.get('token')
 
 	useEffect(() => {
 		if (!location.state?.contractor) {
 			const fetchContractor = async () => {
 				try {
-					const response = await axios.get(`${serverConfig}/contragents/${id}`)
+					const response = await axios.get(
+						`${serverConfig}/contragents/${id}`,
+						{
+							headers: { Authorization: `Bearer ${token}` }
+						}
+					)
 					setContractor(response.data)
 				} catch (error) {
 					console.error('Error fetching product:', error)
@@ -40,9 +47,15 @@ function UpdateContractor({ ...props }) {
 	const handleSubmit = async e => {
 		e.preventDefault()
 		try {
-			const response = await axios.put(`${serverConfig}/contragents/${id}`, {
-				...contractor
-			})
+			const response = await axios.put(
+				`${serverConfig}/contragents/${id}`,
+				{
+					...contractor
+				},
+				{
+					headers: { Authorization: `Bearer ${token}` }
+				}
+			)
 			navigate('/contractors')
 		} catch (error) {
 			console.error('Error fetching product:', error)
@@ -60,7 +73,7 @@ function UpdateContractor({ ...props }) {
 					<form onSubmit={handleSubmit} className={styles.form_product}>
 						<div className={styles.products_header__wrapper}>
 							<div className={styles.products_buttons}>
-								<button>Сохранить</button>
+								<button>Изменить</button>
 								<button type='button' onClick={navBack}>
 									Закрыть
 								</button>

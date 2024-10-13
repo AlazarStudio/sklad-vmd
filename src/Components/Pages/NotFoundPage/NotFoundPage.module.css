@@ -5,3 +5,10 @@
   text-align: center;
   line-height: 37px;
 }
+
+.not_found__wrapper {
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

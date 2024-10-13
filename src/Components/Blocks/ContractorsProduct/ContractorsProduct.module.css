@@ -33,16 +33,16 @@
 }
 
 .created {
-  flex-basis: 20%;
+  flex-basis: 15%;
 }
 
 .phone {
   flex-basis: 12%;
 }
 .email {
-  flex-basis: 20%;
+  flex-basis: 17%;
 }
 
 .address {
-  flex-basis: 20%;
+  flex-basis: 28%;
 }

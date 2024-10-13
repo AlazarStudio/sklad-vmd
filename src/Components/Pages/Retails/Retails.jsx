@@ -18,12 +18,12 @@ function Retails({ ...props }) {
 						<img src='/images/qr-code.png' alt='' />
 						Продать товар
 					</Link> */}
-					<Link to='/add-retails'>
-						<img src='/images/green_add.png' alt='' />
-						Отгрузка
-					</Link>
+					{/* <Link to='/add-retails'>
+						<img style={{width:'25px', height:'25px'}} src='/images/cart1.png' alt='' />
+						Товары к продаже
+					</Link> */}
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
-					<AddButton img='/images/print.png' text='Печать' />
+					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
 				<input type='search' placeholder='Поиск...' />
 			</div>
@@ -41,7 +41,7 @@ function Retails({ ...props }) {
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
-					{products.slice(-5).map((product, index) => (
+					{products.slice(0, 5).map((product, index) => (
 						<AcceptanceProduct key={index} {...product} />
 					))}
 				</div>

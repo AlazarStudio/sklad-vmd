@@ -152,8 +152,8 @@ select {
 }
 
 .checkBox_wrapper {
-  padding-left: 8px;
   flex-basis: 3%;
+  text-align: right;
 }
 
 .name {
@@ -290,6 +290,8 @@ select {
 .productRow {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
 .title_sale {

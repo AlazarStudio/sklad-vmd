@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { products } from '../../../../data'
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import ContractorsProduct from '../../Blocks/ContractorsProduct/ContractorsProduct'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -12,7 +13,9 @@ import styles from './ContractorsPage.module.css'
 
 const fetchContractors = async () => {
 	try {
-		const response = await axios.get(`${serverConfig}/contragents`)
+		const response = await axios.get(`${serverConfig}/contragents`, {
+			headers: { Authorization: `Bearer ${getToken}` }
+		})
 		return response.data
 	} catch (error) {
 		console.error('Error fetching products:', error)
@@ -23,7 +26,11 @@ const fetchContractors = async () => {
 const deleteContractors = async ContractorsId => {
 	try {
 		await Promise.all(
-			ContractorsId.map(id => axios.delete(`${serverConfig}/contragents/${id}`))
+			ContractorsId.map(id =>
+				axios.delete(`${serverConfig}/contragents/${id}`, {
+					headers: { Authorization: `Bearer ${getToken}` }
+				})
+			)
 		)
 		return true
 	} catch (error) {
@@ -35,6 +42,7 @@ const deleteContractors = async ContractorsId => {
 function ContractorsPage({ children, ...props }) {
 	const [contractors, setContractors] = useState([])
 	const [selectedContractors, setSelectedContractors] = useState([])
+	const [searchQuery, setSearchQuery] = useState('')
 
 	useEffect(() => {
 		const getContractors = async () => {
@@ -64,6 +72,24 @@ function ContractorsPage({ children, ...props }) {
 		}
 	}
 
+	const filteredContractors = contractors.filter(contractor => {
+		const contractorName = contractor.name?.toLowerCase() || ''
+		const contractorNumber = contractor.number?.toLowerCase() || ''
+		const contractorEmail = contractor.email?.toLowerCase() || ''
+		const contractorAddress = contractor.adress?.toLowerCase() || ''
+
+		return (
+			contractorName.includes(searchQuery.toLowerCase()) ||
+			contractorNumber.includes(searchQuery.toLowerCase()) ||
+			contractorEmail.includes(searchQuery.toLowerCase()) ||
+			contractorAddress.includes(searchQuery.toLowerCase())
+		)
+	})
+
+	const handleSearchChange = event => {
+		setSearchQuery(event.target.value)
+	}
+
 	return (
 		<>
 			<div className={styles.operations}>
@@ -73,9 +99,14 @@ function ContractorsPage({ children, ...props }) {
 						<img src='/images/green_add.png' alt='' />
 						Контрагент
 					</Link>
-					<AddButton img='/images/print.png' text='Печать' />
+					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
-				<input type='search' placeholder='Поиск...' />
+				<input
+					type='search'
+					placeholder='Поиск...'
+					value={searchQuery}
+					onChange={handleSearchChange}
+				/>
 			</div>
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
@@ -100,7 +131,7 @@ function ContractorsPage({ children, ...props }) {
 					<p className={styles.address}>Адрес</p>
 				</div>
 				<div>
-					{contractors.map(contractor => (
+					{filteredContractors.map(contractor => (
 						<ContractorsProduct
 							key={contractor.id}
 							operation={`/update-contractor/${contractor.id}`}

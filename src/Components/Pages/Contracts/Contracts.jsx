@@ -12,7 +12,7 @@ function Contracts({ ...props }) {
 				<p className={styles.operations__title}>Договоры</p>
 				<div className={styles.operation_buttons__wrapper}>
 					<AddButton img='/images/green_add.png' text='Договор' />
-					<AddButton img='/images/print.png' text='Печать' />
+					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
 				<input type='search' placeholder='Поиск...' />
 			</div>

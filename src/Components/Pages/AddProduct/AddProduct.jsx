@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
@@ -12,6 +13,7 @@ function AddProduct({ children, ...props }) {
 	let { id } = useParams()
 	let location = useLocation()
 	const navigate = useNavigate()
+	const token = Cookies.get('token')
 	// console.log(id)
 
 	const [formData, setFormData] = useState({
@@ -20,7 +22,7 @@ function AddProduct({ children, ...props }) {
 		description: '',
 		gender: '',
 		color: '',
-		groupId: '', // ID группы, которую нужно получить динамически
+		groupId: 2, // ID группы, которую нужно получить динамически
 		type: '',
 		price: '',
 		priceForSale: '',
@@ -59,7 +61,7 @@ function AddProduct({ children, ...props }) {
 		const fetchGroups = async () => {
 			try {
 				const response = await axios.get(`${serverConfig}/groups`)
-				console.log(response)
+				// console.log(response)
 				setGroups(response.data)
 			} catch (error) {
 				console.error('Error fetching groups:', error)
@@ -189,11 +191,13 @@ function AddProduct({ children, ...props }) {
 			warehouseCount: parseInt(formData.warehouseCount)
 		}
 
-		console.log('Submitting form data:', preparedData)
+		// console.log('Submitting form data:', preparedData)
 
 		try {
-			const response = await axios.post(`${serverConfig}/items`, preparedData)
-			console.log('Response from server:', response.data)
+			const response = await axios.post(`${serverConfig}/items`, preparedData, {
+				headers: { Authorization: `Bearer ${token}` }
+			})
+			// console.log('Response from server:', response.data)
 			navigate('/warehouse') // Перенаправление после успешного создания товара
 		} catch (error) {
 			console.error('Error creating item:', error)
@@ -202,7 +206,7 @@ function AddProduct({ children, ...props }) {
 
 	const navBack = e => {
 		e.preventDefault()
-		navigate('/warehouse')
+		navigate('/select-group')
 		// navigate(-1)
 	}
 
@@ -213,7 +217,7 @@ function AddProduct({ children, ...props }) {
 				<div className={styles.products_header__wrapper}>
 					<div className={styles.products_buttons}>
 						<button type='submit'>Сохранить</button>
-						<button
+						{/* <button
 							style={{
 								backgroundColor: '#f77532',
 								color: '#fff',
@@ -222,7 +226,7 @@ function AddProduct({ children, ...props }) {
 							}}
 						>
 							Опубликовать
-						</button>
+						</button> */}
 						<button type='button' onClick={navBack}>
 							Закрыть
 						</button>
@@ -256,11 +260,7 @@ function AddProduct({ children, ...props }) {
 							<div className={styles.preview}>
 								{previewImages.map((src, index) => (
 									<div key={index} className={styles.previewImage}>
-									<img
-										key={index}
-										src={src}
-										alt={`preview-${index}`}
-									/>
+										<img key={index} src={src} alt={`preview-${index}`} />
 									</div>
 								))}
 							</div>
@@ -292,7 +292,7 @@ function AddProduct({ children, ...props }) {
 								name='warehouseCount'
 								value={formData.warehouseCount}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='nds'>НДС</label>
 							<input
@@ -305,23 +305,7 @@ function AddProduct({ children, ...props }) {
 						</div>
 						<div className={styles.item}>
 							<label htmlFor='groupId'>Группа</label>
-							<select
-								name='groupId'
-								value={formData.groupId}
-								onChange={handleChange}
-								required
-							>
-								<option value='' defaultValue hidden>
-									Выберите группу
-								</option>
-								{groups
-									.map(group => (
-										<option key={group.id} value={group.id}>
-											{group.name}
-										</option>
-									))
-									.reverse()}
-							</select>
+							<input type='text' name='groupId' value={'Велосипеды'} disabled />
 							<label htmlFor='price'>Себестоимость</label>
 							<input
 								type='text'
@@ -487,6 +471,19 @@ function AddProduct({ children, ...props }) {
 						</div>
 
 						<div className={styles.item}>
+							<label htmlFor='bearingType'>Тип подшипника</label>
+							<select
+								name='bearingType'
+								value={formData.bearingType}
+								onChange={handleChange}
+								// required
+							>
+								<option value='' defaultValue hidden>
+									Выберите тип подшипника
+								</option>
+								<option value='Двухподвес'>Обычный</option>
+								<option value='Жесткая вилка'>Пром</option>
+							</select>
 							<label htmlFor='system'>Система</label>
 							<input
 								type='text'

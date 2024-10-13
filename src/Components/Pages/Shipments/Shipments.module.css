@@ -10,9 +10,19 @@
   font-weight: 500;
 }
 
-.operations input {
+.operations input[type='search'] {
   padding: 0 25px;
   flex-basis: 33%;
+  height: 44px;
+  font-size: 14px;
+  border: 1px solid #b4b4b4;
+  border-radius: 10px;
+  outline: none;
+}
+
+.operations input[type='date'] {
+  padding: 0 25px;
+  flex-basis: 25%;
   height: 44px;
   font-size: 14px;
   border: 1px solid #b4b4b4;
