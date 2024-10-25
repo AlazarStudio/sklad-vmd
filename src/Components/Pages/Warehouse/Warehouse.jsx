@@ -187,13 +187,13 @@ function Warehouse() {
 		const productName = product.name
 
 		if (uniqueProducts[productName]) {
-			uniqueProducts[productName].Store.count += +product.Store.count
+			uniqueProducts[productName].Warehouse.count += +product.Warehouse.count
 		} else {
 			uniqueProducts[productName] = {
 				...product,
-				Store: {
-					...product.Store,
-					count: +product.Store.count
+				Warehouse: {
+					...product.Warehouse,
+					count: +product.Warehouse.count
 				}
 			}
 		}

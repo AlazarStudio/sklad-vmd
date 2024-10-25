@@ -2,9 +2,20 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './ProductCardSale.module.css'
 
-function ProductCardSale({ fromWarehouse, linkName, onSelect, ...props }) {
+function ProductCardSale({
+	onRemove,
+	fromWarehouse,
+	linkName,
+	onSelect,
+	...props
+}) {
 	const handleCheckBoxChange = event => {
 		onSelect(props, event.target.checked)
+	}
+
+	const handleRemoveClick = event => {
+		event.preventDefault()
+		onRemove(props.id) // Передаем ID товара для удаления
 	}
 
 	return (
@@ -16,13 +27,15 @@ function ProductCardSale({ fromWarehouse, linkName, onSelect, ...props }) {
 				{props.Item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.sale_price}>
-				{props.Item.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.Item.priceForSale
+					.toString()
+					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
 			</p>
 			<p className={styles.color}>{props.Item.color}</p>
 			<p className={styles.frameGrowth}>{props.Item.frameGrouve}"</p>
 			<p className={styles.wheelsSize}>{props.Item.wheelSize}</p>
 			<div className={styles.checkBox_wrapper}>
-				<img src="/images/delete.png" alt="" />
+				<img src='/images/delete.png' alt='' onClick={handleRemoveClick} />
 				{/* <CheckBox onChange={handleCheckBoxChange} /> */}
 			</div>
 		</div>

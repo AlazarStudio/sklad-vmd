@@ -43,6 +43,20 @@ function AddRetail({ ...props }) {
 		getProducts()
 	}, [])
 
+	const removeItemFromCart = async itemId => {
+		try {
+			await axios.delete(`${serverConfig}/cart/${itemId}`, {
+				headers: { Authorization: `Bearer ${getToken}` }
+			})
+			// После успешного удаления обновляем список товаров
+			setProducts(prevProducts =>
+				prevProducts.filter(product => product.id !== itemId)
+			)
+		} catch (error) {
+			console.error('Error removing item:', error)
+		}
+	}
+
 	const confirmSale = async price => {
 		try {
 			await axios.post(
@@ -59,7 +73,7 @@ function AddRetail({ ...props }) {
 			navigate(WarehouseOrNot === 'warehouse' ? '/warehouse' : '/')
 			// alert('Продажа успешно подтверждена!')
 		} catch (error) {
-			console.error('Catch error:', error.response?.data || error.message)
+			console.error('Catch error:', error)
 			// alert(error)
 		}
 	}
@@ -132,6 +146,7 @@ function AddRetail({ ...props }) {
 							key={product.id}
 							{...product}
 							onSelect={handleProductSelect}
+							onRemove={removeItemFromCart}
 						/>
 					))}
 				</div>

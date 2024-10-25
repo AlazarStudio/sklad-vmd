@@ -10,7 +10,7 @@ function Contractors({ children, ...props }) {
 	return (
 		<div className={styles.products_header__wrapper}>
 			<div className={styles.products_buttons}>
-				<Link
+				{/* <Link
 					to='/contractors'
 					className={location.pathname === '/contractors' ? styles.active : ''}
 				>
@@ -23,7 +23,7 @@ function Contractors({ children, ...props }) {
 					}
 				>
 					Договоры
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	)

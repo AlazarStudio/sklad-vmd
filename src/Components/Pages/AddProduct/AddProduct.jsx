@@ -22,7 +22,7 @@ function AddProduct({ children, ...props }) {
 		description: '',
 		gender: '',
 		color: '',
-		groupId: 2, // ID группы, которую нужно получить динамически
+		groupId: 0, // ID группы, которую нужно получить динамически
 		type: '',
 		price: '',
 		priceForSale: '',
@@ -305,7 +305,19 @@ function AddProduct({ children, ...props }) {
 						</div>
 						<div className={styles.item}>
 							<label htmlFor='groupId'>Группа</label>
-							<input type='text' name='groupId' value={'Велосипеды'} disabled />
+							<select name='groupId' id='' required onChange={handleChange}>
+								<option value='' defaultValue>
+									Все группы
+								</option>
+								{groups
+									.map(group => (
+										<option key={group.id} value={group.id}>
+											{group.name}
+										</option>
+									))
+									.reverse()}
+							</select>
+							{/* <input type='text' name='groupId' value={'Велосипеды'} disabled /> */}
 							<label htmlFor='price'>Себестоимость</label>
 							<input
 								type='text'

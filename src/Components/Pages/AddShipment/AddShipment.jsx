@@ -131,7 +131,22 @@ function AddShipment({ ...props }) {
 		}
 	}
 
+	const removeItemFromCart = async itemId => {
+		try {
+			await axios.delete(`${serverConfig}/cart/${itemId}`, {
+				headers: { Authorization: `Bearer ${getToken}` }
+			})
+			// После успешного удаления обновляем список товаров
+			setProducts(prevProducts =>
+				prevProducts.filter(product => product.id !== itemId)
+			)
+		} catch (error) {
+			console.error('Error removing item:', error)
+		}
+	}
+
 	const confirmSale = async price => {
+		console.log('Selected Contractor ID:', selectedContractorId);
 		try {
 			await axios.post(
 				`${serverConfig}/cart/confirm-sale`,
@@ -145,10 +160,10 @@ function AddShipment({ ...props }) {
 			)
 			closeModal()
 			setPrices({})
-			alert('Продажа успешно подтверждена!')
+			navigate(WarehouseOrNot === 'warehouse' ? '/warehouse' : '/')
+			// alert('Продажа успешно подтверждена!')
 		} catch (error) {
 			console.error('Catch error:', error.response?.data || error.message)
-			alert(error)
 		}
 	}
 
@@ -251,6 +266,7 @@ function AddShipment({ ...props }) {
 							{...product}
 							quantity={product.quantity}
 							onSelect={handleProductSelect}
+							onRemove={removeItemFromCart}
 						/>
 					))}
 				</div>
