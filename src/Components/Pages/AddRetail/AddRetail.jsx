@@ -57,24 +57,22 @@ function AddRetail({ ...props }) {
 		}
 	}
 
-	const confirmSale = async price => {
+	const confirmSale = async customPrices => {
 		try {
 			await axios.post(
 				`${serverConfig}/cart/confirm-sale`,
 				{
 					buyertype: 'customer',
 					saleFrom: WarehouseOrNot,
-					price: price
+					customPrices // Передаем объект customPrices напрямую
 				},
 				{ headers: { Authorization: `Bearer ${getToken}` } }
 			)
 			closeModal()
 			setPrices({})
 			navigate(WarehouseOrNot === 'warehouse' ? '/warehouse' : '/')
-			// alert('Продажа успешно подтверждена!')
 		} catch (error) {
 			console.error('Catch error:', error)
-			// alert(error)
 		}
 	}
 
@@ -100,11 +98,13 @@ function AddRetail({ ...props }) {
 	}
 
 	const handleSubmitPrice = () => {
-		productsDB.map(product => {
-			confirmSale(
-				prices[product.id] ? prices[product.id] : product.Item.priceForSale
-			)
-		})
+		const customPrices = productsDB.reduce((acc, product) => {
+			acc[product.Item.id] = prices[product.id] ? prices[product.id] : product.Item.priceForSale
+			return acc
+		}, {})
+	
+		confirmSale(customPrices)
+		console.log("Received customPrices:", customPrices);
 	}
 
 	const handlePriceChange = (productCode, newPrice) => {

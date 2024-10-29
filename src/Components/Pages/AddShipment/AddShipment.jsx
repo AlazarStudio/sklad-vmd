@@ -145,8 +145,8 @@ function AddShipment({ ...props }) {
 		}
 	}
 
-	const confirmSale = async price => {
-		console.log('Selected Contractor ID:', selectedContractorId);
+	const confirmSale = async customPrices => {
+		console.log('Selected Contractor ID:', selectedContractorId)
 		try {
 			await axios.post(
 				`${serverConfig}/cart/confirm-sale`,
@@ -154,7 +154,7 @@ function AddShipment({ ...props }) {
 					buyertype: 'contractor',
 					saleFrom: WarehouseOrNot,
 					contrAgentId: parseInt(selectedContractorId, 10),
-					price: price
+					customPrices
 				},
 				{ headers: { Authorization: `Bearer ${getToken}` } }
 			)
@@ -168,11 +168,15 @@ function AddShipment({ ...props }) {
 	}
 
 	const handleSubmitPrice = () => {
-		productsDB.map(product => {
-			confirmSale(
-				prices[product.id] ? prices[product.id] : product.Item.priceForSale
-			)
-		})
+		const customPrices = productsDB.reduce((acc, product) => {
+			acc[product.Item.id] = prices[product.id]
+				? prices[product.id]
+				: product.Item.priceForSale
+			return acc
+		}, {})
+
+		confirmSale(customPrices)
+		console.log('Received customPrices:', customPrices)
 	}
 
 	// const confirmSale = async () => {

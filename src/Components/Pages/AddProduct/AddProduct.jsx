@@ -305,7 +305,13 @@ function AddProduct({ children, ...props }) {
 						</div>
 						<div className={styles.item}>
 							<label htmlFor='groupId'>Группа</label>
-							<select name='groupId' id='' required onChange={handleChange}>
+							<select
+								name='groupId'
+								id='groupId'
+								value={formData.groupId}
+								required
+								onChange={handleChange}
+							>
 								<option value='' defaultValue>
 									Все группы
 								</option>
