@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import Scanner from '../../Blocks/Scanner/Scanner'
 import AddButton from '../../UI/AddButton/AddButton'
@@ -20,7 +21,7 @@ function AddProductATVs({ children, ...props }) {
 		description: '',
 		gender: '',
 		color: '',
-		groupId: 10, // ID группы, которую нужно получить динамически
+		groupId: 0, // ID группы, которую нужно получить динамически
 		type: '',
 		price: '',
 		priceForSale: '',
@@ -33,8 +34,8 @@ function AddProductATVs({ children, ...props }) {
 		size: '',
 		ratchet: '',
 		weight: '',
-		wheelSize: '12',
-		frameGrouve: '13',
+		wheelSize: '',
+		frameGrouve: '',
 		amortization: '',
 		speed: '',
 		fork: '',
@@ -45,6 +46,18 @@ function AddProductATVs({ children, ...props }) {
 		backDerailleur: '',
 		bushings: '',
 		rubber: '',
+		motor: '',
+		frontSuspension: '',
+		rearSuspension: '',
+		fuelConsumption: '',
+		starting: '',
+		power: '',
+		torque: '',
+		maxSpeed: '',
+		transmission: '',
+		wheelbase: '',
+		groundClearance: '',
+		fuelTankCapacity: '',
 		warehouseCount: 0, // Например, можно установить значение по умолчанию
 		storeCount: 0
 	})
@@ -192,7 +205,9 @@ function AddProductATVs({ children, ...props }) {
 		// console.log('Submitting form data:', preparedData)
 
 		try {
-			const response = await axios.post(`${serverConfig}/items`, preparedData)
+			const response = await axios.post(`${serverConfig}/items`, preparedData, {
+				headers: { Authorization: `Bearer ${getToken}` }
+			})
 			// console.log('Response from server:', response.data)
 			navigate('/warehouse') // Перенаправление после успешного создания товара
 		} catch (error) {
@@ -301,14 +316,24 @@ function AddProductATVs({ children, ...props }) {
 						</div>
 						<div className={styles.item}>
 							<label htmlFor='groupId'>Группа</label>
-							<input
-								type='text'
+							<select
 								name='groupId'
-								value={'Квадроциклы'}
-								disabled
-								// onChange={handleChange}
-								// required
-							/>
+								id='groupId'
+								value={formData.groupId}
+								required
+								onChange={handleChange}
+							>
+								<option value='' defaultValue>
+									Все группы
+								</option>
+								{groups
+									.map(group => (
+										<option key={group.id} value={group.id}>
+											{group.name}
+										</option>
+									))
+									.reverse()}
+							</select>
 							<label htmlFor='price'>Себестоимость</label>
 							<input
 								type='text'
