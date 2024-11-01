@@ -31,6 +31,8 @@ function ProductDetailPage() {
 	const { linkName } = useParams()
 	const location = useLocation()
 	const { fromWarehouse } = location.state || {}
+	const { group } = location.state || {}
+	// console.log(group)
 	const navigate = useNavigate()
 	// console.log(linkName)
 
@@ -436,50 +438,89 @@ function ProductDetailPage() {
 			<CenterBlock>
 				<WidthBlock>
 					<div className={styles.scale_wrapper}>
-						<div className={styles.filter_item__scale}>
-							<Scale
-								value={wheelSizeRange}
-								onChange={handleWheelSizeChange}
-								min={12}
-								max={29}
-								title={'Диаметр колеса'}
-							/>
-						</div>
-						<div className={styles.filter_item__scale}>
-							<Scale
-								value={frameSizeRange}
-								onChange={handleFrameSizeChange}
-								min={13}
-								max={23}
-								title={'Ростовка рамы'}
-							/>
-						</div>
-						<div className={styles.filter_item__scale}>
-							<div className={styles.custom_color_filter} ref={dropdownRef}>
-								<div className={styles.color_selected} onClick={toggleDropdown}>
-									{selectedColor ? (
+						{group.toLowerCase() !== 'велосипеды' ? (
+							<>
+								<div className={styles.filter_item__scale}>
+									<div className={styles.custom_color_filter} ref={dropdownRef}>
 										<div
-											className={styles.color_preview}
-											style={{ backgroundColor: Colors[selectedColor] }}
-										></div>
-									) : (
-										<p className={styles.custom_color_title}>Цвет</p>
-									)}
-								</div>
-								{isDropdownOpen && (
-									<div className={styles.color_wrapper}>
-										{Object.keys(Colors).map(color => (
-											<div
-												key={color}
-												className={styles.color_item}
-												style={{ backgroundColor: Colors[color] }}
-												onClick={() => handleColorClick(color)}
-											></div>
-										))}
+											className={styles.color_selected}
+											onClick={toggleDropdown}
+										>
+											{selectedColor ? (
+												<div
+													className={styles.color_preview}
+													style={{ backgroundColor: Colors[selectedColor] }}
+												></div>
+											) : (
+												<p className={styles.custom_color_title}>Цвет</p>
+											)}
+										</div>
+										{isDropdownOpen && (
+											<div className={styles.color_wrapper}>
+												{Object.keys(Colors).map(color => (
+													<div
+														key={color}
+														className={styles.color_item}
+														style={{ backgroundColor: Colors[color] }}
+														onClick={() => handleColorClick(color)}
+													></div>
+												))}
+											</div>
+										)}
 									</div>
-								)}
-							</div>
-						</div>
+								</div>
+							</>
+						) : (
+							<>
+								<div className={styles.filter_item__scale}>
+									<Scale
+										value={wheelSizeRange}
+										onChange={handleWheelSizeChange}
+										min={12}
+										max={29}
+										title={'Диаметр колеса'}
+									/>
+								</div>
+								<div className={styles.filter_item__scale}>
+									<Scale
+										value={frameSizeRange}
+										onChange={handleFrameSizeChange}
+										min={13}
+										max={23}
+										title={'Ростовка рамы'}
+									/>
+								</div>
+								<div className={styles.filter_item__scale}>
+									<div className={styles.custom_color_filter} ref={dropdownRef}>
+										<div
+											className={styles.color_selected}
+											onClick={toggleDropdown}
+										>
+											{selectedColor ? (
+												<div
+													className={styles.color_preview}
+													style={{ backgroundColor: Colors[selectedColor] }}
+												></div>
+											) : (
+												<p className={styles.custom_color_title}>Цвет</p>
+											)}
+										</div>
+										{isDropdownOpen && (
+											<div className={styles.color_wrapper}>
+												{Object.keys(Colors).map(color => (
+													<div
+														key={color}
+														className={styles.color_item}
+														style={{ backgroundColor: Colors[color] }}
+														onClick={() => handleColorClick(color)}
+													></div>
+												))}
+											</div>
+										)}
+									</div>
+								</div>
+							</>
+						)}
 					</div>
 
 					<div className={styles.reset_wrapper}>
@@ -509,13 +550,21 @@ function ProductDetailPage() {
 									{/* <CheckBox onChange={() => {}} /> */}
 								</div>
 								<p className={styles.name}>Наименование</p>
-								<p className={styles.code}>Код</p>
+								{/* <p className={styles.code}>Код</p> */}
 								<p className={styles.unit_of_measurement}>Количество</p>
 								<p className={styles.cost_price}>Себестоимость</p>
 								<p className={styles.sale_price}>Цена продажи</p>
 								<p className={styles.color}>Цвет</p>
-								<p className={styles.frameGrowth}>Ростовка рамы</p>
-								<p className={styles.wheelsSize}>Диаметр колеса</p>
+								<p className={styles.frameGrowth}>
+									{group.toLowerCase() !== 'велосипеды'
+										? 'Высота по седлу'
+										: 'Ростовка рамы'}
+								</p>
+								<p className={styles.wheelsSize}>
+									{group.toLowerCase() !== 'велосипеды'
+										? 'Максимальная нагрузка'
+										: 'Диаметр колеса'}
+								</p>
 							</div>
 							<div>
 								{filteredProducts.map(product => (
@@ -523,7 +572,11 @@ function ProductDetailPage() {
 										fromWarehouse={fromWarehouse}
 										key={product.id}
 										operation={
-											fromWarehouse ? `/update-product/${product.id}` : null
+											fromWarehouse
+												? product.group.name.toLowerCase() !== 'велосипеды'
+													? `/update-moto/${product.id}`
+													: `/update-product/${product.id}`
+												: null
 										}
 										{...product}
 										onSelect={handleProductSelect}

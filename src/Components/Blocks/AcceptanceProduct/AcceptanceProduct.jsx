@@ -19,8 +19,21 @@ const fetchContractors = async () => {
 	}
 }
 
+const fetchGroups = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/groups`, {
+			headers: { Authorization: `Bearer ${getToken}` }
+		})
+		return response.data
+	} catch (error) {
+		console.error('Error fetching contractors:', error)
+		return []
+	}
+}
+
 function AcceptanceProduct({ ...props }) {
 	const [contractors, setContractors] = useState([])
+	const [groups, setGroups] = useState([])
 
 	useEffect(() => {
 		const getContractors = async () => {
@@ -28,6 +41,14 @@ function AcceptanceProduct({ ...props }) {
 			setContractors(contractors)
 		}
 		getContractors()
+	}, [])
+
+	useEffect(() => {
+		const getGroups = async () => {
+			const groups = await fetchGroups()
+			setGroups(groups)
+		}
+		getGroups()
 	}, [])
 
 	const formatDate = dateString => {
@@ -48,21 +69,34 @@ function AcceptanceProduct({ ...props }) {
 
 	const contractorName = contractor ? contractor.name : 'Частное лицо'
 
+	const group = groups.find(group => group.id === props.item.groupId)
+
+	const groupName = group ? group.name : ' '
+	// console.log(groupName)
+
+	const sum = props.price * props.quantity
 	return (
 		<div className={styles.product_wrapper}>
 			<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
 			{/* <p className={styles.number}>0001</p> */}
 			<p className={styles.time}>{formatDate(props.createdAt)}</p>
 			<p className={styles.name}>
-				{props.name} {' '} {props.color} {' '}
-				 {props.frameGrouve}{'"  '} {props.wheelSize}
+				{props.name} {props.color}{' '}
+				{groupName.toLowerCase() !== 'велосипеды'
+					? props.saddleHeight
+					: `${props.frameGrouve}"`} {' '}
+				{groupName.toLowerCase() !== 'велосипеды'
+					? props.maximumLoad
+					: props.wheelSize}
 			</p>
 			<p className={styles.to_warehouse}>
 				{props.source === 'warehouse' ? 'Склад' : 'Магазин'}
 			</p>
 			<p className={styles.contractors}>{contractorName}</p>
 			<p className={styles.organization}>{props.quantity}</p>
-			<p className={styles.sum}>{props.price}</p>
+			<p className={styles.sum}>
+				{sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
+			</p>
 		</div>
 	)
 }

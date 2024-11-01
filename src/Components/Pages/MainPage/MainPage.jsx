@@ -74,8 +74,8 @@ function MainPage({ children, ...props }) {
 					{/* {id == 'update-product' && !idType && <UpdateProduct />} */}
 					{id == 'add-product-bike' && <AddProduct />}
 					{id == 'add-product-motorcycle' && <AddProductMoto />}
-					{id == 'add-product-atvs' && <AddProductATVs />}
-					{id == 'add-product-moped' && <AddProductMoped />}
+					{id == 'add-product-atvs' && <AddProductMoto />}
+					{id == 'add-product-moped' && <AddProductMoto />}
 					{id == 'add-product-group' && <AddGroup />}
 					{id == 'products' && idType == 'write-offs' && <WriteOffs />}
 					{id == 'products' && idType == 'remains' && <Remains />}

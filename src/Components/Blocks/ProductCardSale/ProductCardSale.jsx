@@ -24,12 +24,12 @@ function ProductCardSale({
 			<p className={styles.code}>{props.Item.code}</p>
 			<p className={styles.unit_of_measurement}>{props.quantity}</p>
 			<p className={styles.cost_price}>
-				{props.Item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.Item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.sale_price}>
 				{props.Item.priceForSale
 					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.color}>{props.Item.color}</p>
 			<p className={styles.frameGrowth}>{props.Item.frameGrouve}"</p>

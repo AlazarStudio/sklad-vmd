@@ -22,7 +22,7 @@ function SelectGroup({ children, ...props }) {
 				<Link to='/add-product-motorcycle'>Мотоциклы</Link>
 				<Link to='/add-product-atvs'>Квадроциклы</Link>
 				<Link to='/add-product-moped'>Мопеды</Link>
-				<Link to=''>Самокаты</Link>
+				{/* <Link to=''>Самокаты</Link> */}
 			</div>
 		</div>
 	)

@@ -47,6 +47,8 @@ function AddProductMoto({ children, ...props }) {
 		bushings: '',
 		rubber: '',
 		motor: '',
+		maximumLoad: '',
+		saddleHeight: '',
 		frontSuspension: '',
 		rearSuspension: '',
 		fuelConsumption: '',
@@ -228,16 +230,6 @@ function AddProductMoto({ children, ...props }) {
 				<div className={styles.products_header__wrapper}>
 					<div className={styles.products_buttons}>
 						<button type='submit'>Сохранить</button>
-						{/* <button
-							style={{
-								backgroundColor: '#f77532',
-								color: '#fff',
-								fontWeight: '700',
-								border: 'none'
-							}}
-						>
-							Опубликовать
-						</button> */}
 						<button type='button' onClick={navBack}>
 							Закрыть
 						</button>
@@ -393,6 +385,17 @@ function AddProductMoto({ children, ...props }) {
 								onChange={handleChange}
 								required
 							/>
+
+							<label htmlFor='maximumLoad'>Максимальная нагрузка</label>
+							<input
+								type='text'
+								id='maximumLoad'
+								name='maximumLoad'
+								value={formData.maximumLoad || ''}
+								onChange={handleChange}
+								required
+							/>
+
 							<label htmlFor='frontDerailleur'>Передний / задний тормоз</label>
 							<input
 								type='text'
@@ -505,6 +508,16 @@ function AddProductMoto({ children, ...props }) {
 								type='text'
 								name='transmission'
 								value={formData.transmission}
+								onChange={handleChange}
+								required
+							/>
+
+							<label htmlFor='saddleHeight'>Высота по седлу</label>
+							<input
+								type='text'
+								id='saddleHeight'
+								name='saddleHeight'
+								value={formData.saddleHeight || ''}
 								onChange={handleChange}
 								required
 							/>

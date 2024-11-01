@@ -29,6 +29,15 @@ function AddRetail({ ...props }) {
 	const navigate = useNavigate()
 
 	const WarehouseOrNot = location.state || ' '
+	const existingValue = localStorage.getItem('WarehouseOrNot')
+
+	// Проверяем, что `location.state` не пустое и отличается от текущего значения в `localStorage`
+	if (WarehouseOrNot !== ' ' && WarehouseOrNot !== existingValue) {
+		localStorage.setItem('WarehouseOrNot', WarehouseOrNot)
+	}
+
+	const fromWhere = localStorage.getItem('WarehouseOrNot') || ''
+	console.log(fromWhere)
 
 	const [productsDB, setProducts] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -63,14 +72,15 @@ function AddRetail({ ...props }) {
 				`${serverConfig}/cart/confirm-sale`,
 				{
 					buyertype: 'customer',
-					saleFrom: WarehouseOrNot,
+					saleFrom: fromWhere,
 					customPrices // Передаем объект customPrices напрямую
 				},
 				{ headers: { Authorization: `Bearer ${getToken}` } }
 			)
 			closeModal()
 			setPrices({})
-			navigate(WarehouseOrNot === 'warehouse' ? '/warehouse' : '/')
+			navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			localStorage.removeItem('WarehouseOrNot')
 		} catch (error) {
 			console.error('Catch error:', error)
 		}
@@ -99,12 +109,14 @@ function AddRetail({ ...props }) {
 
 	const handleSubmitPrice = () => {
 		const customPrices = productsDB.reduce((acc, product) => {
-			acc[product.Item.id] = prices[product.id] ? prices[product.id] : product.Item.priceForSale
+			acc[product.Item.id] = prices[product.id]
+				? prices[product.id]
+				: product.Item.priceForSale
 			return acc
 		}, {})
-	
+
 		confirmSale(customPrices)
-		console.log("Received customPrices:", customPrices);
+		console.log('Received customPrices:', customPrices)
 	}
 
 	const handlePriceChange = (productCode, newPrice) => {
@@ -157,6 +169,7 @@ function AddRetail({ ...props }) {
 					<p>
 						<span style={{ fontWeight: '400' }}>Сумма:</span>{' '}
 						{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+						{' ₽'}
 					</p>
 					<button onClick={openModal}>Оформить продажу</button>
 				</div>

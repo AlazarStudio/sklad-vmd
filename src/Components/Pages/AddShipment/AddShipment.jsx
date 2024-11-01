@@ -53,6 +53,15 @@ function AddShipment({ ...props }) {
 	const navigate = useNavigate()
 
 	const WarehouseOrNot = location.state || ' '
+	const existingValue = localStorage.getItem('WarehouseOrNot')
+
+	// Проверяем, что `location.state` не пустое и отличается от текущего значения в `localStorage`
+	if (WarehouseOrNot !== ' ' && WarehouseOrNot !== existingValue) {
+		localStorage.setItem('WarehouseOrNot', WarehouseOrNot)
+	}
+
+	const fromWhere = localStorage.getItem('WarehouseOrNot') || ''
+	console.log(fromWhere)
 
 	console.log('Это выбранные продукты из', WarehouseOrNot)
 
@@ -152,7 +161,7 @@ function AddShipment({ ...props }) {
 				`${serverConfig}/cart/confirm-sale`,
 				{
 					buyertype: 'contractor',
-					saleFrom: WarehouseOrNot,
+					saleFrom: fromWhere,
 					contrAgentId: parseInt(selectedContractorId, 10),
 					customPrices
 				},
@@ -160,7 +169,8 @@ function AddShipment({ ...props }) {
 			)
 			closeModal()
 			setPrices({})
-			navigate(WarehouseOrNot === 'warehouse' ? '/warehouse' : '/')
+			navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			localStorage.removeItem('WarehouseOrNot')
 			// alert('Продажа успешно подтверждена!')
 		} catch (error) {
 			console.error('Catch error:', error.response?.data || error.message)
@@ -281,6 +291,7 @@ function AddShipment({ ...props }) {
 					<p>
 						<span style={{ fontWeight: '400' }}>Сумма:</span>{' '}
 						{totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+						{' ₽'}
 					</p>
 					<button onClick={handleSubmit} disabled={!selectedContractorId}>
 						{!selectedContractorId
@@ -323,6 +334,7 @@ function AddShipment({ ...props }) {
 								.toFixed(2)
 								.toString()
 								.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+							{'₽'}
 						</p>
 					</div>
 					<div className={styles.modalButtons}>

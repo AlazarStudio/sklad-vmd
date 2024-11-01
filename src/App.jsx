@@ -7,6 +7,7 @@ import MainPage from './Components/Pages/MainPage/MainPage'
 import NotFoundPage from './Components/Pages/NotFoundPage/NotFoundPage'
 import ProductDetailPage from './Components/Pages/ProductDetailPage/ProductDetailPage'
 import UpdateContractor from './Components/Pages/UpdateContractor/UpdateContractor'
+import UpdateMoto from './Components/Pages/UpdateMoto/UpdateMoto'
 import UpdateProduct from './Components/Pages/UpdateProduct/UpdateProduct'
 import Layout from './Components/Standart/Layout/Layout'
 
@@ -23,6 +24,7 @@ function App() {
 						<Route path='/product/:linkName' element={<ProductDetailPage />} />
 
 						<Route path='/update-product/:id' element={<UpdateProduct />} />
+						<Route path='/update-moto/:id' element={<UpdateMoto />} />
 						<Route
 							path='/update-contractor/:id'
 							element={<UpdateContractor />}

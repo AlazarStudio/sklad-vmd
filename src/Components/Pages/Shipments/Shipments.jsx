@@ -94,10 +94,12 @@ function Shipments({ ...props }) {
 								name={sale.item.name}
 								color={sale.item.color}
 								wheelSize={sale.item.wheelSize}
+								saddleHeight={sale.item.saddleHeight}
+								maximumLoad={sale.item.maximumLoad}
 								frameGrouve={sale.item.frameGrouve}
 							/>
 						) : null
-					)}
+					).reverse()}
 				</div>
 			</section>
 			{/* <div className={styles.summary}>

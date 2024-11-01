@@ -25,11 +25,11 @@
 }
 
 .name {
-  flex-basis: 20%;
+  flex-basis: 24%;
 }
 
 .to_warehouse {
-  flex-basis: 15%;
+  flex-basis: 11%;
   /* text-align: center; */
 }
 

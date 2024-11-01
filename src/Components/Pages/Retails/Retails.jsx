@@ -63,9 +63,7 @@ function Retails({ ...props }) {
 			</div>
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
-					<div className={styles.checkBox_wrapper}>
-						{/* <CheckBox /> */}
-					</div>
+					<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
 					{/* <p className={styles.number}>№</p> */}
 					<p className={styles.time}>Время</p>
 					<p className={styles.name}>Наименование</p>
@@ -75,18 +73,22 @@ function Retails({ ...props }) {
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
-					{sales.map(sale =>
-						sale.buyertype === 'customer' ? (
-							<AcceptanceProduct
-								key={sale.id}
-								{...sale}
-								name={sale.item.name}
-								color={sale.item.color}
-								wheelSize={sale.item.wheelSize}
-								frameGrouve={sale.item.frameGrouve}
-							/>
-						) : null
-					)}
+					{sales
+						.map(sale =>
+							sale.buyertype === 'customer' ? (
+								<AcceptanceProduct
+									key={sale.id}
+									{...sale}
+									name={sale.item.name}
+									color={sale.item.color}
+									wheelSize={sale.item.wheelSize}
+									saddleHeight={sale.item.saddleHeight}
+									maximumLoad={sale.item.maximumLoad}
+									frameGrouve={sale.item.frameGrouve}
+								/>
+							) : null
+						)
+						.reverse()}
 				</div>
 			</section>
 		</>

@@ -29,17 +29,25 @@ function ProductCard({
 				{itemCount === 0 ? null : <CheckBox onChange={handleCheckBoxChange} />}
 			</div>
 			<p className={styles.name}>{props.name}</p>
-			<p className={styles.code}>{props.code}</p>
+			{/* <p className={styles.code}>{props.code}</p> */}
 			<p className={styles.unit_of_measurement}>{itemCount}</p>
 			<p className={styles.cost_price}>
-				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.sale_price}>
-				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.color}>{props.color}</p>
-			<p className={styles.frameGrowth}>{props.frameGrouve}"</p>
-			<p className={styles.wheelsSize}>{props.wheelSize}</p>
+			<p className={styles.frameGrowth}>
+				{props.group.name.toLowerCase() !== 'велосипеды'
+					? props.saddleHeight
+					: props.frameGrouve}
+			</p>
+			<p className={styles.wheelsSize}>
+				{props.group.name.toLowerCase() !== 'велосипеды'
+					? props.maximumLoad
+					: props.wheelSize}
+			</p>
 		</div>
 	)
 }

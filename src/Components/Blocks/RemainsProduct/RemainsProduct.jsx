@@ -15,7 +15,7 @@ function RemainsProduct({
 
 	const goToProductDetail = () => {
 		navigate(`/product/${linkName}`, {
-			state: { fromWarehouse: true }
+			state: { fromWarehouse: true, group: props.group.name }
 		})
 	}
 
@@ -36,20 +36,20 @@ function RemainsProduct({
 			<p className={styles.code}>{props.code}</p>
 			<p className={styles.remains}>{props.Warehouse.count}</p>
 			<p className={styles.cost_price}>
-				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.cost_price_sum}>
 				{(parseInt(props.price) * parseInt(props.Warehouse.count))
 					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.sale_price}>
-				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.sale_price_sum}>
 				{(parseInt(props.priceForSale) * parseInt(props.Warehouse.count))
 					.toString()
-					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+					.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 		</div>
 	)
