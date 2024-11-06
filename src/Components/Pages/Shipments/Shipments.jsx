@@ -11,11 +11,25 @@ import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './Shipments.module.css'
 
+const fetchContractors = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/contragents`, {
+			headers: { Authorization: `Bearer ${getToken}` }
+		})
+		return response.data
+	} catch (error) {
+		console.error('Error fetching contractors:', error)
+		return []
+	}
+}
+
 function Shipments({ ...props }) {
 	const [sales, setSales] = useState([])
+	const [contractors, setContractors] = useState([])
 	const [totalQuantity, setTotalQuantity] = useState(0)
 	const [totalAmount, setTotalAmount] = useState(0)
 	const [mostSoldColor, setMostSoldColor] = useState('')
+	const [searchQuery, setSearchQuery] = useState('')
 
 	useEffect(() => {
 		const fetchSalesReport = async () => {
@@ -49,8 +63,39 @@ function Shipments({ ...props }) {
 			}
 		}
 
+		const loadContractors = async () => {
+			const contractors = await fetchContractors()
+			setContractors(contractors)
+		}
+
 		fetchSalesReport()
+		loadContractors()
 	}, [])
+
+	// Функция для обновления поискового запроса
+	const handleSearchChange = event => {
+		setSearchQuery(event.target.value)
+	}
+
+	// Фильтрация продаж на основе поискового запроса
+	const filteredSales = sales.filter(sale => {
+		const { name, color, wheelSize, saddleHeight, maximumLoad, frameGrouve } =
+			sale.item
+		const { source, contrAgentId } = sale
+		const contractor = contractors.find(c => c.id === contrAgentId)
+		const query = searchQuery.toLowerCase()
+		return (
+			(name && name.toLowerCase().includes(query)) ||
+			(color && color.toLowerCase().includes(query)) ||
+			(wheelSize && wheelSize.toString().includes(query)) ||
+			(saddleHeight && saddleHeight.toString().includes(query)) ||
+			(maximumLoad && maximumLoad.toString().includes(query)) ||
+			(contractor && contractor.name.toLowerCase().includes(query)) ||
+			(frameGrouve && frameGrouve.toLowerCase().includes(query)) ||
+			(source === 'store' && 'Магазин'.toLowerCase().includes(query)) ||
+			(source === 'warehouse' && 'Склад'.toLowerCase().includes(query))
+		)
+	})
 	return (
 		<>
 			<div className={styles.operations}>
@@ -72,7 +117,12 @@ function Shipments({ ...props }) {
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
 					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
-				<input type='search' placeholder='Поиск...' />
+				<input
+					type='search'
+					value={searchQuery}
+					onChange={handleSearchChange}
+					placeholder='Поиск...'
+				/>
 			</div>
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
@@ -86,20 +136,22 @@ function Shipments({ ...props }) {
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
-					{sales.map(sale =>
-						sale.buyertype !== 'customer' ? (
-							<AcceptanceProduct
-								key={sale.id}
-								{...sale}
-								name={sale.item.name}
-								color={sale.item.color}
-								wheelSize={sale.item.wheelSize}
-								saddleHeight={sale.item.saddleHeight}
-								maximumLoad={sale.item.maximumLoad}
-								frameGrouve={sale.item.frameGrouve}
-							/>
-						) : null
-					).reverse()}
+					{filteredSales
+						.map(sale =>
+							sale.buyertype !== 'customer' ? (
+								<AcceptanceProduct
+									key={sale.id}
+									{...sale}
+									name={sale.item.name}
+									color={sale.item.color}
+									wheelSize={sale.item.wheelSize}
+									saddleHeight={sale.item.saddleHeight}
+									maximumLoad={sale.item.maximumLoad}
+									frameGrouve={sale.item.frameGrouve}
+								/>
+							) : null
+						)
+						.reverse()}
 				</div>
 			</section>
 			{/* <div className={styles.summary}>

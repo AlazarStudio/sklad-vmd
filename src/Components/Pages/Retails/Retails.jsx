@@ -2,29 +2,40 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { products } from '../../../../data'
 import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import AcceptanceProduct from '../../Blocks/AcceptanceProduct/AcceptanceProduct'
-import AddButton from '../../UI/AddButton/AddButton'
-import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './Retails.module.css'
 
-function Retails({ ...props }) {
+function Retails() {
 	const [sales, setSales] = useState([])
 	const [totalQuantity, setTotalQuantity] = useState(0)
 	const [totalAmount, setTotalAmount] = useState(0)
 	const [mostSoldColor, setMostSoldColor] = useState('')
+	const [searchQuery, setSearchQuery] = useState('')
 
 	useEffect(() => {
 		const fetchSalesReport = async () => {
 			try {
+				// Получаем текущий год
+				const currentYear = new Date().getFullYear()
+
+				// Устанавливаем endDate как последний день текущего года
+				const endDate = new Date(currentYear, 11, 31)
+					.toISOString()
+					.split('T')[0]
+
+				// Устанавливаем startDate как начало года
+				const startDate = `${currentYear}-01-01`
+
+				// console.log(startDate)
+				// console.log(endDate)
 				const response = await axios.get(`${serverConfig}/reports/sales`, {
 					headers: { Authorization: `Bearer ${getToken}` },
 					params: {
 						startDate: '2024-01-01', // Укажите нужный диапазон дат
-						endDate: '2024-12-31'
+						endDate
 					}
 				})
 				setSales(response.data.sales)
@@ -38,6 +49,30 @@ function Retails({ ...props }) {
 
 		fetchSalesReport()
 	}, [])
+
+	// Функция для обновления поискового запроса
+	const handleSearchChange = event => {
+		setSearchQuery(event.target.value)
+	}
+
+	// Фильтрация продаж на основе поискового запроса
+	const filteredSales = sales.filter(sale => {
+		const { name, color, wheelSize, saddleHeight, maximumLoad, frameGrouve } =
+			sale.item
+		const { source } = sale
+		const query = searchQuery.toLowerCase()
+		return (
+			(name && name.toLowerCase().includes(query)) ||
+			(color && color.toLowerCase().includes(query)) ||
+			(wheelSize && wheelSize.toString().includes(query)) ||
+			(saddleHeight && saddleHeight.toString().includes(query)) ||
+			(maximumLoad && maximumLoad.toString().includes(query)) ||
+			(frameGrouve && frameGrouve.toLowerCase().includes(query)) ||
+			(source === 'store' && 'Магазин'.toLowerCase().includes(query)) ||
+			(source === 'warehouse' && 'Склад'.toLowerCase().includes(query))
+		)
+	})
+
 	return (
 		<>
 			<div className={styles.operations}>
@@ -59,7 +94,12 @@ function Retails({ ...props }) {
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
 					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
-				<input type='search' placeholder='Поиск...' />
+				<input
+					type='search'
+					value={searchQuery}
+					onChange={handleSearchChange}
+					placeholder='Поиск...'
+				/>
 			</div>
 			<section className={styles.products_wrapper}>
 				<div className={styles.products_wrapper__head}>
@@ -73,7 +113,7 @@ function Retails({ ...props }) {
 					<p className={styles.sum}>Сумма</p>
 				</div>
 				<div>
-					{sales
+					{filteredSales
 						.map(sale =>
 							sale.buyertype === 'customer' ? (
 								<AcceptanceProduct

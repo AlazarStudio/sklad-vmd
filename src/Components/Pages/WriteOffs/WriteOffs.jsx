@@ -83,7 +83,7 @@ function WriteOffs({ children, ...props }) {
 						<CheckBox />
 					</div> */}
 					<p className={styles.name}>Наименование</p>
-					<p className={styles.code}>Код</p>
+					{/* <p className={styles.code}>Код</p> */}
 					<p className={styles.sale_price}>Время</p>
 					<p className={styles.unit_of_measurement}>Количество</p>
 					<p className={styles.reason}>Статус</p>

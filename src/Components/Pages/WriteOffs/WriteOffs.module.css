@@ -62,13 +62,13 @@
 
 .name {
   margin-left: 50px;
-  flex-basis: 23%;
+  flex-basis: 25%;
 }
 
-.code {
+/* .code {
   flex-basis: 5%;
   text-align: right;
-}
+} */
 
 .unit_of_measurement {
   flex-basis: 10%;
@@ -76,7 +76,7 @@
 }
 
 .reason {
-  flex-basis: 12%;
+  flex-basis: 15%;
   text-align: end;
 }
 

@@ -274,7 +274,7 @@ function AddShipment({ ...props }) {
 					<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
 				</div>
 				<div>
-					{productsDB.map((product, index) => (
+					{productsDB.map((product) => (
 						<ProductCardSale
 							key={product.id}
 							{...product}
