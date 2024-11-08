@@ -409,7 +409,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.size || ''}
 										onChange={handleChange}
 									/>
-									<label htmlFor='weight'>Снаряженная масса</label>
+									<label htmlFor='weight'>Снаряженная масса (кг)</label>
 									<input
 										type='text'
 										id='weight'
@@ -419,7 +419,7 @@ function UpdateMoto({ children, ...props }) {
 										onChange={handleChange}
 									/>
 
-									<label htmlFor='maximumLoad'>Максимальная нагрузка</label>
+									<label htmlFor='maximumLoad'>Максимальная нагрузка (кг)</label>
 									<input
 										type='text'
 										id='maximumLoad'
@@ -560,7 +560,7 @@ function UpdateMoto({ children, ...props }) {
 										onChange={handleChange}
 									/>
 
-									<label htmlFor='saddleHeight'>Высота по седлу</label>
+									<label htmlFor='saddleHeight'>Высота по седлу (мм)</label>
 									<input
 										type='text'
 										id='saddleHeight'
@@ -588,7 +588,7 @@ function UpdateMoto({ children, ...props }) {
 										onChange={handleChange}
 									/>
 									<label htmlFor='fuelTankCapacity'>
-										Объём топливного бака
+										Объём топливного бака (л)
 									</label>
 									<input
 										type='text'

@@ -29,14 +29,14 @@ function AddRetail({ ...props }) {
 	const navigate = useNavigate()
 
 	const WarehouseOrNot = location.state || ' '
-	const existingValue = localStorage.getItem('WarehouseOrNot')
+	const existingValue = localStorage.getItem('RWarehouseOrNot')
 
 	// Проверяем, что `location.state` не пустое и отличается от текущего значения в `localStorage`
 	if (WarehouseOrNot !== ' ' && WarehouseOrNot !== existingValue) {
-		localStorage.setItem('WarehouseOrNot', WarehouseOrNot)
+		localStorage.setItem('RWarehouseOrNot', WarehouseOrNot)
 	}
 
-	const fromWhere = localStorage.getItem('WarehouseOrNot') || ''
+	const fromWhere = localStorage.getItem('RWarehouseOrNot') || ''
 	console.log(fromWhere)
 
 	const [productsDB, setProducts] = useState([])
@@ -80,7 +80,7 @@ function AddRetail({ ...props }) {
 			closeModal()
 			setPrices({})
 			navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
-			localStorage.removeItem('WarehouseOrNot')
+			localStorage.removeItem('RWarehouseOrNot')
 		} catch (error) {
 			console.error('Catch error:', error)
 		}

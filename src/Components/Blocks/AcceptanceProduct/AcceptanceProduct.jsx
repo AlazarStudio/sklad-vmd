@@ -83,10 +83,10 @@ function AcceptanceProduct({ ...props }) {
 			<p className={styles.name}>
 				{props.name} {props.color}{' '}
 				{groupName.toLowerCase() !== 'велосипеды'
-					? props.saddleHeight
+					? `${props.saddleHeight} мм`
 					: `${props.frameGrouve}"`} {' '}
 				{groupName.toLowerCase() !== 'велосипеды'
-					? props.maximumLoad
+					? `${props.maximumLoad} кг`
 					: props.wheelSize}
 			</p>
 			<p className={styles.to_warehouse}>

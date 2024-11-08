@@ -377,7 +377,7 @@ function AddProductMoto({ children, ...props }) {
 								onChange={handleChange}
 								required
 							/>
-							<label htmlFor='weight'>Снаряженная масса</label>
+							<label htmlFor='weight'>Снаряженная масса (кг)</label>
 							<input
 								type='text'
 								name='weight'
@@ -386,7 +386,7 @@ function AddProductMoto({ children, ...props }) {
 								required
 							/>
 
-							<label htmlFor='maximumLoad'>Максимальная нагрузка</label>
+							<label htmlFor='maximumLoad'>Максимальная нагрузка (кг)</label>
 							<input
 								type='text'
 								id='maximumLoad'
@@ -512,7 +512,7 @@ function AddProductMoto({ children, ...props }) {
 								required
 							/>
 
-							<label htmlFor='saddleHeight'>Высота по седлу</label>
+							<label htmlFor='saddleHeight'>Высота по седлу (мм)</label>
 							<input
 								type='text'
 								id='saddleHeight'
@@ -537,7 +537,7 @@ function AddProductMoto({ children, ...props }) {
 								onChange={handleChange}
 								required
 							/>
-							<label htmlFor='fuelTankCapacity'>Объём топливного бака</label>
+							<label htmlFor='fuelTankCapacity'>Объём топливного бака (л)</label>
 							<input
 								type='text'
 								name='fuelTankCapacity'
