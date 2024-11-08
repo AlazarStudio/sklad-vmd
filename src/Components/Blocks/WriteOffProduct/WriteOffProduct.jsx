@@ -1,5 +1,3 @@
-import CheckBox from '../../UI/CheckBox/CheckBox'
-
 import styles from './WriteOffProduct.module.css'
 
 function WriteOffProduct({ quantity, reason, ...props }) {

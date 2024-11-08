@@ -21,6 +21,18 @@ const fetchCustomerSales = async () => {
 	}
 }
 
+const fetchGroups = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/groups`, {
+			headers: { Authorization: `Bearer ${getToken}` }
+		})
+		return response.data
+	} catch (error) {
+		console.error('Error fetching contractors:', error)
+		return []
+	}
+}
+
 ReactModal.setAppElement('#root') // Указываем корневой элемент для доступности
 
 function AddRetail({ ...props }) {
@@ -42,6 +54,15 @@ function AddRetail({ ...props }) {
 	const [productsDB, setProducts] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [prices, setPrices] = useState({})
+	const [groups, setGroups] = useState([])
+
+	useEffect(() => {
+		const getGroups = async () => {
+			const groups = await fetchGroups()
+			setGroups(groups)
+		}
+		getGroups()
+	}, [])
 
 	useEffect(() => {
 		const getProducts = async () => {
@@ -79,7 +100,8 @@ function AddRetail({ ...props }) {
 			)
 			closeModal()
 			setPrices({})
-			navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			// navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			navigate('/sales/retails')
 			localStorage.removeItem('RWarehouseOrNot')
 		} catch (error) {
 			console.error('Catch error:', error)
@@ -149,8 +171,12 @@ function AddRetail({ ...props }) {
 					<p className={styles.cost_price}>Себестоимость</p>
 					<p className={styles.sale_price}>Цена продажи</p>
 					<p className={styles.color}>Цвет</p>
-					<p className={styles.frameGrowth}>Ростовка рамы</p>
-					<p className={styles.wheelsSize}>Диаметр колеса</p>
+					<p className={styles.frameGrowth}>
+						Ростовка рамы {'\n'} / Высота по седлу{' '}
+					</p>
+					<p className={styles.wheelsSize}>
+						Диаметр колеса {'\n'} / Максимальная нагрузка{' '}
+					</p>
 				</div>
 				<div>
 					{productsDB.map(product => (
@@ -184,22 +210,34 @@ function AddRetail({ ...props }) {
 				<div className={styles.modalContent}>
 					<p className={styles.title_sale}>Оформление продажи</p>
 					<div className={styles.productRow__wrapper}>
-						{productsDB.map((product, index) => (
-							<div key={index} className={styles.productRow}>
-								<span>
-									{product.Item.name} {product.Item.color}{' '}
-									{product.Item.frameGrouve}
-									{'" '}
-									{product.Item.wheelSize}
-								</span>
-								<input
-									type='number'
-									placeholder='Введите цену'
-									value={prices[product.id] || ''}
-									onChange={e => handlePriceChange(product.id, e.target.value)}
-								/>
-							</div>
-						))}
+						{productsDB.map(product => {
+							const group = groups.find(
+								group => group.id === product.Item.groupId
+							)
+
+							const groupName = group ? group.name : ' '
+							return (
+								<div key={product.id} className={styles.productRow}>
+									<span>
+										{product.Item.name} {product.Item.color}{' '}
+										{groupName.toLowerCase() !== 'велосипеды'
+											? `${product.Item.saddleHeight} мм`
+											: `${product.Item.frameGrouve}"`}{' '}
+										{groupName.toLowerCase() !== 'велосипеды'
+											? `${product.Item.maximumLoad} кг`
+											: product.Item.wheelSize}
+									</span>
+									<input
+										type='number'
+										placeholder='Введите цену'
+										value={prices[product.id] || ''}
+										onChange={e =>
+											handlePriceChange(product.id, e.target.value)
+										}
+									/>
+								</div>
+							)
+						})}
 					</div>
 					<div className={styles.totalPrice}>
 						<p>

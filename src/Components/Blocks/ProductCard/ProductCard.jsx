@@ -24,7 +24,10 @@ function ProductCard({
 	const itemCount = fromWarehouse ? props.Warehouse.count : props.Store.count
 
 	return (
-		<div className={styles.product_wrapper} onClick={goToUpdateProduct}>
+		<div
+			className={styles.product_wrapper}
+			onClick={fromWarehouse ? goToUpdateProduct : null}
+		>
 			<div className={styles.checkBox_wrapper}>
 				{itemCount === 0 ? null : <CheckBox onChange={handleCheckBoxChange} />}
 			</div>
@@ -35,17 +38,18 @@ function ProductCard({
 				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
 			<p className={styles.sale_price}>
-				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
+				{props.priceForSale.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}{' '}
+				{' ₽'}
 			</p>
 			<p className={styles.color}>{props.color}</p>
 			<p className={styles.frameGrowth}>
 				{props.group.name.toLowerCase() !== 'велосипеды'
-					? props.saddleHeight
-					: props.frameGrouve}
+					? `${props.saddleHeight} мм`
+					: `${props.frameGrouve}"`}
 			</p>
 			<p className={styles.wheelsSize}>
 				{props.group.name.toLowerCase() !== 'велосипеды'
-					? props.maximumLoad
+					? `${props.maximumLoad} кг`
 					: props.wheelSize}
 			</p>
 		</div>

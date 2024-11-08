@@ -3,11 +3,9 @@ import React, { useEffect, useState } from 'react'
 import ReactModal from 'react-modal'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { products } from '../../../../data'
 import getToken from '../../../getToken'
 import serverConfig from '../../../serverConfig'
 import ProductCardSale from '../../Blocks/ProductCardSale/ProductCardSale'
-import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './AddShipment.module.css'
 
@@ -23,16 +21,6 @@ const fetchContractors = async () => {
 	}
 }
 
-const fetchProducts = async () => {
-	try {
-		const response = await axios.get(`${serverConfig}/items`)
-		return response.data
-	} catch (error) {
-		console.error('Error fetching products:', error)
-		return []
-	}
-}
-
 const fetchContractorSales = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/cart/Contractor`, {
@@ -41,6 +29,18 @@ const fetchContractorSales = async () => {
 		return response.data
 	} catch (error) {
 		console.error('Error fetching products:', error)
+		return []
+	}
+}
+
+const fetchGroups = async () => {
+	try {
+		const response = await axios.get(`${serverConfig}/groups`, {
+			headers: { Authorization: `Bearer ${getToken}` }
+		})
+		return response.data
+	} catch (error) {
+		console.error('Error fetching contractors:', error)
 		return []
 	}
 }
@@ -74,6 +74,16 @@ function AddShipment({ ...props }) {
 	const [selectedContractorId, setSelectedContractorId] = useState('')
 
 	const [filteredProducts, setFilteredProducts] = useState([])
+
+	const [groups, setGroups] = useState([])
+
+	useEffect(() => {
+		const getGroups = async () => {
+			const groups = await fetchGroups()
+			setGroups(groups)
+		}
+		getGroups()
+	}, [])
 
 	useEffect(() => {
 		const getProducts = async () => {
@@ -169,7 +179,8 @@ function AddShipment({ ...props }) {
 			)
 			closeModal()
 			setPrices({})
-			navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			// navigate(fromWhere === 'warehouse' ? '/warehouse' : '/')
+			navigate('/sales/shipments')
 			localStorage.removeItem('WarehouseOrNot')
 			// alert('Продажа успешно подтверждена!')
 		} catch (error) {
@@ -269,12 +280,16 @@ function AddShipment({ ...props }) {
 					<p className={styles.cost_price}>Себестоимость</p>
 					<p className={styles.sale_price}>Цена продажи</p>
 					<p className={styles.color}>Цвет</p>
-					<p className={styles.frameGrowth}>Ростовка рамы</p>
-					<p className={styles.wheelsSize}>Диаметр колеса</p>
+					<p className={styles.frameGrowth}>
+						Ростовка рамы {'\n'} / Высота по седлу{' '}
+					</p>
+					<p className={styles.wheelsSize}>
+						Диаметр колеса {'\n'} / Максимальная нагрузка{' '}
+					</p>
 					<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
 				</div>
 				<div>
-					{productsDB.map((product) => (
+					{productsDB.map(product => (
 						<ProductCardSale
 							key={product.id}
 							{...product}
@@ -310,22 +325,34 @@ function AddShipment({ ...props }) {
 				<div className={styles.modalContent}>
 					<p className={styles.title_sale}>Оформление продажи</p>
 					<div className={styles.productRow__wrapper}>
-						{productsDB.map(product => (
-							<div key={product.id} className={styles.productRow}>
-								<span>
-									{product.Item.name} {product.Item.color}{' '}
-									{product.Item.frameGrouve}
-									{'" '}
-									{product.Item.wheelSize}
-								</span>
-								<input
-									type='number'
-									placeholder='Введите цену'
-									value={prices[product.id] || ''}
-									onChange={e => handlePriceChange(product.id, e.target.value)}
-								/>
-							</div>
-						))}
+						{productsDB.map(product => {
+							const group = groups.find(
+								group => group.id === product.Item.groupId
+							)
+
+							const groupName = group ? group.name : ' '
+							return (
+								<div key={product.id} className={styles.productRow}>
+									<span>
+										{product.Item.name} {product.Item.color}{' '}
+										{groupName.toLowerCase() !== 'велосипеды'
+											? `${product.Item.saddleHeight} мм`
+											: `${product.Item.frameGrouve}"`}{' '}
+										{groupName.toLowerCase() !== 'велосипеды'
+											? `${product.Item.maximumLoad} кг`
+											: product.Item.wheelSize}
+									</span>
+									<input
+										type='number'
+										placeholder='Введите цену'
+										value={prices[product.id] || ''}
+										onChange={e =>
+											handlePriceChange(product.id, e.target.value)
+										}
+									/>
+								</div>
+							)
+						})}
 					</div>
 					<div className={styles.totalPrice}>
 						<p>

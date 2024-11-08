@@ -31,6 +31,7 @@ function ProductDetailPage() {
 	const { linkName } = useParams()
 	const location = useLocation()
 	const { fromWarehouse } = location.state || {}
+	// console.log(fromWarehouse)
 	const { group } = location.state || {}
 	// console.log(group)
 	const navigate = useNavigate()
