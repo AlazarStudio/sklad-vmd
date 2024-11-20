@@ -528,18 +528,18 @@ function UpdateProduct({ children, ...props }) {
 								</div>
 
 								<div className={styles.item}>
-									<label htmlFor='bearingType'>Тип подшипника</label>
+									<label htmlFor='isProm'>Тип подшипника</label>
 									<select
-										name='bearingType'
-										value={product.bearingType || ''}
+										name='isProm'
+										value={product.isProm || ''}
 										onChange={handleChange}
 										// required
 									>
 										<option value='' defaultValue hidden>
 											Выберите тип подшипника
 										</option>
-										<option value='Двухподвес'>Обычный</option>
-										<option value='Жесткая вилка'>Пром</option>
+										<option value='Обычный'>Обычный</option>
+										<option value='Пром'>Пром</option>
 									</select>
 									<label htmlFor='system'>Система</label>
 									<input

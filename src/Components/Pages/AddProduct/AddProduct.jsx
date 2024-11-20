@@ -37,6 +37,7 @@ function AddProduct({ children, ...props }) {
 		weight: '',
 		wheelSize: '12',
 		frameGrouve: '13',
+		isProm: '',
 		amortization: '',
 		speed: '',
 		fork: '',
@@ -489,18 +490,18 @@ function AddProduct({ children, ...props }) {
 						</div>
 
 						<div className={styles.item}>
-							<label htmlFor='bearingType'>Тип подшипника</label>
+							<label htmlFor='isProm'>Тип подшипника</label>
 							<select
-								name='bearingType'
-								value={formData.bearingType}
+								name='isProm'
+								value={formData.isProm}
 								onChange={handleChange}
 								// required
 							>
 								<option value='' defaultValue hidden>
 									Выберите тип подшипника
 								</option>
-								<option value='Двухподвес'>Обычный</option>
-								<option value='Жесткая вилка'>Пром</option>
+								<option value='Обычный'>Обычный</option>
+								<option value='Пром'>Пром</option>
 							</select>
 							<label htmlFor='system'>Система</label>
 							<input
