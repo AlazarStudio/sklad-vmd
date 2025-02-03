@@ -372,9 +372,9 @@ function UpdateProduct({ children, ...props }) {
 											placeholder='EAN13'
 											id='barcode'
 											name='barcode'
-											required
 											value={product.barcode || ''}
 											onChange={handleChange}
+											// required
 										/>
 										{/* <input
 											type='text'
@@ -504,15 +504,22 @@ function UpdateProduct({ children, ...props }) {
 										<option value='' defaultValue hidden>
 											Выберите группу
 										</option>
-										<option value='Для взрослых'>Для взрослых</option>
-										<option value='От 2 до 5 лет'>От 2 до 5 лет</option>
-										<option value='От 3 до 6 лет'>От 3 до 6 лет</option>
-										<option value='От 5 до 8 лет'>От 5 до 8 лет</option>
+										<option value='От 2 до 4 лет'>От 2 до 4 лет</option>
+										<option value='От 4 до 6 лет'>От 4 до 6 лет</option>
+										<option value='От 5 до 9 лет'>От 6 до 9 лет</option>
 										<option value='Подростковый'>Подростковый</option>
+										<option value='Для взрослых'>Для взрослых</option>
 									</select>
 
 									<label htmlFor='amortization'>Амортизация</label>
-									<select
+									<input
+										type='text'
+										name='amortization'
+										value={product.amortization || ''}
+										onChange={handleChange}
+										required
+									/>
+									{/* <select
 										name='amortization'
 										value={product.amortization || ''}
 										onChange={handleChange}
@@ -524,7 +531,7 @@ function UpdateProduct({ children, ...props }) {
 										<option value='Двухподвес'>Двухподвес</option>
 										<option value='Жесткая вилка'>Жесткая вилка</option>
 										<option value='Хардтейл'>Хардтейл</option>
-									</select>
+									</select> */}
 								</div>
 
 								<div className={styles.item}>
@@ -580,7 +587,14 @@ function UpdateProduct({ children, ...props }) {
 										onChange={handleChange}
 									/>
 									<label htmlFor='breaks'>Тормоза</label>
-									<select
+									<input
+										type='text'
+										name='breaks'
+										value={product.breaks || ''}
+										onChange={handleChange}
+										required
+									/>
+									{/* <select
 										name='breaks'
 										value={product.breaks || ''}
 										onChange={handleChange}
@@ -600,7 +614,7 @@ function UpdateProduct({ children, ...props }) {
 										<option value='Ножной тормоз'>Ножной тормоз</option>
 										<option value='Передний V-brake'>Передний V-brake</option>
 										<option value='Передний клещевой'>Передний клещевой</option>
-									</select>
+									</select> */}
 									<label htmlFor='bushings'>Втулки</label>
 									<input
 										type='text'
@@ -626,6 +640,7 @@ function UpdateProduct({ children, ...props }) {
 										name='frameGrouve'
 										min={13}
 										max={23}
+										step={0.5}
 										value={product.frameGrouve || ''}
 										onChange={handleChange}
 										required

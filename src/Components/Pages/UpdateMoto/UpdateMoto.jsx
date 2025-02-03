@@ -372,9 +372,9 @@ function UpdateMoto({ children, ...props }) {
 											placeholder='EAN13'
 											id='barcode'
 											name='barcode'
-											required
 											value={product.barcode || ''}
 											onChange={handleChange}
+											// required
 										/>
 										{/* <input
 											type='text'

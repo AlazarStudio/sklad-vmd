@@ -61,9 +61,9 @@ function AddShipment({ ...props }) {
 	}
 
 	const fromWhere = localStorage.getItem('WarehouseOrNot') || ''
-	console.log(fromWhere)
+	// console.log(fromWhere)
 
-	console.log('Это выбранные продукты из', WarehouseOrNot)
+	// console.log('Это выбранные продукты из', WarehouseOrNot)
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [selectedProducts, setSelectedProducts] = useState([])

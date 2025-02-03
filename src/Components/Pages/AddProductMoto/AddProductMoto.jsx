@@ -350,7 +350,7 @@ function AddProductMoto({ children, ...props }) {
 									value={formData.barcode}
 									onChange={handleChange}
 									placeholder='EAN13'
-									required
+									// required
 								/>
 								{/* <input type='text' placeholder='2000000000022' required /> */}
 							</div>
