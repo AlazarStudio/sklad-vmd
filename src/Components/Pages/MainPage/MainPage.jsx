@@ -30,9 +30,9 @@ import AddProductMoto from '../AddProductMoto/AddProductMoto'
 import AddProductATVs from '../AddProductATVs/AddProductATVs'
 import AddProductMoped from '../AddProductMoped/AddProductMoped'
 
-function MainPage({ children, ...props }) {
+function MainPage({ children, user, ...props }) {
 	let { id, idType } = useParams()
-	// console.log(id)
+	// console.log(user)
 	const ids = [
 		'products',
 		'add-product-bike',
@@ -68,35 +68,35 @@ function MainPage({ children, ...props }) {
 		<main>
 			<CenterBlock>
 				<WidthBlock>
-					{(id == 'products' || !id) && <Products />}
-					{!id && !idType && <ProductsPage />}
-					{id == 'products' && !idType && <ProductsPage />}
+					{(id == 'products' || !id) && <Products user={user} />}
+					{!id && !idType && <ProductsPage user={user} />}
+					{id == 'products' && !idType && <ProductsPage user={user} />}
 					{/* {id == 'update-product' && !idType && <UpdateProduct />} */}
 					{id == 'add-product-bike' && <AddProduct />}
-					{id == 'add-product-motorcycle' && <AddProductMoto />}
-					{id == 'add-product-atvs' && <AddProductMoto />}
-					{id == 'add-product-moped' && <AddProductMoto />}
-					{id == 'add-product-group' && <AddGroup />}
-					{id == 'products' && idType == 'write-offs' && <WriteOffs />}
-					{id == 'products' && idType == 'remains' && <Remains />}
-					{id == 'products' && idType == 'turnovers' && <Turnovers />}
-					{id == 'contractors' && <Contractors />}
-					{id == 'contractors' && !idType && <ContractorsPage />}
-					{id == 'contractors' && idType == 'contracts' && <Contracts />}
+					{id == 'add-product-motorcycle' && <AddProductMoto user={user} />}
+					{id == 'add-product-atvs' && <AddProductMoto user={user} />}
+					{id == 'add-product-moped' && <AddProductMoto user={user} />}
+					{id == 'add-product-group' && <AddGroup user={user} />}
+					{id == 'products' && idType == 'write-offs' && <WriteOffs user={user} />}
+					{id == 'products' && idType == 'remains' && <Remains user={user} />}
+					{id == 'products' && idType == 'turnovers' && <Turnovers user={user} />}
+					{id == 'contractors' && <Contractors user={user} />}
+					{id == 'contractors' && !idType && <ContractorsPage user={user} />}
+					{id == 'contractors' && idType == 'contracts' && <Contracts user={user} />}
 					{id == 'add-contractors' && <AddContractors />}
-					{id == 'warehouse' && <Warehouse />}
+					{id == 'warehouse' && <Warehouse user={user} />}
 					{/* {id == 'warehouse' && !idType && <Acceptance />} */}
 					{/* {id == 'warehouse' && idType == 'acceptance' && <Acceptance />} */}
-					{id == 'add-acceptance' && <AddAcceptance />}
-					{id == 'sales' && <Sales />}
-					{id == 'sales' && !idType && <Shipments />}
-					{id == 'sales' && idType == 'shipments' && <Shipments />}
-					{id == 'sales' && idType == 'retails' && <Retails />}
-					{id == 'add-shipment' && <AddShipment />}
-					{id == 'add-retails' && <AddRetail />}
-					{id == 'reports' && <Reports />}
-					{id == 'add-report' && <AddReport />}
-					{id == 'select-group' && <SelectGroup />}
+					{id == 'add-acceptance' && <AddAcceptance user={user} />}
+					{id == 'sales' && <Sales user={user} />}
+					{id == 'sales' && !idType && <Shipments user={user} />}
+					{id == 'sales' && idType == 'shipments' && <Shipments user={user} />}
+					{id == 'sales' && idType == 'retails' && <Retails user={user} />}
+					{id == 'add-shipment' && <AddShipment user={user} />}
+					{id == 'add-retails' && <AddRetail user={user} />}
+					{id == 'reports' && <Reports user={user} />}
+					{id == 'add-report' && <AddReport user={user} />}
+					{id == 'select-group' && <SelectGroup user={user} />}
 					{!ids.includes(id) && <NotFoundPage />}
 					{ids.includes(id) && !idTypes.includes(idType) && <NotFoundPage />}
 				</WidthBlock>

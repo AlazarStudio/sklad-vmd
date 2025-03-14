@@ -38,7 +38,7 @@ function AddContractors({ ...props }) {
 					...formData
 				},
 				{
-					headers: { Authorization: `Bearer ${getToken}` }
+					headers: { Authorization: `Bearer ${getToken()}` }
 				}
 			)
 			navigate('/contractors')

@@ -5,4 +5,4 @@ function getToken() {
 	return token
 }
 
-export default getToken()
+export default getToken

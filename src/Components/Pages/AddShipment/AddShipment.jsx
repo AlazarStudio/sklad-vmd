@@ -12,7 +12,7 @@ import styles from './AddShipment.module.css'
 const fetchContractors = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/contragents`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -24,7 +24,7 @@ const fetchContractors = async () => {
 const fetchContractorSales = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/cart/Contractor`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -36,7 +36,7 @@ const fetchContractorSales = async () => {
 const fetchGroups = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/groups`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -93,6 +93,8 @@ function AddShipment({ ...props }) {
 		}
 		getProducts()
 	}, [])
+
+	// console.log(productsDB)
 
 	useEffect(() => {
 		const getContractors = async () => {
@@ -153,7 +155,7 @@ function AddShipment({ ...props }) {
 	const removeItemFromCart = async itemId => {
 		try {
 			await axios.delete(`${serverConfig}/cart/${itemId}`, {
-				headers: { Authorization: `Bearer ${getToken}` }
+				headers: { Authorization: `Bearer ${getToken()}` }
 			})
 			// После успешного удаления обновляем список товаров
 			setProducts(prevProducts =>
@@ -175,7 +177,7 @@ function AddShipment({ ...props }) {
 					contrAgentId: parseInt(selectedContractorId, 10),
 					customPrices
 				},
-				{ headers: { Authorization: `Bearer ${getToken}` } }
+				{ headers: { Authorization: `Bearer ${getToken()}` } }
 			)
 			closeModal()
 			setPrices({})
@@ -213,7 +215,7 @@ function AddShipment({ ...props }) {
 	// 					price: parseFloat(prices[product.code]) || product.Item.priceForSale
 	// 				}))
 	// 			},
-	// 			{ headers: { Authorization: `Bearer ${getToken}` } }
+	// 			{ headers: { Authorization: `Bearer ${getToken()}` } }
 	// 		)
 	// 		closeModal()
 	// 		setPrices({})

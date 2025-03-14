@@ -11,7 +11,7 @@ import AddButton from '../../UI/AddButton/AddButton'
 
 import styles from './UpdateMoto.module.css'
 
-function UpdateMoto({ children, ...props }) {
+function UpdateMoto({ children, user, ...props }) {
 	const { id } = useParams()
 	const location = useLocation()
 	const navigate = useNavigate()
@@ -28,7 +28,7 @@ function UpdateMoto({ children, ...props }) {
 			const fetchProduct = async () => {
 				try {
 					const response = await axios.get(`${serverConfig}/items/${id}`, {
-						headers: { Authorization: `Bearer ${getToken}` }
+						headers: { Authorization: `Bearer ${getToken()}` }
 					})
 					// console.log(response.data)
 					setProduct(response.data)
@@ -180,7 +180,7 @@ function UpdateMoto({ children, ...props }) {
 				`${serverConfig}/items/${id}`,
 				updatedData,
 				{
-					headers: { Authorization: `Bearer ${getToken}` }
+					headers: { Authorization: `Bearer ${getToken()}` }
 				}
 			)
 			// console.log('Response from server:', response.data)
@@ -207,6 +207,8 @@ function UpdateMoto({ children, ...props }) {
 		console.log(URL.createObjectURL(file))
 	}
 
+	const isDis = user?.role !== 'ADMIN' ? true : false
+
 	return (
 		<main>
 			<CenterBlock>
@@ -214,7 +216,9 @@ function UpdateMoto({ children, ...props }) {
 					<form onSubmit={handleSubmit} className={styles.form_product}>
 						<div className={styles.products_header__wrapper}>
 							<div className={styles.products_buttons}>
-								<button type='submit'>Изменить</button>
+								{user?.role !== 'ADMIN' ? null : (
+									<button type='submit'>Изменить</button>
+								)}
 								<button type='button' onClick={navBack}>
 									Закрыть
 								</button>
@@ -233,23 +237,27 @@ function UpdateMoto({ children, ...props }) {
 										value={product.name || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 								</div>
 								<div className={styles.item}>
 									<label htmlFor='img'>Изображения</label>
-									<div className={styles.item2}>
-										<input
-											className={styles.image_input}
-											id='img'
-											type='file'
-											accept='images/*'
-											multiple
-											// required
-											onChange={handleFileChange}
-											// value={product.img || ''}
-											// onChange={e => setProduct({ ...product, img: e.target.value })}
-										/>
-									</div>
+									{user?.role !== 'ADMIN' ? null : (
+										<div className={styles.item2}>
+											<input
+												className={styles.image_input}
+												id='img'
+												type='file'
+												accept='images/*'
+												multiple
+												// required
+												onChange={handleFileChange}
+												// value={product.img || ''}
+												// onChange={e => setProduct({ ...product, img: e.target.value })}
+												disabled={isDis}
+											/>
+										</div>
+									)}
 									<div className={styles.preview}>
 										{uploadedFilePaths.map((file, index) => (
 											<div key={index} className={styles.previewImage}>
@@ -257,12 +265,14 @@ function UpdateMoto({ children, ...props }) {
 													src={`${uploadsConfig}${file}`}
 													alt={`Uploaded preview ${index + 1}`}
 												/>
-												<button
-													type='button'
-													onClick={() => handleRemoveImage(index)}
-												>
-													Удалить
-												</button>
+												{user?.role !== 'ADMIN' ? null : (
+													<button
+														type='button'
+														onClick={() => handleRemoveImage(index)}
+													>
+														Удалить
+													</button>
+												)}
 											</div>
 										))}
 										{selectedFiles.map((file, index) => (
@@ -297,6 +307,7 @@ function UpdateMoto({ children, ...props }) {
 										style={{ resize: 'none' }}
 										value={product.description || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									></textarea>
 									<label htmlFor='code'>Код</label>
 									<input
@@ -307,6 +318,7 @@ function UpdateMoto({ children, ...props }) {
 										placeholder='00001'
 										value={product.code || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='warehouseCount'>Количество</label>
 									<input
@@ -316,6 +328,7 @@ function UpdateMoto({ children, ...props }) {
 										// required
 										value={product.Warehouse.count || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='nds'>НДС</label>
 									<input
@@ -325,6 +338,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.nds || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 								</div>
 								<div className={styles.item}>
@@ -335,6 +349,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.groupId || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите группу
@@ -355,6 +370,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.price || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='priceForSale'>Цена продажи</label>
 									<input
@@ -364,6 +380,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.priceForSale || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='barcode'>Штрихкоды товара</label>
 									<div className={styles.item}>
@@ -375,6 +392,7 @@ function UpdateMoto({ children, ...props }) {
 											value={product.barcode || ''}
 											onChange={handleChange}
 											// required
+											disabled={isDis}
 										/>
 										{/* <input
 											type='text'
@@ -389,7 +407,7 @@ function UpdateMoto({ children, ...props }) {
 								</div>
 							</div>
 							<div className={styles.form_item}>
-								<p style={{ flexBasis: '100%' }}>Данные велосипеда</p>
+								{/* <p style={{ flexBasis: '100%' }}>Данные</p> */}
 								<div className={styles.item}>
 									<label htmlFor='motor'>Двигатель</label>
 									<input
@@ -399,6 +417,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.motor || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='size'>Длина х Ширина х Высота</label>
 									<input
@@ -408,6 +427,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.size || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='weight'>Снаряженная масса (кг)</label>
 									<input
@@ -417,9 +437,12 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.weight || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 
-									<label htmlFor='maximumLoad'>Максимальная нагрузка (кг)</label>
+									<label htmlFor='maximumLoad'>
+										Максимальная нагрузка (кг)
+									</label>
 									<input
 										type='text'
 										id='maximumLoad'
@@ -427,6 +450,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.maximumLoad || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='frontDerailleur'>
 										Передний / задний тормоз
@@ -438,6 +462,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.frontDerailleur || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='backDerailleur'>
 										Переднее / заднее колесо
@@ -449,6 +474,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.backDerailleur || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='frontSuspension'>Передняя подвеска</label>
 									<input
@@ -458,6 +484,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.frontSuspension || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='rearSuspension'>Задняя подвеска</label>
 									<input
@@ -467,6 +494,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.rearSuspension || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='fuelConsumption'>Расход топлива (л/км)</label>
 									<input
@@ -476,6 +504,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.fuelConsumption || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='color'>Цвет</label>
 									<select
@@ -486,6 +515,7 @@ function UpdateMoto({ children, ...props }) {
 											setProduct({ ...product, color: e.target.value })
 										}
 										required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите цвет
@@ -514,6 +544,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.system || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='starting'>Запуск</label>
 									<input
@@ -523,6 +554,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.starting || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='power'>Мощность</label>
 									<input
@@ -532,6 +564,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.power || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='torque'>Крутящий момент</label>
 									<input
@@ -540,6 +573,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.torque || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='maxSpeed'>Максимальная скорость (км/ч)</label>
 									<input
@@ -549,6 +583,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.maxSpeed || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='transmission'>Трансмиссия</label>
 									<input
@@ -558,6 +593,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.transmission || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 
 									<label htmlFor='saddleHeight'>Высота по седлу (мм)</label>
@@ -568,6 +604,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.saddleHeight || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='wheelbase'>Колёсная база (мм)</label>
 									<input
@@ -577,6 +614,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.wheelbase || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='groundClearance'>Дорожный просвет (мм)</label>
 									<input
@@ -586,6 +624,7 @@ function UpdateMoto({ children, ...props }) {
 										required
 										value={product.groundClearance || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='fuelTankCapacity'>
 										Объём топливного бака (л)
@@ -597,6 +636,7 @@ function UpdateMoto({ children, ...props }) {
 										value={product.fuelTankCapacity || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 								</div>
 							</div>

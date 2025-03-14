@@ -10,7 +10,7 @@ import styles from './ProductCardSale.module.css'
 const fetchGroups = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/groups`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {

@@ -2,33 +2,37 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 
 import styles from './Products.module.css'
 
-function Products({ children, ...props }) {
+function Products({ children, user, ...props }) {
 	let { id } = useParams()
 	let location = useLocation()
-	// console.log(id)
+	// console.log(user)
 
 	return (
-		<div className={styles.products_header__wrapper}>
-			<div className={styles.products_buttons}>
-				<Link
-					to='/products'
-					className={
-						location.pathname === '/products' || location.pathname === '/'
-							? styles.active
-							: ''
-					}
-				>
-					Магазин
-				</Link>
-				<Link
-					to='/products/write-offs'
-					className={
-						location.pathname === '/products/write-offs' ? styles.active : ''
-					}
-				>
-					Списания
-				</Link>
-				{/* <Link
+		<>
+			{user?.role !== 'ADMIN' ? null : (
+				<div className={styles.products_header__wrapper}>
+					<div className={styles.products_buttons}>
+						<Link
+							to='/products'
+							className={
+								location.pathname === '/products' || location.pathname === '/'
+									? styles.active
+									: ''
+							}
+						>
+							Магазин
+						</Link>
+						<Link
+							to='/products/write-offs'
+							className={
+								location.pathname === '/products/write-offs'
+									? styles.active
+									: ''
+							}
+						>
+							Списания
+						</Link>
+						{/* <Link
 					to='/products/remains'
 					className={
 						location.pathname === '/products/remains' ? styles.active : ''
@@ -36,7 +40,7 @@ function Products({ children, ...props }) {
 				>
 					Остатки
 				</Link> */}
-				{/* <Link
+						{/* <Link
 					to='/products/turnovers'
 					className={
 						location.pathname === '/products/turnovers' ? styles.active : ''
@@ -44,8 +48,10 @@ function Products({ children, ...props }) {
 				>
 					Обороты
 				</Link> */}
-			</div>
-		</div>
+					</div>
+				</div>
+			)}
+		</>
 	)
 }
 

@@ -22,7 +22,7 @@ const theme = createTheme({
 	}
 })
 
-function Scale({ value, onChange, ...props }) {
+function Scale({ value, onChange, isFloat, ...props }) {
 	const handleChange = (event, newValue) => {
 		onChange(newValue)
 	}
@@ -38,6 +38,7 @@ function Scale({ value, onChange, ...props }) {
 						onChange={handleChange}
 						valueLabelDisplay='auto'
 						getAriaValueText={valuetext}
+						step={isFloat ? 0.5 : 1}
 						min={props.min} // Минимальное значение
 						max={props.max} // Максимальное значение
 					/>

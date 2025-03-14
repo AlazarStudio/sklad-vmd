@@ -14,7 +14,7 @@ import styles from './ContractorsPage.module.css'
 const fetchContractors = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/contragents`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -28,7 +28,7 @@ const deleteContractors = async ContractorsId => {
 		await Promise.all(
 			ContractorsId.map(id =>
 				axios.delete(`${serverConfig}/contragents/${id}`, {
-					headers: { Authorization: `Bearer ${getToken}` }
+					headers: { Authorization: `Bearer ${getToken()}` }
 				})
 			)
 		)
@@ -39,10 +39,12 @@ const deleteContractors = async ContractorsId => {
 	}
 }
 
-function ContractorsPage({ children, ...props }) {
+function ContractorsPage({ children, user, ...props }) {
 	const [contractors, setContractors] = useState([])
 	const [selectedContractors, setSelectedContractors] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
+
+	// console.log(user);
 
 	useEffect(() => {
 		const getContractors = async () => {
@@ -95,10 +97,12 @@ function ContractorsPage({ children, ...props }) {
 			<div className={styles.operations}>
 				<p className={styles.operations__title}>Контрагенты</p>
 				<div className={styles.operation_buttons__wrapper}>
-					<Link to='/add-contractors'>
-						<img src='/images/green_add.png' alt='' />
-						Контрагент
-					</Link>
+					{user?.role !== 'ADMIN' ? null : (
+						<Link to='/add-contractors'>
+							<img src='/images/green_add.png' alt='' />
+							Контрагент
+						</Link>
+					)}
 					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
 				<input
@@ -133,6 +137,7 @@ function ContractorsPage({ children, ...props }) {
 				<div>
 					{filteredContractors.map(contractor => (
 						<ContractorsProduct
+							user={user}
 							key={contractor.id}
 							operation={`/update-contractor/${contractor.id}`}
 							onSelect={() => handleSelectContractor(contractor.id)}

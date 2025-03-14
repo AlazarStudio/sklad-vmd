@@ -24,7 +24,7 @@ function AddGroup({ children, ...props }) {
 					name: groupName
 				},
 				{
-					headers: { Authorization: `Bearer ${getToken}` }
+					headers: { Authorization: `Bearer ${getToken()}` }
 				}
 			)
 			navigate('/warehouse') // Перенаправление после успешного создания группы

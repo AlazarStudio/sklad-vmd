@@ -12,22 +12,24 @@ import UpdateProduct from './Components/Pages/UpdateProduct/UpdateProduct'
 import Layout from './Components/Standart/Layout/Layout'
 
 function App() {
-	const { isAuthenticated } = useContext(AuthContext)
+	const { isAuthenticated, user } = useContext(AuthContext)
+	// console.log(user);
+	
 	return (
 		<>
 			<Routes>
 				{isAuthenticated ? (
 					<Route path='/' element={<Layout />}>
-						<Route index element={<MainPage />} />
-						<Route path='/:id' element={<MainPage />} />
-						<Route path='/:id/:idType' element={<MainPage />} />
-						<Route path='/product/:linkName' element={<ProductDetailPage />} />
+						<Route index element={<MainPage user={user} />} />
+						<Route path='/:id' element={<MainPage user={user} />} />
+						<Route path='/:id/:idType' element={<MainPage user={user} />} />
+						<Route path='/product/:linkName' element={<ProductDetailPage user={user} />} />
 
-						<Route path='/update-product/:id' element={<UpdateProduct />} />
-						<Route path='/update-moto/:id' element={<UpdateMoto />} />
+						<Route path='/update-product/:id' element={<UpdateProduct user={user} />} />
+						<Route path='/update-moto/:id' element={<UpdateMoto user={user} />} />
 						<Route
 							path='/update-contractor/:id'
-							element={<UpdateContractor />}
+							element={<UpdateContractor user={user} />}
 						/>
 
 						<Route path='*' element={<NotFoundPage />} />

@@ -12,7 +12,7 @@ import styles from './AddRetail.module.css'
 const fetchCustomerSales = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/cart/Customer`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -24,7 +24,7 @@ const fetchCustomerSales = async () => {
 const fetchGroups = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/groups`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -73,10 +73,12 @@ function AddRetail({ ...props }) {
 		getProducts()
 	}, [])
 
+	console.log(productsDB)
+
 	const removeItemFromCart = async itemId => {
 		try {
 			await axios.delete(`${serverConfig}/cart/${itemId}`, {
-				headers: { Authorization: `Bearer ${getToken}` }
+				headers: { Authorization: `Bearer ${getToken()}` }
 			})
 			// После успешного удаления обновляем список товаров
 			setProducts(prevProducts =>
@@ -96,7 +98,7 @@ function AddRetail({ ...props }) {
 					saleFrom: fromWhere,
 					customPrices // Передаем объект customPrices напрямую
 				},
-				{ headers: { Authorization: `Bearer ${getToken}` } }
+				{ headers: { Authorization: `Bearer ${getToken()}` } }
 			)
 			closeModal()
 			setPrices({})

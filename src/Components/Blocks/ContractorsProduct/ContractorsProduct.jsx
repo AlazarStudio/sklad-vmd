@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+
 import CheckBox from '../../UI/CheckBox/CheckBox'
 
 import styles from './ContractorsProduct.module.css'
 
-function ContractorsProduct({ operation, onSelect, ...props }) {
+function ContractorsProduct({ operation, onSelect, user, ...props }) {
 	const navigate = useNavigate()
 
 	const formatDate = dateString => {
@@ -19,14 +20,15 @@ function ContractorsProduct({ operation, onSelect, ...props }) {
 	}
 
 	const goToUpdateContractor = () => {
-		navigate(operation, {state:{contractor: props}})
+		user?.role !== 'ADMIN'
+			? null
+			: navigate(operation, { state: { contractor: props } })
 	}
-
 
 	return (
 		<div className={styles.product_wrapper} onClick={goToUpdateContractor}>
 			<div className={styles.checkBox_wrapper}>
-				<CheckBox onChange={onSelect} />
+				{user?.role !== 'ADMIN' ? null : <CheckBox onChange={onSelect} />}
 			</div>
 			<p className={styles.name}> {props.name} </p>
 			{/* <p className={styles.code}> {props.code} </p> */}

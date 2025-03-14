@@ -11,8 +11,10 @@ import AddButton from '../../UI/AddButton/AddButton'
 
 import styles from './UpdateProduct.module.css'
 
-function UpdateProduct({ children, ...props }) {
+function UpdateProduct({ children, user, ...props }) {
 	const { id } = useParams()
+	// console.log(user);
+
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [product, setProduct] = useState(location.state?.product || {})
@@ -28,7 +30,7 @@ function UpdateProduct({ children, ...props }) {
 			const fetchProduct = async () => {
 				try {
 					const response = await axios.get(`${serverConfig}/items/${id}`, {
-						headers: { Authorization: `Bearer ${getToken}` }
+						headers: { Authorization: `Bearer ${getToken()}` }
 					})
 					// console.log(response.data)
 					setProduct(response.data)
@@ -180,7 +182,7 @@ function UpdateProduct({ children, ...props }) {
 				`${serverConfig}/items/${id}`,
 				updatedData,
 				{
-					headers: { Authorization: `Bearer ${getToken}` }
+					headers: { Authorization: `Bearer ${getToken()}` }
 				}
 			)
 			// console.log('Response from server:', response.data)
@@ -207,6 +209,8 @@ function UpdateProduct({ children, ...props }) {
 		console.log(URL.createObjectURL(file))
 	}
 
+	const isDis = user?.role !== 'ADMIN' ? true : false
+
 	return (
 		<main>
 			<CenterBlock>
@@ -214,7 +218,9 @@ function UpdateProduct({ children, ...props }) {
 					<form onSubmit={handleSubmit} className={styles.form_product}>
 						<div className={styles.products_header__wrapper}>
 							<div className={styles.products_buttons}>
-								<button type='submit'>Изменить</button>
+								{user?.role !== 'ADMIN' ? null : (
+									<button type='submit'>Изменить</button>
+								)}
 								<button type='button' onClick={navBack}>
 									Закрыть
 								</button>
@@ -233,23 +239,27 @@ function UpdateProduct({ children, ...props }) {
 										value={product.name || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 								</div>
 								<div className={styles.item}>
 									<label htmlFor='img'>Изображения</label>
-									<div className={styles.item2}>
-										<input
-											className={styles.image_input}
-											id='img'
-											type='file'
-											accept='images/*'
-											multiple
-											// required
-											onChange={handleFileChange}
-											// value={product.img || ''}
-											// onChange={e => setProduct({ ...product, img: e.target.value })}
-										/>
-									</div>
+									{user?.role !== 'ADMIN' ? null : (
+										<div className={styles.item2}>
+											<input
+												className={styles.image_input}
+												id='img'
+												type='file'
+												accept='images/*'
+												multiple
+												// required
+												onChange={handleFileChange}
+												// value={product.img || ''}
+												// onChange={e => setProduct({ ...product, img: e.target.value })}
+												disabled={isDis}
+											/>
+										</div>
+									)}
 									<div className={styles.preview}>
 										{uploadedFilePaths.map((file, index) => (
 											<div key={index} className={styles.previewImage}>
@@ -257,12 +267,14 @@ function UpdateProduct({ children, ...props }) {
 													src={`${uploadsConfig}${file}`}
 													alt={`Uploaded preview ${index + 1}`}
 												/>
-												<button
-													type='button'
-													onClick={() => handleRemoveImage(index)}
-												>
-													Удалить
-												</button>
+												{user?.role !== 'ADMIN' ? null : (
+													<button
+														type='button'
+														onClick={() => handleRemoveImage(index)}
+													>
+														Удалить
+													</button>
+												)}
 											</div>
 										))}
 										{selectedFiles.map((file, index) => (
@@ -297,6 +309,7 @@ function UpdateProduct({ children, ...props }) {
 										style={{ resize: 'none' }}
 										value={product.description || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									></textarea>
 									<label htmlFor='code'>Код</label>
 									<input
@@ -307,6 +320,7 @@ function UpdateProduct({ children, ...props }) {
 										placeholder='00001'
 										value={product.code || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='warehouseCount'>Количество</label>
 									<input
@@ -316,6 +330,7 @@ function UpdateProduct({ children, ...props }) {
 										// required
 										value={product.Warehouse.count || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='nds'>НДС</label>
 									<input
@@ -325,6 +340,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.nds || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 								</div>
 								<div className={styles.item}>
@@ -335,6 +351,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.groupId || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите группу
@@ -355,6 +372,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.price || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='priceForSale'>Цена продажи</label>
 									<input
@@ -364,6 +382,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.priceForSale || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='barcode'>Штрихкоды товара</label>
 									<div className={styles.item}>
@@ -375,6 +394,7 @@ function UpdateProduct({ children, ...props }) {
 											value={product.barcode || ''}
 											onChange={handleChange}
 											// required
+											disabled={isDis}
 										/>
 										{/* <input
 											type='text'
@@ -399,6 +419,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.frame || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='size'>Размер</label>
 									<input
@@ -408,6 +429,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.size || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='weight'>Вес</label>
 									<input
@@ -417,6 +439,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.weight || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='fork'>Вилка</label>
 									<input
@@ -426,6 +449,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.fork || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='flywheels'>Манетки</label>
 									<input
@@ -435,6 +459,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.flywheels || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='frontDerailleur'>
 										Передний переключатель
@@ -446,6 +471,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.frontDerailleur || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='backDerailleur'>Задний переключатель</label>
 									<input
@@ -455,6 +481,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.backDerailleur || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='wheelSize'>Диаметр колеса</label>
 									<input
@@ -466,6 +493,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.wheelSize || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='color'>Цвет</label>
 									<select
@@ -476,6 +504,7 @@ function UpdateProduct({ children, ...props }) {
 											setProduct({ ...product, color: e.target.value })
 										}
 										required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите цвет
@@ -500,6 +529,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.ageGroup || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите группу
@@ -518,6 +548,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.amortization || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									{/* <select
 										name='amortization'
@@ -541,6 +572,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.isProm || ''}
 										onChange={handleChange}
 										// required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите тип подшипника
@@ -556,6 +588,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.system || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='ratchet'>Кассета трещотка</label>
 									<input
@@ -565,6 +598,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.ratchet || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='speed'>Скорость</label>
 									<input
@@ -576,6 +610,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.speed || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='carriage'>Каретка</label>{' '}
 									<input
@@ -585,6 +620,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.carriage || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='breaks'>Тормоза</label>
 									<input
@@ -593,6 +629,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.breaks || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									{/* <select
 										name='breaks'
@@ -623,6 +660,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.bushings || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='rubber'>Резина</label>
 									<input
@@ -632,6 +670,7 @@ function UpdateProduct({ children, ...props }) {
 										required
 										value={product.rubber || ''}
 										onChange={handleChange}
+										disabled={isDis}
 									/>
 									<label htmlFor='frameGrouve'>Ростовка рамы</label>
 									<input
@@ -644,6 +683,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.frameGrouve || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									/>
 									<label htmlFor='gender'>Пол</label>
 									<select
@@ -651,6 +691,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.gender || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите пол
@@ -664,6 +705,7 @@ function UpdateProduct({ children, ...props }) {
 										value={product.type || ''}
 										onChange={handleChange}
 										required
+										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
 											Выберите тип

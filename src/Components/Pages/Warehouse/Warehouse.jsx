@@ -20,11 +20,13 @@ const fetchProducts = async () => {
 	}
 }
 
-function Warehouse() {
+function Warehouse(user) {
 	const [selectedProducts, setSelectedProducts] = useState([])
 	const [searchQuery, setSearchQuery] = useState('')
 	const [selectedType, setSelectedType] = useState('')
 	const navigate = useNavigate()
+
+	// console.log(user?.user?.role);
 
 	const [productsDB, setProducts] = useState([])
 
@@ -237,7 +239,7 @@ function Warehouse() {
 	const handleTypeChange = event => {
 		setSelectedType(event.target.value)
 	}
-	
+
 	const handleSearchChange = event => {
 		setSearchQuery(event.target.value)
 	}
@@ -253,13 +255,17 @@ function Warehouse() {
 				<p className={styles.operations__title}>Склад</p>
 				<div className={styles.operation_buttons__wrapper}>
 					{/* <AddButton img='/images/qr-code.png' text='Добавить товар' /> */}
-					<Link to='/select-group'>
-						<img src='/images/green_add.png' alt='' /> Товар
-					</Link>
-					<Link to='/add-product-group'>
-						<img src='/images/blue_add.png' alt='' />
-						Группа
-					</Link>
+					{user?.user?.role !== 'ADMIN' ? null : (
+						<>
+							<Link to='/select-group'>
+								<img src='/images/green_add.png' alt='' /> Товар
+							</Link>
+							<Link to='/add-product-group'>
+								<img src='/images/blue_add.png' alt='' />
+								Группа
+							</Link>
+						</>
+					)}
 					<select name='group' id='' required onChange={handleTypeChange}>
 						<option value='' defaultValue>
 							Все группы

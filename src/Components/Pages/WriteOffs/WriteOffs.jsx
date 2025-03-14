@@ -14,7 +14,7 @@ import styles from './WriteOffs.module.css'
 const fetchWriteOffs = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/writeoffs`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {

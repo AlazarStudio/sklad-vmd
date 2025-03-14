@@ -5,7 +5,7 @@
 }
 
 .operations__title {
-  flex-basis: 13%;
+  flex-basis: 28%;
   font-size: 32px;
   font-weight: 500;
 }
@@ -31,7 +31,7 @@
 }
 
 .operation_buttons__wrapper {
-  flex-basis: 50%;
+  flex-basis: 30%;
   display: flex;
   justify-content: flex-end;
   gap: 24px;

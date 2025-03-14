@@ -208,7 +208,7 @@ function AddProductMoto({ children, ...props }) {
 
 		try {
 			const response = await axios.post(`${serverConfig}/items`, preparedData, {
-				headers: { Authorization: `Bearer ${getToken}` }
+				headers: { Authorization: `Bearer ${getToken()}` }
 			})
 			// console.log('Response from server:', response.data)
 			navigate('/warehouse') // Перенаправление после успешного создания товара

@@ -10,7 +10,7 @@ import styles from './AcceptanceProduct.module.css'
 const fetchContractors = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/contragents`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {
@@ -22,7 +22,7 @@ const fetchContractors = async () => {
 const fetchGroups = async () => {
 	try {
 		const response = await axios.get(`${serverConfig}/groups`, {
-			headers: { Authorization: `Bearer ${getToken}` }
+			headers: { Authorization: `Bearer ${getToken()}` }
 		})
 		return response.data
 	} catch (error) {

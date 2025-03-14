@@ -27,7 +27,7 @@ const fetchProducts = async () => {
 	}
 }
 
-function ProductDetailPage() {
+function ProductDetailPage({ user }) {
 	const { linkName } = useParams()
 	const location = useLocation()
 	const { fromWarehouse } = location.state || {}
@@ -218,17 +218,40 @@ function ProductDetailPage() {
 		}
 	}, [isDropdownOpen])
 
+	// const filterProducts = () => {
+	// 	const newFilteredProducts = productsDB.filter(product => {
+	// 		const wheelSize = parseInt(product.wheelSize, 10)
+	// 		const frameSize = Number(product.frameGrouve)
+
+	// 		return (
+	// 			transliterate(product.name) === linkName &&
+	// 			wheelSize >= wheelSizeRange[0] &&
+	// 			wheelSize <= wheelSizeRange[1] &&
+	// 			frameSize >= frameSizeRange[0] &&
+	// 			frameSize <= frameSizeRange[1] &&
+	// 			(selectedColor === '' ||
+	// 				product.color.toLowerCase() === selectedColor.toLowerCase())
+	// 		)
+	// 	})
+	// 	setFilteredProducts(newFilteredProducts)
+	// }
+
 	const filterProducts = () => {
 		const newFilteredProducts = productsDB.filter(product => {
-			const wheelSize = parseInt(product.wheelSize, 10)
-			const frameSize = parseInt(product.frameGrouve, 10)
+			// Если значение пустое, то условие считается пройденным (true)
+			const wheelValid =
+				product.wheelSize === '' ||
+				(parseInt(product.wheelSize, 10) >= wheelSizeRange[0] &&
+					parseInt(product.wheelSize, 10) <= wheelSizeRange[1])
+			const frameValid =
+				product.frameGrouve === '' ||
+				(Number(product.frameGrouve) >= frameSizeRange[0] &&
+					Number(product.frameGrouve) <= frameSizeRange[1])
 
 			return (
 				transliterate(product.name) === linkName &&
-				wheelSize >= wheelSizeRange[0] &&
-				wheelSize <= wheelSizeRange[1] &&
-				frameSize >= frameSizeRange[0] &&
-				frameSize <= frameSizeRange[1] &&
+				wheelValid &&
+				frameValid &&
 				(selectedColor === '' ||
 					product.color.toLowerCase() === selectedColor.toLowerCase())
 			)
@@ -294,7 +317,7 @@ function ProductDetailPage() {
 						source: fromWarehouse ? 'warehouse' : 'store'
 					},
 					{
-						headers: { Authorization: `Bearer ${getToken}` }
+						headers: { Authorization: `Bearer ${getToken()}` }
 					}
 				)
 
@@ -329,7 +352,7 @@ function ProductDetailPage() {
 						to: !fromWarehouse ? 'warehouse' : 'store'
 					},
 					{
-						headers: { Authorization: `Bearer ${getToken}` }
+						headers: { Authorization: `Bearer ${getToken()}` }
 					}
 				)
 
@@ -360,12 +383,12 @@ function ProductDetailPage() {
 				const response = await axios.post(
 					`${serverConfig}/cart`,
 					{
-						userId: 1,
+						userId: user?.userId,
 						itemId: product.id,
 						quantity: modalQuantities[product.code],
 						buyertype: buyerType
 					},
-					{ headers: { Authorization: `Bearer ${getToken}` } }
+					{ headers: { Authorization: `Bearer ${getToken()}` } }
 				)
 				if (response.status !== 200) {
 					console.error('Error blyat', response.data)
@@ -486,6 +509,7 @@ function ProductDetailPage() {
 									<Scale
 										value={frameSizeRange}
 										onChange={handleFrameSizeChange}
+										isFloat={true}
 										min={13}
 										max={23}
 										title={'Ростовка рамы'}
@@ -605,7 +629,9 @@ function ProductDetailPage() {
 											: 'Переместить в магазин'}
 									</button>
 
-									<button onClick={handleWriteOffButtonClick}>Списать</button>
+									{user?.role !== 'ADMIN' ? null : (
+										<button onClick={handleWriteOffButtonClick}>Списать</button>
+									)}
 									<button onClick={handleSellButtonClick}>Продать</button>
 								</div>
 							</div>
