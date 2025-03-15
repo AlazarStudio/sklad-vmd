@@ -273,7 +273,14 @@ function AddShipment({ ...props }) {
 				</div>
 			</form>
 
-			<p className={styles.products_name}>ТОВАРЫ</p>
+			<p className={styles.products_name}>
+				ТОВАРЫ{' '}
+				{fromWhere ? (
+					<span className={styles.products_name} style={{ color: '#f77532' }}>
+						{fromWhere === 'warehouse' ? 'со склада' : 'с магазина'}
+					</span>
+				) : null}
+			</p>
 			<section className={styles.sale_products}>
 				<div className={styles.products_wrapper__head}>
 					<p className={styles.name}>Наименование</p>

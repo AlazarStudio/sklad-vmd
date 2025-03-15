@@ -19,7 +19,7 @@ function App() {
 		<>
 			<Routes>
 				{isAuthenticated ? (
-					<Route path='/' element={<Layout />}>
+					<Route path='/' element={<Layout user={user} />}>
 						<Route index element={<MainPage user={user} />} />
 						<Route path='/:id' element={<MainPage user={user} />} />
 						<Route path='/:id/:idType' element={<MainPage user={user} />} />

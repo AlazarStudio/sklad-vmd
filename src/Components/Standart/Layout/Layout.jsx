@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../../Blocks/Footer/Footer'
 import Header from '../../Blocks/Header/Header'
 
-function Empty({ children, ...props }) {
+function Empty({ children, user, ...props }) {
 	return (
 		<>
-			<Header />
+			<Header user={user} />
 			<Outlet />
 			{/* <Footer /> */}
 		</>

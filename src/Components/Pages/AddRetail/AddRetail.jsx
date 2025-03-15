@@ -49,7 +49,7 @@ function AddRetail({ ...props }) {
 	}
 
 	const fromWhere = localStorage.getItem('RWarehouseOrNot') || ''
-	console.log(fromWhere)
+	// console.log(fromWhere)
 
 	const [productsDB, setProducts] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -73,7 +73,7 @@ function AddRetail({ ...props }) {
 		getProducts()
 	}, [])
 
-	console.log(productsDB)
+	// console.log(productsDB)
 
 	const removeItemFromCart = async itemId => {
 		try {
@@ -161,7 +161,17 @@ function AddRetail({ ...props }) {
 
 	return (
 		<>
-			<p className={styles.products_name}>ТОВАРЫ</p>
+			<p className={styles.products_name}>
+				ТОВАРЫ{' '}
+				{fromWhere ? (
+					<span
+						className={styles.products_name}
+						style={{ color: '#f77532', border: 'none' }}
+					>
+						{fromWhere === 'warehouse' ? 'со склада' : 'с магазина'}
+					</span>
+				) : null}
+			</p>
 			<section className={styles.sale_products}>
 				<div className={styles.products_wrapper__head}>
 					{/* <div className={styles.checkBox_wrapper}>

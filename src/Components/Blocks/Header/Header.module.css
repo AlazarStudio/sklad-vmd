@@ -19,6 +19,9 @@
   width: 44px;
   height: 34px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .exit img {

@@ -9,7 +9,7 @@ import styles from './Header.module.css'
 
 Modal.setAppElement('#root')
 
-function Header() {
+function Header({ user }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const { logout } = useContext(AuthContext)
 
@@ -34,6 +34,7 @@ function Header() {
 				</Link>
 				<Burger />
 				<div className={styles.exit} onClick={handleLogoutClick}>
+					{/* {user?.role === "ADMIN" ? "АДМИН" : ""} */}
 					<img src='/images/logout.png' alt='Выйти' />
 				</div>
 			</div>
