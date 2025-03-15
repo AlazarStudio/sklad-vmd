@@ -358,7 +358,7 @@ function AddProductMoto({ children, ...props }) {
 					</div>
 
 					<div className={styles.form_item}>
-						<p style={{ flexBasis: '100%' }}>Данные велосипеда</p>
+						{/* <p style={{ flexBasis: '100%' }}>Данные велосипеда</p> */}
 
 						<div className={styles.item}>
 							<label htmlFor='motor'>Двигатель</label>
@@ -367,7 +367,7 @@ function AddProductMoto({ children, ...props }) {
 								name='motor'
 								value={formData.motor}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='size'>Длина х Ширина х Высота</label>
 							<input
@@ -375,7 +375,7 @@ function AddProductMoto({ children, ...props }) {
 								name='size'
 								value={formData.size}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='weight'>Снаряженная масса (кг)</label>
 							<input
@@ -383,7 +383,7 @@ function AddProductMoto({ children, ...props }) {
 								name='weight'
 								value={formData.weight}
 								onChange={handleChange}
-								required
+								// required
 							/>
 
 							<label htmlFor='maximumLoad'>Максимальная нагрузка (кг)</label>
@@ -393,7 +393,7 @@ function AddProductMoto({ children, ...props }) {
 								name='maximumLoad'
 								value={formData.maximumLoad || ''}
 								onChange={handleChange}
-								required
+								// required
 							/>
 
 							<label htmlFor='frontDerailleur'>Передний / задний тормоз</label>
@@ -402,7 +402,7 @@ function AddProductMoto({ children, ...props }) {
 								name='frontDerailleur'
 								value={formData.frontDerailleur}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='backDerailleur'>Переднее / заднее колесо</label>
 							<input
@@ -410,7 +410,7 @@ function AddProductMoto({ children, ...props }) {
 								name='backDerailleur'
 								value={formData.backDerailleur}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='frontSuspension'>Передняя подвеска</label>
 							<input
@@ -418,7 +418,7 @@ function AddProductMoto({ children, ...props }) {
 								name='frontSuspension'
 								value={formData.frontSuspension}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='rearSuspension'>Задняя подвеска</label>
 							<input
@@ -426,7 +426,7 @@ function AddProductMoto({ children, ...props }) {
 								name='rearSuspension'
 								value={formData.rearSuspension}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='fuelConsumption'>Расход топлива (л/км)</label>
 							<input
@@ -434,14 +434,14 @@ function AddProductMoto({ children, ...props }) {
 								name='fuelConsumption'
 								value={formData.fuelConsumption}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='color'>Цвет</label>
 							<select
 								name='color'
 								value={formData.color}
 								onChange={handleChange}
-								required
+								// required
 							>
 								<option value='' defaultValue hidden>
 									Выберите цвет
@@ -468,7 +468,7 @@ function AddProductMoto({ children, ...props }) {
 								name='system'
 								value={formData.system}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='starting'>Запуск</label>
 							<input
@@ -476,7 +476,7 @@ function AddProductMoto({ children, ...props }) {
 								name='starting'
 								value={formData.starting}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='power'>Мощность</label>
 							<input
@@ -484,7 +484,7 @@ function AddProductMoto({ children, ...props }) {
 								name='power'
 								value={formData.power}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='torque'>Крутящий момент</label>
 							<input
@@ -492,7 +492,7 @@ function AddProductMoto({ children, ...props }) {
 								name='torque'
 								value={formData.torque}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='maxSpeed'>Максимальная скорость (км/ч)</label>
 							<input
@@ -500,7 +500,7 @@ function AddProductMoto({ children, ...props }) {
 								name='maxSpeed'
 								value={formData.maxSpeed}
 								onChange={handleChange}
-								required
+								// required
 							/>
 
 							<label htmlFor='transmission'>Трансмиссия</label>
@@ -509,7 +509,7 @@ function AddProductMoto({ children, ...props }) {
 								name='transmission'
 								value={formData.transmission}
 								onChange={handleChange}
-								required
+								// required
 							/>
 
 							<label htmlFor='saddleHeight'>Высота по седлу (мм)</label>
@@ -519,7 +519,7 @@ function AddProductMoto({ children, ...props }) {
 								name='saddleHeight'
 								value={formData.saddleHeight || ''}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='wheelbase'>Колёсная база (мм)</label>
 							<input
@@ -527,7 +527,7 @@ function AddProductMoto({ children, ...props }) {
 								name='wheelbase'
 								value={formData.wheelbase}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='groundClearance'>Дорожный просвет (мм)</label>
 							<input
@@ -535,7 +535,7 @@ function AddProductMoto({ children, ...props }) {
 								name='groundClearance'
 								value={formData.groundClearance}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='fuelTankCapacity'>Объём топливного бака (л)</label>
 							<input
@@ -543,7 +543,7 @@ function AddProductMoto({ children, ...props }) {
 								name='fuelTankCapacity'
 								value={formData.fuelTankCapacity}
 								onChange={handleChange}
-								required
+								// required
 							/>
 						</div>
 					</div>

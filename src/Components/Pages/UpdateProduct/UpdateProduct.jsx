@@ -416,7 +416,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='frame'
 										name='frame'
-										required
+										// required
 										value={product.frame || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -426,7 +426,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='size'
 										name='size'
-										required
+										// required
 										value={product.size || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -436,7 +436,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='weight'
 										name='weight'
-										required
+										// required
 										value={product.weight || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -446,7 +446,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='fork'
 										name='fork'
-										required
+										// required
 										value={product.fork || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -456,7 +456,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='flywheels'
 										name='flywheels'
-										required
+										// required
 										value={product.flywheels || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -468,7 +468,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='frontDerailleur'
 										name='frontDerailleur'
-										required
+										// required
 										value={product.frontDerailleur || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -478,7 +478,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='backDerailleur'
 										name='backDerailleur'
-										required
+										// required
 										value={product.backDerailleur || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -492,7 +492,7 @@ function UpdateProduct({ children, user, ...props }) {
 										max={29}
 										value={product.wheelSize || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='color'>Цвет</label>
@@ -503,7 +503,7 @@ function UpdateProduct({ children, user, ...props }) {
 										onChange={e =>
 											setProduct({ ...product, color: e.target.value })
 										}
-										required
+										// required
 										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
@@ -547,7 +547,7 @@ function UpdateProduct({ children, user, ...props }) {
 										name='amortization'
 										value={product.amortization || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									{/* <select
@@ -585,7 +585,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='system'
 										name='system'
-										required
+										// required
 										value={product.system || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -595,7 +595,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='ratchet'
 										name='ratchet'
-										required
+										// required
 										value={product.ratchet || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -609,7 +609,7 @@ function UpdateProduct({ children, user, ...props }) {
 										max={27}
 										value={product.speed || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='carriage'>Каретка</label>{' '}
@@ -617,7 +617,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='carriage'
 										name='carriage'
-										required
+										// required
 										value={product.carriage || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -628,7 +628,7 @@ function UpdateProduct({ children, user, ...props }) {
 										name='breaks'
 										value={product.breaks || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									{/* <select
@@ -657,7 +657,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='bushings'
 										name='bushings'
-										required
+										// required
 										value={product.bushings || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -667,7 +667,7 @@ function UpdateProduct({ children, user, ...props }) {
 										type='text'
 										id='rubber'
 										name='rubber'
-										required
+										// required
 										value={product.rubber || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -682,7 +682,7 @@ function UpdateProduct({ children, user, ...props }) {
 										step={0.5}
 										value={product.frameGrouve || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='gender'>Пол</label>
@@ -690,7 +690,7 @@ function UpdateProduct({ children, user, ...props }) {
 										name='gender'
 										value={product.gender || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
@@ -704,7 +704,7 @@ function UpdateProduct({ children, user, ...props }) {
 										name='type'
 										value={product.type || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>

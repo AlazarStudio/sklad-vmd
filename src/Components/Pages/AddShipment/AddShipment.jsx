@@ -167,7 +167,7 @@ function AddShipment({ ...props }) {
 	}
 
 	const confirmSale = async customPrices => {
-		console.log('Selected Contractor ID:', selectedContractorId)
+		// console.log('Selected Contractor ID:', selectedContractorId)
 		try {
 			await axios.post(
 				`${serverConfig}/cart/confirm-sale`,
@@ -199,7 +199,7 @@ function AddShipment({ ...props }) {
 		}, {})
 
 		confirmSale(customPrices)
-		console.log('Received customPrices:', customPrices)
+		// console.log('Received customPrices:', customPrices)
 	}
 
 	// const confirmSale = async () => {

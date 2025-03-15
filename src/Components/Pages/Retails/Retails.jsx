@@ -16,7 +16,7 @@ function Retails({ user }) {
 	const [searchQuery, setSearchQuery] = useState('')
 
 	useEffect(() => {
-		if (user?.role === 'ADMIN') {
+		// if (user?.role === 'ADMIN') {
 			const fetchSalesReport = async () => {
 				try {
 					// Получаем текущий год
@@ -49,9 +49,9 @@ function Retails({ user }) {
 			}
 
 			fetchSalesReport()
-		} else {
-		}
-	}, [user?.role])
+		// } else {
+		// }
+	}, [])
 
 	// Функция для обновления поискового запроса
 	const handleSearchChange = event => {
@@ -102,16 +102,16 @@ function Retails({ user }) {
 					{/* <AddButton img='/images/green_add.png' text='Отгрузка' /> */}
 					{/* <AddButton img='/images/print.png' text='Печать' /> */}
 				</div>
-				{user?.role !== 'ADMIN' ? null : (
+				{/* {user?.role !== 'ADMIN' ? null : ( */}
 					<input
 						type='search'
 						value={searchQuery}
 						onChange={handleSearchChange}
 						placeholder='Поиск...'
 					/>
-				)}
+				{/* )} */}
 			</div>
-			{user?.role !== 'ADMIN' ? null : (
+			{/* {user?.role !== 'ADMIN' ? null : ( */}
 				<section className={styles.products_wrapper}>
 					<div className={styles.products_wrapper__head}>
 						<div className={styles.checkBox_wrapper}>{/* <CheckBox /> */}</div>
@@ -142,7 +142,7 @@ function Retails({ user }) {
 							.reverse()}
 					</div>
 				</section>
-			)}
+			{/* )} */}
 		</>
 	)
 }

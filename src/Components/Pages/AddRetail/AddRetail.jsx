@@ -140,7 +140,7 @@ function AddRetail({ ...props }) {
 		}, {})
 
 		confirmSale(customPrices)
-		console.log('Received customPrices:', customPrices)
+		// console.log('Received customPrices:', customPrices)
 	}
 
 	const handlePriceChange = (productCode, newPrice) => {

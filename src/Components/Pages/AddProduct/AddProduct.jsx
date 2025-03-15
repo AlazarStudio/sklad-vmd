@@ -366,7 +366,7 @@ function AddProduct({ children, ...props }) {
 								name='frame'
 								value={formData.frame}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='size'>Размер</label>
 							<input
@@ -374,7 +374,7 @@ function AddProduct({ children, ...props }) {
 								name='size'
 								value={formData.size}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='weight'>Вес</label>
 							<input
@@ -382,7 +382,7 @@ function AddProduct({ children, ...props }) {
 								name='weight'
 								value={formData.weight}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='fork'>Вилка</label>
 							<input
@@ -390,7 +390,7 @@ function AddProduct({ children, ...props }) {
 								name='fork'
 								value={formData.fork}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='flywheels'>Манетки</label>
 							<input
@@ -398,7 +398,7 @@ function AddProduct({ children, ...props }) {
 								name='flywheels'
 								value={formData.flywheels}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='frontDerailleur'>Передний переключатель</label>
 							<input
@@ -406,7 +406,7 @@ function AddProduct({ children, ...props }) {
 								name='frontDerailleur'
 								value={formData.frontDerailleur}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='backDerailleur'>Задний переключатель</label>
 							<input
@@ -414,7 +414,7 @@ function AddProduct({ children, ...props }) {
 								name='backDerailleur'
 								value={formData.backDerailleur}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='wheelSize'>Диаметр колеса</label>
 							<input
@@ -424,14 +424,14 @@ function AddProduct({ children, ...props }) {
 								max={29}
 								value={formData.wheelSize}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='color'>Цвет</label>
 							<select
 								name='color'
 								value={formData.color}
 								onChange={handleChange}
-								required
+								// required
 							>
 								<option value='' defaultValue hidden>
 									Выберите цвет
@@ -461,7 +461,7 @@ function AddProduct({ children, ...props }) {
 								name='ageGroup'
 								value={formData.ageGroup}
 								onChange={handleChange}
-								required
+								// required
 							>
 								<option value='' defaultValue hidden>
 									Выберите группу
@@ -479,7 +479,7 @@ function AddProduct({ children, ...props }) {
 								name='amortization'
 								value={formData.amortization}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							{/* <select
 								name='amortization'
@@ -516,7 +516,7 @@ function AddProduct({ children, ...props }) {
 								name='system'
 								value={formData.system}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='ratchet'>Кассета трещотка</label>
 							<input
@@ -524,7 +524,7 @@ function AddProduct({ children, ...props }) {
 								name='ratchet'
 								value={formData.ratchet}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='speed'>Скорость</label>
 							<input
@@ -534,7 +534,7 @@ function AddProduct({ children, ...props }) {
 								max={27}
 								value={formData.speed}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='carriage'>Каретка</label>
 							<input
@@ -542,7 +542,7 @@ function AddProduct({ children, ...props }) {
 								name='carriage'
 								value={formData.carriage}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='breaks'>Тормоза</label>
 							<input
@@ -550,7 +550,7 @@ function AddProduct({ children, ...props }) {
 								name='breaks'
 								value={formData.breaks}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							{/* <select
 								name='breaks'
@@ -580,7 +580,7 @@ function AddProduct({ children, ...props }) {
 								name='bushings'
 								value={formData.bushings}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='rubber'>Резина</label>
 							<input
@@ -588,7 +588,7 @@ function AddProduct({ children, ...props }) {
 								name='rubber'
 								value={formData.rubber}
 								onChange={handleChange}
-								required
+								// required
 							/>
 							<label htmlFor='frameGrouve'>Ростовка рамы</label>
 							<input
@@ -598,7 +598,7 @@ function AddProduct({ children, ...props }) {
 								max={23}
 								step={0.5}
 								value={formData.frameGrouve}
-								required
+								// required
 								onChange={handleChange}
 							/>
 							<label htmlFor='gender'>Пол</label>
@@ -626,7 +626,7 @@ function AddProduct({ children, ...props }) {
 								name='type'
 								value={formData.type}
 								onChange={handleChange}
-								required
+								// required
 							>
 								<option value='' defaultValue hidden>
 									Выберите тип

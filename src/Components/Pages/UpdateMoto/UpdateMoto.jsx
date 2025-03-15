@@ -414,7 +414,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='motor'
 										name='motor'
-										required
+										// required
 										value={product.motor || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -424,7 +424,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='size'
 										name='size'
-										required
+										// required
 										value={product.size || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -434,7 +434,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='weight'
 										name='weight'
-										required
+										// required
 										value={product.weight || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -449,7 +449,7 @@ function UpdateMoto({ children, user, ...props }) {
 										name='maximumLoad'
 										value={product.maximumLoad || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='frontDerailleur'>
@@ -459,7 +459,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='frontDerailleur'
 										name='frontDerailleur'
-										required
+										// required
 										value={product.frontDerailleur || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -471,7 +471,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='backDerailleur'
 										name='backDerailleur'
-										required
+										// required
 										value={product.backDerailleur || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -491,7 +491,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='rearSuspension'
 										name='rearSuspension'
-										required
+										// required
 										value={product.rearSuspension || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -503,7 +503,7 @@ function UpdateMoto({ children, user, ...props }) {
 										name='fuelConsumption'
 										value={product.fuelConsumption || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='color'>Цвет</label>
@@ -514,7 +514,7 @@ function UpdateMoto({ children, user, ...props }) {
 										onChange={e =>
 											setProduct({ ...product, color: e.target.value })
 										}
-										required
+										// required
 										disabled={isDis}
 									>
 										<option value='' defaultValue hidden>
@@ -541,7 +541,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='system'
 										name='system'
-										required
+										// required
 										value={product.system || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -553,7 +553,7 @@ function UpdateMoto({ children, user, ...props }) {
 										id='starting'
 										value={product.starting || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='power'>Мощность</label>
@@ -561,7 +561,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='power'
 										name='power'
-										required
+										// required
 										value={product.power || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -572,7 +572,7 @@ function UpdateMoto({ children, user, ...props }) {
 										name='torque'
 										value={product.torque || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='maxSpeed'>Максимальная скорость (км/ч)</label>
@@ -580,7 +580,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='maxSpeed'
 										name='maxSpeed'
-										required
+										// required
 										value={product.maxSpeed || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -590,7 +590,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										name='transmission'
 										id='transmission'
-										required
+										// required
 										value={product.transmission || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -603,7 +603,7 @@ function UpdateMoto({ children, user, ...props }) {
 										name='saddleHeight'
 										value={product.saddleHeight || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 									<label htmlFor='wheelbase'>Колёсная база (мм)</label>
@@ -611,7 +611,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='wheelbase'
 										name='wheelbase'
-										required
+										// required
 										value={product.wheelbase || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -621,7 +621,7 @@ function UpdateMoto({ children, user, ...props }) {
 										type='text'
 										id='groundClearance'
 										name='groundClearance'
-										required
+										// required
 										value={product.groundClearance || ''}
 										onChange={handleChange}
 										disabled={isDis}
@@ -635,7 +635,7 @@ function UpdateMoto({ children, user, ...props }) {
 										name='fuelTankCapacity'
 										value={product.fuelTankCapacity || ''}
 										onChange={handleChange}
-										required
+										// required
 										disabled={isDis}
 									/>
 								</div>
