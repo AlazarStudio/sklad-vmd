@@ -169,17 +169,17 @@ function AddProductMoto({ children, ...props }) {
 
 		// Проверяем, есть ли выбранные файлы
 		if (selectedFiles.length > 0) {
-			const formData = new FormData()
+			const filesData = new FormData()
 
-			// Добавляем каждый файл в FormData
+			// Добавляем каждый файл в filesData
 			selectedFiles.forEach(file => {
-				formData.append('images', file)
+				filesData.append('images', file)
 			})
 
 			try {
 				const uploadResponse = await axios.post(
 					`${serverConfig}/upload`,
-					formData,
+					filesData,
 					{
 						headers: {
 							'Content-Type': 'multipart/form-data'

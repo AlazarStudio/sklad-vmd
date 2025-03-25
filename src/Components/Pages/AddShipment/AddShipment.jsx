@@ -226,12 +226,21 @@ function AddShipment({ ...props }) {
 	// 	}
 	// }
 
-	const handlePriceChange = (productCode, newPrice) => {
+	const handlePriceChange = (productId, newPrice, minPrice) => {
+		const price = parseFloat(newPrice) || 0
+		// Если введённая цена меньше минимальной, устанавливаем минимальное значение
 		setPrices(prevPrices => ({
 			...prevPrices,
-			[productCode]: parseFloat(newPrice) || 0 // Преобразуем цену в число
+			[productId]: price < minPrice ? minPrice : price
 		}))
 	}
+
+	// const handlePriceChange = (productCode, newPrice) => {
+	// 	setPrices(prevPrices => ({
+	// 		...prevPrices,
+	// 		[productCode]: parseFloat(newPrice) || 0 // Преобразуем цену в число
+	// 	}))
+	// }
 
 	const totalEnteredPrice = Object.values(prices).reduce(
 		(sum, price) => sum + parseFloat(price || 0),
@@ -354,9 +363,14 @@ function AddShipment({ ...props }) {
 									<input
 										type='number'
 										placeholder='Введите цену'
-										value={prices[product.id] || ''}
+										min={product?.Item?.price}
+										value={prices[product.id] || product?.Item?.price}
 										onChange={e =>
-											handlePriceChange(product.id, e.target.value)
+											handlePriceChange(
+												product.id,
+												e.target.value,
+												product?.Item?.price
+											)
 										}
 									/>
 								</div>
@@ -364,14 +378,15 @@ function AddShipment({ ...props }) {
 						})}
 					</div>
 					<div className={styles.totalPrice}>
-						<p>
-							Сумма:{' '}
-							{totalEnteredPrice
-								.toFixed(2)
-								.toString()
-								.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
-							{'₽'}
-						</p>
+						{totalEnteredPrice > 0 ? (
+							<p>
+								Сумма:{' '}
+								{totalEnteredPrice
+									.toFixed(2)
+									.toString()
+									.replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}
+							</p>
+						) : null}
 					</div>
 					<div className={styles.modalButtons}>
 						<button onClick={handleSubmitPrice}>Подтвердить</button>

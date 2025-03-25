@@ -17,33 +17,39 @@
 
 
 .number {
-  flex-basis: 5%;
+  flex-basis: 10%;
+  text-align: center;
+}
+
+.fb11 {
+  flex-basis: 11%;
+  text-align: center;
 }
 
 .time {
-  flex-basis: 15%;
+  flex-basis: 12%;
 }
 
 .name {
-  flex-basis: 24%;
+  flex-basis: 18%;
 }
 
 .to_warehouse {
-  flex-basis: 11%;
+  flex-basis: 7%;
   /* text-align: center; */
 }
 
 .contractors {
-  flex-basis: 20%;
+  flex-basis: 19%;
   text-align: center;
 }
 
 .organization {
-  flex-basis: 15%;
+  flex-basis: 10%;
   text-align: center;
 }
 
 .sum {
-  flex-basis: 12%;
+  flex-basis: 9%;
   text-align: right;
 }

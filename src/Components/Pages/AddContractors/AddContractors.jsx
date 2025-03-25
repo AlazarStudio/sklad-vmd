@@ -18,7 +18,8 @@ function AddContractors({ ...props }) {
 		name: '',
 		number: '',
 		email: '',
-		adress: ''
+		adress: '',
+		inn: ''
 	})
 
 	const handleChange = e => {
@@ -35,7 +36,8 @@ function AddContractors({ ...props }) {
 			const response = await axios.post(
 				`${serverConfig}/contragents`,
 				{
-					...formData
+					...formData,
+					inn: parseInt(formData.inn)
 				},
 				{
 					headers: { Authorization: `Bearer ${getToken()}` }
@@ -78,6 +80,14 @@ function AddContractors({ ...props }) {
 				</div>
 				<div className={styles.form_item}>
 					<div className={styles.item}>
+						<label htmlFor='inn'>ИНН</label>
+						<input
+							type='text'
+							name='inn'
+							value={formData.inn}
+							onChange={handleChange}
+							required
+						/>
 						<label htmlFor='number'>Телефон</label>
 						<input
 							type='text'

@@ -36,6 +36,9 @@ function UpdateContractor({ ...props }) {
 		}
 	}, [id, location.state])
 
+	// console.log(contractor);
+	
+
 	const handleChange = e => {
 		const { name, value } = e.target
 		setContractor({
@@ -50,7 +53,8 @@ function UpdateContractor({ ...props }) {
 			const response = await axios.put(
 				`${serverConfig}/contragents/${id}`,
 				{
-					...contractor
+					...contractor,
+					inn: parseInt(contractor.inn)
 				},
 				{
 					headers: { Authorization: `Bearer ${token}` }
@@ -96,6 +100,14 @@ function UpdateContractor({ ...props }) {
 							</div>
 							<div className={styles.form_item}>
 								<div className={styles.item}>
+									<label htmlFor='inn'>ИНН</label>
+									<input
+										type='text'
+										name='inn'
+										value={contractor.inn || ''}
+										onChange={handleChange}
+										required
+									/>
 									<label htmlFor='number'>Телефон</label>
 									<input
 										type='text'

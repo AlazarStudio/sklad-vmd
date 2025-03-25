@@ -84,7 +84,7 @@ function AcceptanceProduct({ ...props }) {
 				{props.name} {props.color}{' '}
 				{groupName.toLowerCase() !== 'велосипеды'
 					? `${props.saddleHeight} мм`
-					: `${props.frameGrouve}"`} {' '}
+					: `${props.frameGrouve}"`}{' '}
 				{groupName.toLowerCase() !== 'велосипеды'
 					? `${props.maximumLoad} кг`
 					: props.wheelSize}
@@ -94,6 +94,10 @@ function AcceptanceProduct({ ...props }) {
 			</p>
 			<p className={styles.contractors}>{contractorName}</p>
 			<p className={styles.organization}>{props.quantity}</p>
+			<p className={styles.number}>{props?.user?.login}</p>
+			<p
+				className={styles.fb11}
+			>{`${props?.item?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}/${props?.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}`}</p>
 			<p className={styles.sum}>
 				{sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}
 			</p>
