@@ -190,17 +190,40 @@ function AddShipment({ ...props }) {
 		}
 	}
 
-	const handleSubmitPrice = () => {
-		const customPrices = productsDB.reduce((acc, product) => {
-			acc[product.Item.id] = prices[product.id]
-				? prices[product.id]
-				: product.Item.priceForSale
-			return acc
-		}, {})
+	// const handleSubmitPrice = () => {
+	// 	const customPrices = productsDB.reduce((acc, product) => {
+	// 		acc[product.Item.id] = prices[product.id]
+	// 			? prices[product.id]
+	// 			: product.Item.priceForSale
+	// 		return acc
+	// 	}, {})
 
-		confirmSale(customPrices)
-		// console.log('Received customPrices:', customPrices)
-	}
+	// 	confirmSale(customPrices)
+	// 	// console.log('Received customPrices:', customPrices)
+	// }
+
+	const handleSubmitPrice = () => {
+		// Проверяем для каждого продукта, соответствует ли введённая цена минимальной цене
+		for (let product of productsDB) {
+			const enteredValue = prices[product.id];
+			// Если пользователь ввёл значение (не пустая строка) и оно ниже минимальной цены
+			if (enteredValue !== '' && enteredValue !== undefined && parseFloat(enteredValue) < product?.Item?.price) {
+				alert(`Введённая цена для ${product.Item.name} ниже себестоимости. Себестоимость: ${product.Item.price}`);
+				return; // Прерываем выполнение функции, если найдено неверное значение
+			}
+		}
+	
+		// Если все введённые цены корректны, формируем объект customPrices
+		const customPrices = productsDB.reduce((acc, product) => {
+			acc[product.Item.id] =
+				prices[product.id] !== '' && prices[product.id] !== undefined
+					? prices[product.id]
+					: product.Item.priceForSale;
+			return acc;
+		}, {});
+	
+		confirmSale(customPrices);
+	};
 
 	// const confirmSale = async () => {
 	// 	try {
@@ -226,21 +249,21 @@ function AddShipment({ ...props }) {
 	// 	}
 	// }
 
-	const handlePriceChange = (productId, newPrice, minPrice) => {
-		const price = parseFloat(newPrice) || 0
-		// Если введённая цена меньше минимальной, устанавливаем минимальное значение
-		setPrices(prevPrices => ({
-			...prevPrices,
-			[productId]: price < minPrice ? minPrice : price
-		}))
-	}
-
-	// const handlePriceChange = (productCode, newPrice) => {
+	// const handlePriceChange = (productId, newPrice, minPrice) => {
+	// 	const price = parseFloat(newPrice) || 0
+	// 	// Если введённая цена меньше минимальной, устанавливаем минимальное значение
 	// 	setPrices(prevPrices => ({
 	// 		...prevPrices,
-	// 		[productCode]: parseFloat(newPrice) || 0 // Преобразуем цену в число
+	// 		[productId]: price < minPrice ? minPrice : price
 	// 	}))
 	// }
+
+	const handlePriceChange = (productCode, newPrice) => {
+		setPrices(prevPrices => ({
+			...prevPrices,
+			[productCode]: parseFloat(newPrice) || 0 // Преобразуем цену в число
+		}))
+	}
 
 	const totalEnteredPrice = Object.values(prices).reduce(
 		(sum, price) => sum + parseFloat(price || 0),
@@ -364,12 +387,11 @@ function AddShipment({ ...props }) {
 										type='number'
 										placeholder='Введите цену'
 										min={product?.Item?.price}
-										value={prices[product.id] || product?.Item?.price}
+										value={prices[product.id]}
 										onChange={e =>
 											handlePriceChange(
 												product.id,
 												e.target.value,
-												product?.Item?.price
 											)
 										}
 									/>

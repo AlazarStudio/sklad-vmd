@@ -52,7 +52,7 @@ function ProductCardSale({
 	return (
 		<div className={styles.product_wrapper}>
 			<p className={styles.name}>{props.Item.name}</p>
-			<p className={styles.code}>{props.Item.code}</p>
+			<p className={styles.code}>{props.Item.id}</p>
 			<p className={styles.unit_of_measurement}>{props.quantity}</p>
 			<p className={styles.cost_price}>
 				{props.Item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}{' '}

@@ -35,6 +35,7 @@ function ContractorsProduct({ operation, onSelect, user, ...props }) {
 			<p className={styles.created}>{formatDate(props.createdAt)}</p>
 			<p className={styles.phone}>{props.number}</p>
 			<p className={styles.email}>{props.email}</p>
+			<p className={styles.email}>{props.inn}</p>
 			<p className={styles.address}>{props.adress}</p>
 		</div>
 	)

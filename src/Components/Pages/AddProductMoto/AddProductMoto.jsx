@@ -199,7 +199,7 @@ function AddProductMoto({ children, ...props }) {
 			groupId: parseInt(formData.groupId),
 			price: parseInt(formData.price),
 			priceForSale: parseInt(formData.priceForSale),
-			code: parseInt(formData.code),
+			code: 0,
 			nds: parseInt(formData.nds),
 			warehouseCount: parseInt(formData.warehouseCount)
 		}
@@ -280,7 +280,7 @@ function AddProductMoto({ children, ...props }) {
 								required
 								style={{ resize: 'none' }}
 							></textarea>
-							<label htmlFor='code'>Код</label>
+							{/* <label htmlFor='code'>Код</label>
 							<input
 								type='text'
 								name='code'
@@ -288,7 +288,7 @@ function AddProductMoto({ children, ...props }) {
 								onChange={handleChange}
 								required
 								placeholder='00001'
-							/>
+							/> */}
 							<label htmlFor='warehouseCount'>Количество</label>
 							<input
 								type='number'

@@ -132,6 +132,7 @@ function ContractorsPage({ children, user, ...props }) {
 					<p className={styles.created}>Создан</p>
 					<p className={styles.phone}>Телефон</p>
 					<p className={styles.email}>Email</p>
+					<p className={styles.email}>ИНН</p>
 					<p className={styles.address}>Адрес</p>
 				</div>
 				<div>

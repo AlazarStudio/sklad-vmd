@@ -309,7 +309,7 @@ function UpdateMoto({ children, user, ...props }) {
 										onChange={handleChange}
 										disabled={isDis}
 									></textarea>
-									<label htmlFor='code'>Код</label>
+									{/* <label htmlFor='code'>Код</label>
 									<input
 										type='text'
 										id='code'
@@ -319,7 +319,7 @@ function UpdateMoto({ children, user, ...props }) {
 										value={product.code || ''}
 										onChange={handleChange}
 										disabled={isDis}
-									/>
+									/> */}
 									<label htmlFor='warehouseCount'>Количество</label>
 									<input
 										type='number'

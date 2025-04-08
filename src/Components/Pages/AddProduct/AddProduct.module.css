@@ -17,8 +17,9 @@ form {
   cursor: pointer;
 }
 
-.form_product input, select {
-  height: 44px;
+.form_product input, 
+.form_product select {
+  min-height: 44px;
   padding: 0 25px;
   border: 1px solid #b4b4b4 !important;
   border-radius: 10px !important;

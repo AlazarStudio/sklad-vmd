@@ -308,6 +308,7 @@ function Warehouse(user) {
 						.map((product, index) => (
 							<RemainsProduct
 								key={index}
+								order={index + 1}
 								isVisCheckBox={false}
 								operation={true}
 								linkName={transliterate(product.name)}

@@ -8,6 +8,7 @@ function RemainsProduct({
 	isVisCheckBox,
 	onSelect,
 	operation,
+	order,
 	linkName,
 	...props
 }) {
@@ -33,7 +34,7 @@ function RemainsProduct({
 				</div>
 			) : null}
 			<p className={styles.name}>{props.name}</p>
-			<p className={styles.code}>{props.code}</p>
+			<p className={styles.code}>{props.id}</p>
 			<p className={styles.remains}>{props.Warehouse.count}</p>
 			<p className={styles.cost_price}>
 				{props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} {' ₽'}

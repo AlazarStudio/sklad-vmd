@@ -54,7 +54,7 @@ function UpdateContractor({ ...props }) {
 				`${serverConfig}/contragents/${id}`,
 				{
 					...contractor,
-					inn: parseInt(contractor.inn)
+					inn: parseFloat(contractor.inn)
 				},
 				{
 					headers: { Authorization: `Bearer ${token}` }

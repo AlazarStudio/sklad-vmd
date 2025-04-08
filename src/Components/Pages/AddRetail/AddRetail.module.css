@@ -241,7 +241,7 @@ select {
 }
 
 .overlay {
-  z-index: 9999;
+  z-index: 9999999999999999;
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   top: 0;

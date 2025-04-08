@@ -27,7 +27,7 @@ function AddProduct({ children, ...props }) {
 		price: '',
 		priceForSale: '',
 		ageGroup: '',
-		code: '',
+		// code: '',
 		barcode: '',
 		nds: '',
 		frame: '',
@@ -187,7 +187,7 @@ function AddProduct({ children, ...props }) {
 			groupId: parseInt(formData.groupId),
 			price: parseInt(formData.price),
 			priceForSale: parseInt(formData.priceForSale),
-			code: parseInt(formData.code),
+			code: 0,
 			nds: parseInt(formData.nds),
 			warehouseCount: parseInt(formData.warehouseCount)
 		}
@@ -198,7 +198,7 @@ function AddProduct({ children, ...props }) {
 			const response = await axios.post(`${serverConfig}/items`, preparedData, {
 				headers: { Authorization: `Bearer ${token}` }
 			})
-			// console.log('Response from server:', response.data)
+			// console.log('Response from server:', response)
 			navigate('/warehouse') // Перенаправление после успешного создания товара
 		} catch (error) {
 			console.error('Error creating item:', error)
@@ -278,7 +278,7 @@ function AddProduct({ children, ...props }) {
 								required
 								style={{ resize: 'none' }}
 							></textarea>
-							<label htmlFor='code'>Код</label>
+							{/* <label htmlFor='code'>Код</label>
 							<input
 								type='text'
 								name='code'
@@ -286,7 +286,7 @@ function AddProduct({ children, ...props }) {
 								onChange={handleChange}
 								required
 								placeholder='00001'
-							/>
+							/> */}
 							<label htmlFor='warehouseCount'>Количество</label>
 							<input
 								type='number'

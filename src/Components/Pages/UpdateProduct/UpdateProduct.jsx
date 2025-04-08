@@ -172,7 +172,7 @@ function UpdateProduct({ children, user, ...props }) {
 			groupId: parseInt(product.groupId),
 			price: parseInt(product.price),
 			priceForSale: parseInt(product.priceForSale),
-			code: parseInt(product.code),
+			// code: parseInt(product.code),
 			nds: parseInt(product.nds),
 			warehouseCount: parseInt(product.Warehouse.count)
 		}
@@ -311,7 +311,7 @@ function UpdateProduct({ children, user, ...props }) {
 										onChange={handleChange}
 										disabled={isDis}
 									></textarea>
-									<label htmlFor='code'>Код</label>
+									{/* <label htmlFor='code'>Код</label>
 									<input
 										type='text'
 										id='code'
@@ -321,7 +321,7 @@ function UpdateProduct({ children, user, ...props }) {
 										value={product.code || ''}
 										onChange={handleChange}
 										disabled={isDis}
-									/>
+									/> */}
 									<label htmlFor='warehouseCount'>Количество</label>
 									<input
 										type='number'
