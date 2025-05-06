@@ -385,7 +385,7 @@ function AddProductMoped({ children, ...props }) {
 								onChange={handleChange}
 								required
 							/>
-							<label htmlFor='weight'>Снаряженная масса</label>
+							<label htmlFor='weight'>Масса</label>
 							<input
 								type='text'
 								name='weight'
@@ -444,17 +444,33 @@ function AddProductMoped({ children, ...props }) {
 									Выберите цвет
 								</option>
 								<option value='черный'>черный</option>
-								<option value='графитовый'>графитовый</option>
-								<option value='синий'>синий</option>
 								<option value='белый'>белый</option>
+								<option value='серый'>серый</option>
+								<option value='черно-красный'>черно-красный</option>
+								<option value='черно-желтый'>черно-желтый</option>
+								<option value='черно-зеленый'>черно-зеленый</option>
+								<option value='черно-синий'>черно-синий</option>
+								<option value='белый-розовый'>белый-розовый</option>
+								<option value='белый-бирюзовый'>белый-бирюзовый</option>
+								<option value='серо-синий'>серо-синий</option>
+								<option value='синий'>синий</option>
 								<option value='желтый'>желтый</option>
 								<option value='оранжевый'>оранжевый</option>
-								<option value='красный'>красный</option>
+								<option value='коричневый'>коричневый</option>
 								<option value='зеленый'>зеленый</option>
+								<option value='красный'>красный</option>
+								<option value='красно-черный'>красно-черный</option>
+								<option value='вишневый'>вишневый</option>
+								<option value='бордовый'>бордовый</option>
 								<option value='голубой'>голубой</option>
-								<option value='серый'>серый</option>
+								<option value='бирюзовый'>бирюзовый</option>
 								<option value='фиолетовый'>фиолетовый</option>
+								<option value='сиреневый'>сиреневый</option>
 								<option value='розовый'>розовый</option>
+								<option value='бежевый'>бежевый</option>
+								<option value='графитовый'>графитовый</option>
+								<option value='хаки'>хаки</option>
+								<option value='оливковый'>оливковый</option>
 							</select>
 						</div>
 

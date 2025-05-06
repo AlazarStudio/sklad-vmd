@@ -471,10 +471,22 @@ function ProductDetailPage({ user }) {
 											onClick={toggleDropdown}
 										>
 											{selectedColor ? (
-												<div
-													className={styles.color_preview}
-													style={{ backgroundColor: Colors[selectedColor] }}
-												></div>
+												<div>
+													<div
+														className={styles.color_preview}
+														style={{
+															background: Array.isArray(Colors[selectedColor])
+																? `linear-gradient(90deg, ${Colors[selectedColor][0]} 50%, ${Colors[selectedColor][1]} 50%)`
+																: Colors[selectedColor]
+														}}
+													></div>
+													{
+														// если нужно заменить дефис на " / "
+														Array.isArray(Colors[selectedColor])
+															? selectedColor.split('-').join(' - ')
+															: selectedColor
+													}
+												</div>
 											) : (
 												<p className={styles.custom_color_title}>Цвет</p>
 											)}
@@ -485,7 +497,11 @@ function ProductDetailPage({ user }) {
 													<div
 														key={color}
 														className={styles.color_item}
-														style={{ backgroundColor: Colors[color] }}
+														style={{
+															background: Array.isArray(Colors[color])
+																? `linear-gradient(90deg, ${Colors[color][0]} 50%, ${Colors[color][1]} 50%)`
+																: Colors[color]
+														}}
 														onClick={() => handleColorClick(color)}
 													></div>
 												))}
@@ -522,10 +538,22 @@ function ProductDetailPage({ user }) {
 											onClick={toggleDropdown}
 										>
 											{selectedColor ? (
-												<div
-													className={styles.color_preview}
-													style={{ backgroundColor: Colors[selectedColor] }}
-												></div>
+												<div>
+													<div
+														className={styles.color_preview}
+														style={{
+															background: Array.isArray(Colors[selectedColor])
+																? `linear-gradient(90deg, ${Colors[selectedColor][0]} 50%, ${Colors[selectedColor][1]} 50%)`
+																: Colors[selectedColor]
+														}}
+													></div>
+													{
+														// если нужно заменить дефис на " / "
+														Array.isArray(Colors[selectedColor])
+															? selectedColor.split('-').join(' - ')
+															: selectedColor
+													}
+												</div>
 											) : (
 												<p className={styles.custom_color_title}>Цвет</p>
 											)}
@@ -536,7 +564,11 @@ function ProductDetailPage({ user }) {
 													<div
 														key={color}
 														className={styles.color_item}
-														style={{ backgroundColor: Colors[color] }}
+														style={{
+															background: Array.isArray(Colors[color])
+																? `linear-gradient(90deg, ${Colors[color][0]} 50%, ${Colors[color][1]} 50%)`
+																: Colors[color]
+														}}
 														onClick={() => handleColorClick(color)}
 													></div>
 												))}
