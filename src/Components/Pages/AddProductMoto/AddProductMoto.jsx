@@ -46,6 +46,7 @@ function AddProductMoto({ children, ...props }) {
 		backDerailleur: '',
 		bushings: '',
 		rubber: '',
+		cooling: '',
 		motor: '',
 		maximumLoad: '',
 		saddleHeight: '',
@@ -366,6 +367,14 @@ function AddProductMoto({ children, ...props }) {
 								type='text'
 								name='motor'
 								value={formData.motor}
+								onChange={handleChange}
+								// required
+							/>
+							<label htmlFor='cooling'>Тип охлаждения</label>
+							<input
+								type='text'
+								name='cooling'
+								value={formData.cooling}
 								onChange={handleChange}
 								// required
 							/>

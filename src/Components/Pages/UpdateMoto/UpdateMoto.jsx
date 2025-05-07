@@ -419,6 +419,16 @@ function UpdateMoto({ children, user, ...props }) {
 										onChange={handleChange}
 										disabled={isDis}
 									/>
+									<label htmlFor='cooling'>Тип охлаждения</label>
+									<input
+										type='text'
+										id='cooling'
+										name='cooling'
+										// required
+										value={product.cooling || ''}
+										onChange={handleChange}
+										disabled={isDis}
+									/>
 									<label htmlFor='size'>Длина х Ширина х Высота</label>
 									<input
 										type='text'
